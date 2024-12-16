@@ -11,5 +11,14 @@ config_version=5
 [application]
 
 config/name="rpg-prototype"
+run/main_scene="res://scenes/battle/battle.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+BattleManager="*res://scripts/singletons/battle_manager.gd"
+
+[dotnet]
+
+project/assembly_name="rpg-prototype"

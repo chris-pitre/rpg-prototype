@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://d06tqibcoa6wk"]
+
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_anor0"]
+
+[resource]
+script = ExtResource("1_anor0")
+move_name = "1 Second Attack"
+duration = 1.0

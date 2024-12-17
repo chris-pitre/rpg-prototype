@@ -49,3 +49,4 @@ theme_override_constants/margin_bottom = 10
 
 [node name="MoveTimeline" parent="MarginContainer" instance=ExtResource("3_n1snp")]
 layout_mode = 2
+mouse_filter = 1

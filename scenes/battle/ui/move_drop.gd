@@ -4,6 +4,8 @@ class_name MoveDragAndDrop extends Control
 @onready var label = $MarginContainer/Label
 var label_text: String = "<null>"
 var is_queued: bool = false
+var segment_start: int
+var segment_end: int
 
 @export var move_resource: MoveResource:
 	set(new_move):
@@ -22,7 +24,7 @@ func _gui_input(event: InputEvent) -> void:
 		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if is_queued:
-			BattleManager.move_removed(move_resource)
+			BattleManager.remove_move(move_resource, segment_start, segment_end)
 			queue_free()
 		elif not is_queued and BattleManager.filled_duration >= move_resource.duration:
 			BattleManager.UI_move_added.emit(move_resource)
@@ -32,6 +34,8 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 		return
 	var icon = self.duplicate()
 	var preview = Control.new()
+	icon.set_h_size_flags(0)
+	icon.custom_minimum_size = Vector2(move_resource.duration * 1153, 0)
 	preview.add_child(icon)
 	preview.z_index = 60
 	set_drag_preview(preview)

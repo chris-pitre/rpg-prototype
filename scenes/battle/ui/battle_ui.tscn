@@ -1,13 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://biqjn62nyirrq"]
+[gd_scene load_steps=9 format=3 uid="uid://biqjn62nyirrq"]
 
 [ext_resource type="Script" path="res://scenes/battle/ui/battle_ui.gd" id="1_fkynf"]
 [ext_resource type="Texture2D" uid="uid://dob1lqw2x7nf4" path="res://assets/textures/ui/placeholderninerect.png" id="1_frxg6"]
 [ext_resource type="PackedScene" uid="uid://c57kasc4x38tm" path="res://scenes/battle/ui/move_button.tscn" id="2_a24mp"]
 [ext_resource type="Resource" uid="uid://d06tqibcoa6wk" path="res://resources/moves/1_second_test.tres" id="3_8aryx"]
+[ext_resource type="PackedScene" uid="uid://dsxivqqdrebe6" path="res://scenes/battle/ui/action_queue.tscn" id="3_at0nk"]
 [ext_resource type="Resource" uid="uid://c8y01ctkb7fsq" path="res://resources/moves/0.5_second_test.tres" id="5_rlurx"]
 [ext_resource type="Resource" uid="uid://dsatsw6074bkc" path="res://resources/moves/0.3_second_test.tres" id="6_00ufe"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4eerp"]
+[ext_resource type="PackedScene" uid="uid://d2a12wr8u0po2" path="res://scenes/battle/ui/move_drop.tscn" id="7_l2dnf"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
@@ -20,50 +20,12 @@ size_flags_horizontal = 4
 script = ExtResource("1_fkynf")
 queued_move_scene = ExtResource("2_a24mp")
 
-[node name="ActionQueue" type="NinePatchRect" parent="."]
+[node name="ActionQueue" parent="." instance=ExtResource("3_at0nk")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 559.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_frxg6")
-region_rect = Rect2(0, 0, 32, 32)
-patch_margin_left = 9
-patch_margin_top = 9
-patch_margin_right = 9
-patch_margin_bottom = 9
-
-[node name="CursorMargin" type="MarginContainer" parent="ActionQueue"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ActionCursor" type="TextureRect" parent="ActionQueue/CursorMargin"]
-custom_minimum_size = Vector2(5, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-texture = SubResource("PlaceholderTexture2D_4eerp")
-
-[node name="MarginContainer" type="MarginContainer" parent="ActionQueue"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HFlowContainer" type="HFlowContainer" parent="ActionQueue/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 4
+anchors_preset = 12
+anchor_top = 1.0
+offset_top = -48.0
+grow_vertical = 0
 
 [node name="ActionSelect" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -101,20 +63,17 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="ActionSelect/MarginContainer/VSplitContainer"]
 layout_mode = 2
 
-[node name="MoveButton" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("2_a24mp")]
+[node name="MoveDrop" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("7_l2dnf")]
 layout_mode = 2
-text = "1 Second Attack"
-move_res = ExtResource("3_8aryx")
+move_resource = ExtResource("3_8aryx")
 
-[node name="MoveButton2" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("2_a24mp")]
+[node name="MoveDrop2" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("7_l2dnf")]
 layout_mode = 2
-text = "0.5 Second Attack"
-move_res = ExtResource("5_rlurx")
+move_resource = ExtResource("5_rlurx")
 
-[node name="MoveButton3" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("2_a24mp")]
+[node name="MoveDrop3" parent="ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("7_l2dnf")]
 layout_mode = 2
-text = "0.3 Second Attack"
-move_res = ExtResource("6_00ufe")
+move_resource = ExtResource("6_00ufe")
 
 [node name="ExecuteButton" type="Button" parent="ActionSelect/MarginContainer/VSplitContainer"]
 layout_mode = 2

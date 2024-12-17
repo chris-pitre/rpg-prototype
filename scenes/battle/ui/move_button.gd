@@ -1,5 +1,4 @@
 @tool
-
 class_name MoveButton extends Button
 
 @export var move_res: MoveResource:

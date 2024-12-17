@@ -30,13 +30,25 @@ func _gui_input(event: InputEvent) -> void:
 			BattleManager.UI_move_added.emit(move_resource)
 		
 func _get_drag_data(at_position: Vector2) -> Variant:
-	if Engine.is_editor_hint() or is_queued:
-		return
-	var icon = self.duplicate()
-	var preview = Control.new()
-	icon.set_h_size_flags(0)
-	icon.custom_minimum_size = Vector2(move_resource.duration * 1153, 0)
-	preview.add_child(icon)
-	preview.z_index = 60
-	set_drag_preview(preview)
-	return move_resource
+	if Engine.is_editor_hint():
+		return null
+	if is_queued:
+		BattleManager.remove_move(move_resource, segment_start, segment_end)
+		var icon = self.duplicate()
+		var preview = Control.new()
+		preview.add_child(icon)
+		preview.z_index = 60
+		icon.position = Vector2(0, 0)
+		set_drag_preview(preview)
+		hide()
+		get_tree().create_timer(1.0).timeout.connect(queue_free)
+		return move_resource
+	else:
+		var icon = self.duplicate()
+		var preview = Control.new()
+		icon.set_h_size_flags(0)
+		icon.custom_minimum_size = Vector2(move_resource.duration * 1153, 0)
+		preview.add_child(icon)
+		preview.z_index = 60
+		set_drag_preview(preview)
+		return move_resource

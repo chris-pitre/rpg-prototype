@@ -78,9 +78,10 @@ corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q402e"]
 bg_color = Color(0, 0, 0, 1)
+border_width_bottom = 2
 
 [sub_resource type="SystemFont" id="SystemFont_pj8mn"]
-font_names = PackedStringArray("Britannic")
+font_names = PackedStringArray("Bookman Old Style")
 
 [resource]
 default_font = SubResource("SystemFont_pj8mn")

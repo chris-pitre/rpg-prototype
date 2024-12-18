@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://15wxudralavu"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_ss63b"]
+
+[sub_resource type="Gradient" id="Gradient_dy24e"]
+interpolation_mode = 1
+colors = PackedColorArray(0.408329, 0.408329, 0.408329, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mieia"]
+gradient = SubResource("Gradient_dy24e")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[resource]
+script = ExtResource("1_ss63b")
+name = "Red Gem"
+description = "A round, glimmering red stone. Various shapes morph and appear when rotating it."
+texture = SubResource("GradientTexture2D_mieia")
+price = 20
+can_be_sold = true
+type = 0

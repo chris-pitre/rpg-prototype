@@ -1,23 +1,26 @@
 class_name WorldMap
 extends Control
 
-enum LOCATIONS {
-	CAMP,
-	OUTLANDS,
-	BLACKSMITH,
-	CHAMBERS,
-	MARKET,
-	MEDICAL,
-	FARM,
-	SLUMS,
-	ACADEMY
-}
+const EVENTS_DIR = "res://resources/events/"
+const EVENT_SCHEDULE_PATH = "res://resources/event_schedule.json"
+const TIME_SCALE = 3
 
 enum EVENTS {
 	NONE,
 	JOBBER,
-	CHOICE,
-	LONG
+	SICKNESS,
+	COLLAPSE,
+	CORRUPTION,
+	SCIENTIST,
+}
+
+enum MIDPOINT_EVENTS {
+	NONE,
+	ANIMALS,
+	THIEVES,
+	TERRAIN,
+	MERCHANT,
+	FIRE
 }
 
 enum RESULT {
@@ -28,57 +31,29 @@ enum RESULT {
 	RICH
 }
 
+var event_schedule: Dictionary
+var road_events: Dictionary = {}
+var events: Dictionary = {}
 var adjacent: Dictionary = {}
-var events: Array = [
-	{},
-	{
-		3: EVENTS.LONG,
-		7: EVENTS.LONG
-	},
-	{},
-	{
-		4: EVENTS.CHOICE
-	},
-	{
-		5: EVENTS.CHOICE
-	},
-	{},
-	{
-		0: EVENTS.JOBBER
-	},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{},
-	{}
-]
 
 var player_tween: Tween
-var day: int = -1
+var current_encounter: Encounter
 
 @onready var map_locations: Array[MapLocation]
+
 @onready var location_container = $Locations
 @onready var current_location = location_container.get_child(0)
 @onready var player = $Player
 @onready var choice_panel = $CanvasLayer/Overlay/ChoicePanel
 @onready var choice_container = choice_panel.get_node("ChoiceContainer")
-@onready var event_panel = $CanvasLayer/Overlay/EventInfoPanel
-@onready var event_text = event_panel.get_node("EventInfoContainer/EventText")
+@onready var choice_title = choice_container.get_node("ChoiceTitle")
+@onready var choice_description = choice_container.get_node("ChoiceDescription")
+@onready var result_panel = $CanvasLayer/Overlay/ResultPanel
+@onready var result_container = result_panel.get_node("ResultContainer")
+@onready var result_title = result_container.get_node("ResultTitle")
+@onready var result_description = result_container.get_node("ResultDescription")
+@onready var result_okay = result_container.get_node("ResultOkay")
+@onready var result_fight = result_container.get_node("ResultFight")
 @onready var camera = $Camera2D
 @onready var visit_button = $CanvasLayer/Overlay/VisitButton
 @onready var blacksmith_menu = $CanvasLayer/Overlay/BlacksmithMenu
@@ -86,49 +61,82 @@ var day: int = -1
 @onready var market_menu = $CanvasLayer/Overlay/MarketMenu
 
 func _ready() -> void:
-	add_road(LOCATIONS.CAMP, LOCATIONS.OUTLANDS)
-	add_road(LOCATIONS.OUTLANDS, LOCATIONS.MARKET)
-	add_road(LOCATIONS.BLACKSMITH, LOCATIONS.CHAMBERS)
-	add_road(LOCATIONS.CHAMBERS, LOCATIONS.MARKET)
-	add_road(LOCATIONS.CHAMBERS, LOCATIONS.MARKET)
-	add_road(LOCATIONS.CHAMBERS, LOCATIONS.ACADEMY)
-	add_road(LOCATIONS.MEDICAL, LOCATIONS.FARM)
-	add_road(LOCATIONS.ACADEMY, LOCATIONS.FARM)
-	add_road(LOCATIONS.ACADEMY, LOCATIONS.SLUMS)
-	add_road(LOCATIONS.ACADEMY, LOCATIONS.MARKET)
+	MapEvents.event_neglected.connect(_map_event_neglected)
+	GameState.day_changed.connect(_day_changed)
+	GameState.gold_changed.connect(_gold_changed)
+	GameState.population_changed.connect(_population_changed)
+	GameState.health_changed.connect(_health_changed)
+	
 	player.global_position = current_location.global_position
-	MapEvents.event_happened.connect(_map_event_happened)
+	
 	for child in location_container.get_children():
 		if child is MapLocation:
 			map_locations.append(child)
 			child.pressed.connect(_map_location_pressed.bind(child))
+	
+	add_road("Camp", "Outlands")
+	add_road("Outlands", "Market")
+	add_road("Blacksmith", "Chambers")
+	add_road("Chambers", "Market")
+	add_road("Chambers", "Market")
+	add_road("Chambers", "Academy")
+	add_road("Medical", "Farm")
+	add_road("Academy", "Farm")
+	add_road("Academy", "Slums")
+	add_road("Academy", "Market")
+	
+	var dir = DirAccess.open(EVENTS_DIR)
+	if dir:
+		for file_name in dir.get_files():
+			file_name = file_name.trim_suffix(".remap")
+			var event = ResourceLoader.load(EVENTS_DIR + "/" + file_name)
+			if event is MapEvent:
+				events[event.name] = event
+	
+	var file = FileAccess.open(EVENT_SCHEDULE_PATH, FileAccess.READ)
+	var json = JSON.new()
+	var error = json.parse(file.get_as_text())
+	if error == OK:
+		event_schedule = json.data
+	
 	progress_time()
-	print(map_locations)
 
 func _draw() -> void:
 	for key in adjacent.keys():
 		var val = adjacent[key]
 		for adj in val:
 			draw_line(
-				map_locations[key].global_position + Vector2.ONE * 16,
-				map_locations[adj].global_position + Vector2.ONE * 16,
-				Color.WHITE,
+				key.global_position + Vector2.ONE * 16,
+				adj.global_position + Vector2.ONE * 16,
+				Color.GRAY,
 				6,
 				true
 			)
+			draw_circle((key.global_position + adj.global_position + Vector2.ONE * 32) / 2, 10, Color.GRAY)
 
 func _physics_process(delta: float) -> void:
 	var move_vector = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
-	camera.global_position += move_vector * delta * 480.0
+	camera.global_position += move_vector * delta * 640.0
+	if Input.is_physical_key_pressed(KEY_R):
+		get_tree().reload_current_scene()
+
+func get_location_by_name(name: String) -> MapLocation:
+	for location in map_locations:
+		if location.location_name == name:
+			return location
+	return null
 
 func progress_time() -> void:
-	if day < events.size() - 1:
-		day += 1
-		for location in events[day].keys():
-			map_locations[location].set_event(events[day][location])
+	if GameState.day < event_schedule.days.size(): #update to use MapEvent
+		GameState.day += 1
+		for location in event_schedule.days[GameState.day].keys():
+			get_location_by_name(location).set_event(events[event_schedule.days[GameState.day][location]])
 		update_state()
 
 func add_road(loc_one, loc_two) -> void:
+	loc_one = get_location_by_name(loc_one)
+	loc_two = get_location_by_name(loc_two)
+	
 	if adjacent.keys().has(loc_one):
 		adjacent[loc_one].append(loc_two)
 	else:
@@ -142,115 +150,167 @@ func update_state() -> void:
 	for map_location in map_locations:
 		map_location.update_state()
 
-func show_event_info(str: String) -> void:
-	event_panel.show()
-	event_text.text = str
+func start_event(event: MapEvent) -> void:
+	show_choices(event)
 
-func start_event(event_id: int) -> void:
-	match event_id:
-		EVENTS.JOBBER:
-			pass
-		EVENTS.CHOICE:
-			show_choices(
-				["Kill the bad guy", "Leave them be"],
-				[RESULT.DEATH, RESULT.LIFE]
-			)
-		EVENTS.LONG:
-			show_choices(
-				["Pay your taxes", "Don't pay your taxes"],
-				[RESULT.UNREST, RESULT.RICH]
-			)
+func show_event_result(result: MapEventResult) -> void:
+	current_encounter = result.encounter
+	if result.encounter:
+		result_fight.show()
+		result_okay.hide()
+	else:
+		result_fight.hide()
+		result_okay.show()
+	if not result.title.is_empty() and not result.description.is_empty():
+		result_panel.show()
+		result_title.text = result.title
+		result_description.text = result.description
+	else:
+		start_encounter(current_encounter)
 
-func show_choices(choices: Array[String], results: Array[RESULT]):
+func show_choices(event: MapEvent):
 	for choice in choice_container.get_children():
 		if choice is Button:
 			choice.queue_free()
 	choice_panel.show()
-	for choice in range(choices.size()):
+	for choice in event.choices:
 		var new_choice = Button.new()
-		new_choice.size_flags_vertical = SIZE_EXPAND_FILL
-		new_choice.text = choices[choice]
+		new_choice.size_flags_vertical = Control.SIZE_SHRINK_END
+		new_choice.text = choice.text
+		match choice.attribute_check:
+			MapEventChoice.POWER:
+				new_choice.text += " (POW)"
+			MapEventChoice.AGILITY:
+				new_choice.text += " (AGI)"
+			MapEventChoice.SPEECH:
+				new_choice.text += " (SPC)"
+			MapEventChoice.PIETY:
+				new_choice.text += " (PTY)"
 		choice_container.add_child(new_choice)
 		new_choice.pressed.connect(
 			func():
 				choice_panel.hide()
-				apply_result(results[choice])
+				apply_choice(choice)
 		)
+		choice_title.text = event.name
+		choice_description.text = event.description
 
-func apply_result(result_id: int):
-	match result_id:
-		RESULT.NONE:
-			show_event_info("Nothing happened.")
-		RESULT.DEATH:
-			show_event_info("The bad guy was actually a good guy and his blood is on your hands!")
-		RESULT.LIFE:
-			show_event_info("The bad guy is actually pretty chill and he saved a family from a feral bear attack.")
-		RESULT.UNREST:
-			show_event_info("You paid too many taxes and billions have fallen")
-		RESULT.RICH:
-			show_event_info("You are freakin' rich!")
+func apply_choice(choice: MapEventChoice) -> void:
+	if choice.fail_result:
+		var roll = GameState.rng.randi_range(1, 20) + GameState.stats[choice.attribute_check - 1]
+		if roll >= choice.difficulty:
+			show_event_result(choice.success_result)
+		else:
+			show_event_result(choice.fail_result)
+	else:
+		show_event_result(choice.success_result)
 
-func start_battle() -> void:
+func start_encounter(encounter: Encounter) -> void:
 	pass
 
 func visit_location(location: MapLocation) -> void:
-	if location.current_event > 0:
+	if not location.current_event == null:
 		start_event(location.current_event)
-		location.current_event = 0
-	match map_locations.find(location):
-		LOCATIONS.BLACKSMITH:
+		location.current_event = null
+	match location.location_name:
+		"Blacksmith":
 			visit_button.show()
-		LOCATIONS.MARKET:
+		"Market":
 			visit_button.show()
-		LOCATIONS.MEDICAL:
+		"Medical":
 			visit_button.show()
 		_:
 			visit_button.hide()
+
+func move_to_location(map_location: MapLocation) -> void:
+	player_tween = get_tree().create_tween()
+	player_tween.tween_property(player, "global_position", map_location.global_position, 1.0)
+	player_tween.finished.connect(_player_second_tween_finished.bind(map_location))
+
+func get_midpoint_event() -> bool:
+	return false #Get random event
+
+func start_midpoint_event(event: MapEvent) -> void:
+	pass
 
 func _map_location_pressed(map_location: MapLocation) -> void:
 	if player_tween:
 		if player_tween.is_running():
 			return
-	if adjacent[map_locations.find(current_location)].has(map_location.get_index()):
-		if player_tween:
-			player_tween.stop()
+	
+	if map_location == current_location:
+		return
+	
+	if adjacent[current_location].has(map_location):
+		visit_button.hide()
 		player_tween = get_tree().create_tween()
-		player_tween.tween_property(player, "global_position", map_location.global_position, 0.3)
-		player_tween.finished.connect(_player_tween_finished)
+		player_tween.tween_property(player, "global_position", (player.global_position + map_location.global_position) / 2.0, 1.0 / TIME_SCALE)
+		player_tween.finished.connect(_player_first_tween_finished.bind(map_location))
+
+func _player_first_tween_finished(map_location: MapLocation) -> void:
+	player_tween = get_tree().create_tween()
+	player_tween.tween_property(player, "global_position", map_location.global_position, 1.0 / TIME_SCALE)
+	player_tween.finished.connect(_player_second_tween_finished.bind(map_location))
+
+func _player_second_tween_finished(map_location: MapLocation) -> void:
+	if not get_midpoint_event():
 		current_location = map_location
+		visit_location(current_location)
+		progress_time()
 
-func _player_tween_finished() -> void:
-	visit_location(current_location)
-	progress_time()
+func _on_result_okay_pressed() -> void:
+	result_panel.hide()
 
-func _on_event_okay_pressed() -> void:
-	event_panel.hide()
+func _on_result_fight_pressed() -> void:
+	result_panel.hide()
+	start_encounter(current_encounter)
 
-func _map_event_happened(event_id) -> void:
-	match event_id:
-		EVENTS.JOBBER:
-			show_event_info("A jobber stole all the money from the local citizens.")
-		EVENTS.CHOICE:
-			show_event_info("Mass hysteria has occurred because you didn't resolve a choice")
-		EVENTS.LONG:
-			show_event_info("Government has fallen")
+func _map_event_neglected(event: MapEvent) -> void:
+	if event.neglect_result:
+		show_event_result(event.neglect_result)
+		current_encounter = event.neglect_result.encounter
 
 func _on_visit_button_pressed() -> void:
 	visit_button.hide()
 	camera.global_position = current_location.global_position - get_viewport_rect().size / 2.0 + Vector2.ONE * 16
-	match map_locations.find(current_location):
-		LOCATIONS.BLACKSMITH:
+	match current_location.location_name:
+		"Blacksmith":
 			blacksmith_menu.show()
-		LOCATIONS.MARKET:
+		"Market":
 			market_menu.show()
-		LOCATIONS.MEDICAL:
+		"Medical":
 			medical_menu.show()
 
 func _on_close_blacksmith_pressed() -> void:
 	blacksmith_menu.hide()
+	visit_button.show()
 
 func _on_close_market_pressed() -> void:
 	market_menu.hide()
+	visit_button.show()
 
 func _on_close_medical_pressed() -> void:
 	medical_menu.hide()
+	visit_button.show()
+
+func _on_open_character_pressed() -> void:
+	$CanvasLayer/Overlay/CharacterMenu.show()
+
+func _on_close_character_pressed() -> void:
+	$CanvasLayer/Overlay/CharacterMenu.hide()
+
+func _day_changed(day: int) -> void:
+	$CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5/ResourceAmount.text = str(day)
+
+func _gold_changed(amt: int) -> void:
+	$CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3/ResourceAmount.text = str(amt)
+
+func _population_changed(amt: int) -> void:
+	$CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4/ResourceAmount.text = str(amt)
+
+func _health_changed(amt: int) -> void:
+	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar.value = amt / GameState.max_health
+	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar/Label.text = str(amt)
+
+func _on_fight_end_close_pressed() -> void:
+	pass # Replace with function body.

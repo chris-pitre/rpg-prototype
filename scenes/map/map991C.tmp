@@ -1,43 +1,12 @@
-[gd_scene load_steps=33 format=3 uid="uid://bncokx5jbxw5s"]
+[gd_scene load_steps=12 format=3 uid="uid://bncokx5jbxw5s"]
 
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
 [ext_resource type="PackedScene" uid="uid://dxub3ciyp34ag" path="res://scenes/map/map_location.tscn" id="2_p1lux"]
-[ext_resource type="Shader" path="res://resources/shaders/mosqit.gdshader" id="3_dmd6y"]
 [ext_resource type="Texture2D" uid="uid://dsdjofo441itv" path="res://assets/textures/icons/star.png" id="3_nvc0i"]
 [ext_resource type="PackedScene" uid="uid://ctyajqqxhjbch" path="res://scenes/map/resource_indicator.tscn" id="4_kh2tm"]
 [ext_resource type="Texture2D" uid="uid://dntiq0sqll5bj" path="res://assets/textures/icons/person.png" id="6_c0ry0"]
 [ext_resource type="Texture2D" uid="uid://5s3decjnv85p" path="res://assets/textures/icons/dude.png" id="6_shbpi"]
-[ext_resource type="PackedScene" uid="uid://dmes2nd6gbfw5" path="res://scenes/inventory/item_button.tscn" id="8_2hsvd"]
-[ext_resource type="PackedScene" uid="uid://c1safyv2w7biw" path="res://scenes/inventory/sell_shop.tscn" id="9_0hr2t"]
-[ext_resource type="Script" path="res://scenes/inventory/item_container.gd" id="9_16x6j"]
-[ext_resource type="PackedScene" uid="uid://dg0ui7mem40lw" path="res://scenes/inventory/shop.tscn" id="9_b65jm"]
-[ext_resource type="PackedScene" uid="uid://cb3d10a6rs8d4" path="res://scenes/inventory/item_slot.tscn" id="10_nse17"]
-[ext_resource type="PackedScene" uid="uid://bgsx2j8h2r5db" path="res://scenes/inventory/upgrade_tree.tscn" id="12_lcj62"]
-[ext_resource type="Script" path="res://resources/items/item.gd" id="12_xi5fo"]
-[ext_resource type="Resource" uid="uid://gjkkrquga68t" path="res://resources/items/consumable_bandage.tres" id="13_guf8o"]
-[ext_resource type="Resource" uid="uid://cldb3yni2gd67" path="res://resources/items/loot_gem_red_crude.tres" id="15_2lqqq"]
-[ext_resource type="Resource" uid="uid://15wxudralavu" path="res://resources/items/loot_gem_red_normal.tres" id="16_lepxj"]
-[ext_resource type="Resource" uid="uid://ctgo3r17ieikw" path="res://resources/items/loot_gem_red_rare.tres" id="17_ydh3o"]
-[ext_resource type="Resource" uid="uid://b30f8nlkl6lrn" path="res://resources/items/weapon_sword_crude.tres" id="20_hvvit"]
-
-[sub_resource type="Gradient" id="Gradient_f2idn"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kg0of"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uw6eg"]
-color_ramp = SubResource("Gradient_f2idn")
-noise = SubResource("FastNoiseLite_kg0of")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_on0mc"]
-shader = ExtResource("3_dmd6y")
-shader_parameter/intensity = 0.4
-shader_parameter/alpha = 0.5
-shader_parameter/vig_color = Color(0.212305, 0.212305, 0.212305, 1)
-shader_parameter/speed = 0.02
-shader_parameter/amplitude = 0.2
-shader_parameter/aliasing = 0.01
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_uw6eg")
 
 [sub_resource type="Gradient" id="Gradient_eglhr"]
 interpolation_mode = 1
@@ -55,31 +24,11 @@ fill_to = Vector2(0.5, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8p6s"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_5enl1"]
-colors = PackedColorArray(0.145098, 0, 0.168627, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_roxg4"]
-gradient = SubResource("Gradient_5enl1")
-width = 400
-height = 20
-
-[sub_resource type="Gradient" id="Gradient_7axxn"]
-colors = PackedColorArray(1, 0.25, 0.25, 1, 1, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_n6i87"]
-gradient = SubResource("Gradient_7axxn")
-width = 400
-height = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jghvb"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pys5o"]
+size = Vector2(64, 64)
 
 [node name="Map" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,17 +37,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_c2g5l")
 script = ExtResource("1_p33he")
-
-[node name="Background" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="ColorRect" type="ColorRect" parent="Background"]
-material = SubResource("ShaderMaterial_on0mc")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Locations" type="Control" parent="."]
 anchors_preset = 0
@@ -242,23 +180,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
-
-[node name="ResourceIndicator5" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer" instance=ExtResource("4_kh2tm")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_stretch_ratio = 0.2
-
-[node name="ResourceName" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5" index="0"]
-text = "Day"
-
-[node name="TextureRect" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5" index="1"]
-visible = false
-texture = SubResource("GradientTexture2D_11o0k")
 
 [node name="ResourceIndicator3" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer" instance=ExtResource("4_kh2tm")]
 layout_mode = 2
-size_flags_horizontal = 8
 
 [node name="ResourceName" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3" index="0"]
 text = "Gold"
@@ -268,7 +192,6 @@ texture = SubResource("GradientTexture2D_11o0k")
 
 [node name="ResourceIndicator4" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer" instance=ExtResource("4_kh2tm")]
 layout_mode = 2
-size_flags_horizontal = 8
 
 [node name="ResourceName" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4" index="0"]
 text = "Population"
@@ -310,17 +233,17 @@ layout_mode = 2
 text = "Choice"
 horizontal_alignment = 1
 
-[node name="ChoiceDescription" type="Label" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
+[node name="ChoiceTitle2" type="Label" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.877616, 0.877616, 0.877616, 1)
+theme_override_colors/font_color = Color(0.808998, 0.808998, 0.808998, 1)
 theme_override_font_sizes/font_size = 16
 text = "The situation"
 horizontal_alignment = 1
-autowrap_mode = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
+layout_mode = 2
 
 [node name="ResultPanel" type="Panel" parent="CanvasLayer/Overlay"]
-visible = false
 custom_minimum_size = Vector2(320, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -353,17 +276,16 @@ horizontal_alignment = 1
 [node name="ResultDescription" type="Label" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.877616, 0.877616, 0.877616, 1)
-theme_override_font_sizes/font_size = 16
 text = "Everyone fuckin died or something"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="ResultOkay" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
 layout_mode = 2
 text = "Okay"
 
-[node name="ResultFight" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+[node name="ResultEvent" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
 layout_mode = 2
 text = "Fight"
 
@@ -373,7 +295,6 @@ custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 64.0
 grow_vertical = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
@@ -381,16 +302,10 @@ theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu"]
-custom_minimum_size = Vector2(416, 0)
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu"]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer"]
-custom_minimum_size = Vector2(416, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -398,76 +313,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Blacksmith"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
+[node name="Label3" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.877616, 0.877616, 0.877616, 1)
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
 theme_override_font_sizes/font_size = 16
 text = "A metallic heartbeat sounds from the valley as the blacksmith reshapes the dull edge of steel into tools and weapons."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="BlacksmithTabs" type="TabContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
+[node name="Button7" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-current_tab = 2
+text = "Buy weapons"
 
-[node name="Buy" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_b65jm")]
-visible = false
+[node name="Button8" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
 layout_mode = 2
+text = "Upgrade weapons"
 
-[node name="Sell" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_0hr2t")]
-visible = false
+[node name="CloseBlacksmith" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
 layout_mode = 2
-
-[node name="Upgrade" type="MarginContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-metadata/_tab_index = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Upgrade"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Upgrade/CenterContainer"]
-layout_mode = 2
-
-[node name="ItemSlot" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Upgrade/CenterContainer/VBoxContainer" instance=ExtResource("10_nse17")]
-layout_mode = 2
-size_flags_horizontal = 4
-require_type = true
-type = 1
-
-[node name="CloseBlacksmith" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 10
 text = "Close"
-
-[node name="UpgradeTree" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(416, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeTree"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scroll_horizontal = 100
-scroll_vertical = 100
-
-[node name="TreeControl" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeTree/ScrollContainer" instance=ExtResource("12_lcj62")]
-layout_mode = 2
 
 [node name="MarketMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
 visible = false
@@ -476,7 +347,6 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
-mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
@@ -502,27 +372,27 @@ horizontal_alignment = 1
 [node name="Label2" type="Label" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.877616, 0.877616, 0.877616, 1)
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
 theme_override_font_sizes/font_size = 16
 text = "Merchants and pedestrians barter and shuffle along the sides of the street with a calm buzz of activity."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+[node name="Button6" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-current_tab = 0
+text = "Buy supplies"
 
-[node name="Buy" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/TabContainer" instance=ExtResource("9_b65jm")]
+[node name="Button7" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
 layout_mode = 2
-items_for_sale = Array[ExtResource("12_xi5fo")]([ExtResource("13_guf8o")])
+text = "Sell valuables"
 
-[node name="Sell" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/TabContainer" instance=ExtResource("9_0hr2t")]
-visible = false
+[node name="Button8" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
 layout_mode = 2
+text = "Invest"
 
 [node name="CloseMarket" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 10
 text = "Close"
 
 [node name="MedicalMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
@@ -549,12 +419,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
 layout_mode = 2
 text = "The Hospital"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+[node name="Label3" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
@@ -597,46 +467,8 @@ layout_mode = 2
 size_flags_vertical = 10
 text = "Close"
 
-[node name="FightEndMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
-custom_minimum_size = Vector2(480, 0)
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-grow_vertical = 2
-theme = ExtResource("1_c2g5l")
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 64
-
-[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/FightEndMenu"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/FightEndMenu/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Victory!"
-horizontal_alignment = 1
-
-[node name="ItemContainer" type="GridContainer" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("9_16x6j")
-
-[node name="FightEndClose" type="Button" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-text = "Close"
-
 [node name="CharacterMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
 visible = false
-texture_filter = 1
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 11
@@ -671,99 +503,44 @@ horizontal_alignment = 1
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
 
-[node name="TextureRect4" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
 
-[node name="Character" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="Character" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 texture = ExtResource("6_shbpi")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Healthbar" type="TextureProgressBar" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-step = 0.05
-value = 100.0
-texture_under = SubResource("GradientTexture2D_roxg4")
-texture_progress = SubResource("GradientTexture2D_n6i87")
-
-[node name="Label" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/outline_size = 8
-text = "5 hp"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_jghvb")
-
-[node name="ItemContainer" type="GridContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-columns = 6
-script = ExtResource("9_16x6j")
-allow_drop = true
-
-[node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("15_2lqqq")
-
-[node name="ItemButton2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("16_lepxj")
-
-[node name="ItemButton3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("17_ydh3o")
-
-[node name="ItemButton4" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("20_hvvit")
-
-[node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
+[node name="CloseInventory" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Close"
@@ -783,32 +560,16 @@ size_flags_vertical = 8
 theme = ExtResource("1_c2g5l")
 text = "Visit Location"
 
-[node name="OpenCharacter" type="Button" parent="CanvasLayer"]
-texture_filter = 3
-custom_minimum_size = Vector2(32, 32)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -32.0
-offset_bottom = 32.0
-grow_horizontal = 0
-icon = ExtResource("6_c0ry0")
-icon_alignment = 1
-expand_icon = true
-
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 position_smoothing_enabled = true
 
 [connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultFight" to="." method="_on_result_fight_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultEvent" to="." method="_on_result_event_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer/FightEndClose" to="." method="_on_fight_end_close_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/CloseCharacter" to="." method="_on_close_character_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/VisitButton" to="." method="_on_visit_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/OpenCharacter" to="." method="_on_open_character_pressed"]
 
 [editable path="Locations/Camp"]
 [editable path="Locations/Outlands"]
@@ -819,6 +580,5 @@ position_smoothing_enabled = true
 [editable path="Locations/Farmlands"]
 [editable path="Locations/Slums"]
 [editable path="Locations/Academy"]
-[editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5"]
 [editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3"]
 [editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]

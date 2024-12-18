@@ -1,19 +1,30 @@
 class_name MapLocation
 extends Button
 
-var current_event: int = 0
+@export var location_name: String = "Location"
+
+var current_event: MapEvent
 var days_left: int = 0
 
 @onready var event_icon = $EventIcon
+@onready var days_text = $DaysText
 
 func update_state() -> void:
-	if current_event > 0:
+	if current_event:
 		days_left -= 1
-		update_icon()
-		if days_left <= 0:
+		if days_left > 0:
+			days_text.text = str(days_left)
+			days_text.visible = true
+		elif days_left == 0:
+			days_text.visible = false
 			apply_event(current_event)
+		else:
+			days_text.visible = false
+		update_icon()
 	else:
+		days_text.visible = false
 		event_icon.texture = null
+		
 
 func update_icon() -> void:
 	match days_left:
@@ -28,16 +39,12 @@ func update_icon() -> void:
 		_:
 			event_icon.texture = load("res://assets/textures/icons/reddot.png")
 
-func set_event(event_id: int) -> void:
-	current_event = event_id
-	match event_id:
-		WorldMap.EVENTS.JOBBER:
-			days_left = 3
-		WorldMap.EVENTS.CHOICE:
-			days_left = 4
-		WorldMap.EVENTS.LONG:
-			days_left = 11
+func set_event(event: MapEvent) -> void:
+	current_event = event
+	days_left = event.lifetime + 1
+	tooltip_text = event.hover_description
 
-func apply_event(event_id: int) -> void:
-	current_event = 0
-	MapEvents.event_happened.emit(event_id)
+func apply_event(event: MapEvent) -> void:
+	current_event = null
+	tooltip_text = ""
+	MapEvents.event_neglected.emit(event)

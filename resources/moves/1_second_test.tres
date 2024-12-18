@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=3 format=3 uid="uid://d06tqibcoa6wk"]
+
+[ext_resource type="Animation" uid="uid://dmvesboggxjgi" path="res://resources/moves/1_second_test_anim.tres" id="1_0i88e"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_anor0"]
+
+[resource]
+script = ExtResource("1_anor0")
+move_name = "1 Second Attack"
+move_animation = ExtResource("1_0i88e")

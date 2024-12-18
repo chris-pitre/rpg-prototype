@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c57kasc4x38tm"]
 
-[ext_resource type="Script" path="res://scenes/battle/ui/move_button.gd" id="1_1hde0"]
+[ext_resource type="Script" path="res://scenes/battle/move_button.gd" id="1_1hde0"]
 
 [node name="MoveButton" type="Button"]
 script = ExtResource("1_1hde0")

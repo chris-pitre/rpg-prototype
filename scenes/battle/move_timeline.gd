@@ -1,22 +1,20 @@
 class_name MoveTimeline extends Control
 
-@onready var num_steps: int = BattleManager.timeline_length / time_granularity
-@onready var step_size: float = size[0] / num_steps
+@onready var step_size: float = size[0] / BattleManager.num_steps
 
-@export var time_granularity: float = 0.025:
-	set(new_time):
-		time_granularity = new_time
-		num_steps = BattleManager.timeline_length / time_granularity
-		step_size = size[0] / num_steps
+var is_player: bool = true
+
+static var occupied_player_segments: Array[bool] = []
+static var occupied_enemy_segments: Array[bool] = []
 
 func _ready() -> void:
-	BattleManager.occupied_segments = []
-	for i in range(num_steps + 1):
-		BattleManager.occupied_segments.append(false)
+	occupied_player_segments = []
+	for i in range(BattleManager.num_steps + 1):
+		occupied_player_segments.append(false)
+		occupied_enemy_segments.append(false)
 	
 func _process(delta: float) -> void:
-	num_steps = (BattleManager.timeline_length / time_granularity)
-	step_size = size[0] / num_steps
+	step_size = size[0] / BattleManager.num_steps
 
 func get_segment_num(x_position: int) -> int:
 	return x_position / step_size
@@ -31,20 +29,28 @@ func occupy_segments(segment_start: int, segment_end: int) -> bool:
 	if not check_segments(segment_start, segment_end):
 		return false
 	for i in range(segment_start, segment_end):
-		BattleManager.occupied_segments[i] = true
+		if is_player:
+			occupied_player_segments[i] = true
+		else:
+			occupied_enemy_segments[i] = true
 	return true
 
 func deoccupy_segments(segment_start: int, segment_end: int) -> bool:
 	if not check_segments(segment_start, segment_end):
 		return false
 	for i in range(segment_start, segment_end):
-		BattleManager.occupied_segments[i] = false
+		if is_player:
+			occupied_player_segments[i] = false
+		else:
+			occupied_enemy_segments[i] = true
 	return true
 
 func check_segments(segment_start: int, segment_end: int) -> bool:
-	if segment_end > num_steps:
+	if segment_end > BattleManager.num_steps:
 		return false
 	for i in range(segment_start, segment_end + 1):
-		if BattleManager.occupied_segments[i]:
+		if is_player and occupied_player_segments[i]:
+			return false
+		elif not is_player and occupied_enemy_segments[i]:
 			return false
 	return true

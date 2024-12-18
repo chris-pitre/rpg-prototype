@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://biqjn62nyirrq"]
+[gd_scene load_steps=9 format=3 uid="uid://biqjn62nyirrq"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_ari4w"]
 [ext_resource type="PackedScene" uid="uid://dsxivqqdrebe6" path="res://scenes/battle/action_queue.tscn" id="2_f2uam"]
 [ext_resource type="Texture2D" uid="uid://dl6iqsg6mrmv5" path="res://icon.svg" id="2_f7ri4"]
 [ext_resource type="Texture2D" uid="uid://dob1lqw2x7nf4" path="res://assets/textures/ui/placeholderninerect.png" id="3_34m7t"]
+[ext_resource type="PackedScene" uid="uid://d2a12wr8u0po2" path="res://scenes/battle/move_drop.tscn" id="4_mu05j"]
+[ext_resource type="Resource" uid="uid://d06tqibcoa6wk" path="res://resources/moves/1_second_test.tres" id="5_iii60"]
+[ext_resource type="Resource" uid="uid://c8y01ctkb7fsq" path="res://resources/moves/0.5_second_test.tres" id="6_btd8y"]
+[ext_resource type="Resource" uid="uid://dsatsw6074bkc" path="res://resources/moves/0.3_second_test.tres" id="7_cwe8k"]
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_ari4w")
@@ -25,8 +29,6 @@ grow_vertical = 1
 is_player = false
 
 [node name="ActionSelect" type="NinePatchRect" parent="CanvasLayer"]
-visible = false
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -59,10 +61,21 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/ActionSelect/MarginContainer"]
 layout_mode = 2
-dragger_visibility = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer"]
 layout_mode = 2
+
+[node name="MoveDrop" parent="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("4_mu05j")]
+layout_mode = 2
+move_resource = ExtResource("5_iii60")
+
+[node name="MoveDrop2" parent="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("4_mu05j")]
+layout_mode = 2
+move_resource = ExtResource("6_btd8y")
+
+[node name="MoveDrop3" parent="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer" instance=ExtResource("4_mu05j")]
+layout_mode = 2
+move_resource = ExtResource("7_cwe8k")
 
 [node name="ExecuteButton" type="Button" parent="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer"]
 layout_mode = 2
@@ -70,8 +83,6 @@ size_flags_vertical = 8
 text = "execute!!!"
 
 [node name="BattlePopup" type="PanelContainer" parent="CanvasLayer"]
-visible = false
-modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 14
 anchor_top = 0.5
@@ -87,13 +98,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Battle Start!"
 
-[node name="GoodGuy" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(266, 464)
-texture = ExtResource("2_f7ri4")
-
-[node name="BadGuy" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
-position = Vector2(860, 246)
 texture = ExtResource("2_f7ri4")
 
 [connection signal="pressed" from="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/ExecuteButton" to="." method="_on_execute_button_pressed"]

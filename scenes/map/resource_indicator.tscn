@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctyajqqxhjbch"]
+
+[sub_resource type="Gradient" id="Gradient_depb4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.980519)
+colors = PackedColorArray(0, 1, 1, 1, 0, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sbly0"]
+gradient = SubResource("Gradient_depb4")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="ResourceIndicator" type="HBoxContainer"]
+size_flags_horizontal = 6
+
+[node name="ResourceName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Mana Orb"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_sbly0")
+expand_mode = 4
+stretch_mode = 3
+
+[node name="ResourceAmount" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0"

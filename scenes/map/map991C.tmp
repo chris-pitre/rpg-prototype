@@ -1,0 +1,584 @@
+[gd_scene load_steps=12 format=3 uid="uid://bncokx5jbxw5s"]
+
+[ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
+[ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
+[ext_resource type="PackedScene" uid="uid://dxub3ciyp34ag" path="res://scenes/map/map_location.tscn" id="2_p1lux"]
+[ext_resource type="Texture2D" uid="uid://dsdjofo441itv" path="res://assets/textures/icons/star.png" id="3_nvc0i"]
+[ext_resource type="PackedScene" uid="uid://ctyajqqxhjbch" path="res://scenes/map/resource_indicator.tscn" id="4_kh2tm"]
+[ext_resource type="Texture2D" uid="uid://dntiq0sqll5bj" path="res://assets/textures/icons/person.png" id="6_c0ry0"]
+[ext_resource type="Texture2D" uid="uid://5s3decjnv85p" path="res://assets/textures/icons/dude.png" id="6_shbpi"]
+
+[sub_resource type="Gradient" id="Gradient_eglhr"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.961039)
+colors = PackedColorArray(1, 0.833333, 0, 1, 1, 0.833333, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_11o0k"]
+gradient = SubResource("Gradient_eglhr")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8p6s"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pys5o"]
+size = Vector2(64, 64)
+
+[node name="Map" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+script = ExtResource("1_p33he")
+
+[node name="Locations" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camp" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 115.0
+offset_right = 218.0
+offset_bottom = 147.0
+location_name = "Camp"
+
+[node name="Label" parent="Locations/Camp" index="1"]
+text = "The Camp"
+
+[node name="Outlands" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 559.0
+offset_top = 144.0
+offset_right = 591.0
+offset_bottom = 176.0
+location_name = "Outlands"
+
+[node name="Label" parent="Locations/Outlands" index="1"]
+text = "The Outlands"
+
+[node name="Blacksmith" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 109.0
+offset_top = 407.0
+offset_right = 141.0
+offset_bottom = 439.0
+location_name = "Blacksmith"
+
+[node name="Label" parent="Locations/Blacksmith" index="1"]
+text = "The Blacksmith"
+
+[node name="Chambers" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 314.0
+offset_right = 521.0
+offset_bottom = 346.0
+location_name = "Chambers"
+
+[node name="Label" parent="Locations/Chambers" index="1"]
+text = "The High Chambers"
+
+[node name="Market" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 355.0
+offset_right = 904.0
+offset_bottom = 387.0
+location_name = "Market"
+
+[node name="Label" parent="Locations/Market" index="1"]
+text = "The Market District"
+
+[node name="Medical" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 553.0
+offset_right = 338.0
+offset_bottom = 585.0
+location_name = "Medical"
+
+[node name="Label" parent="Locations/Medical" index="1"]
+text = "The Medical District"
+
+[node name="Farmlands" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 583.0
+offset_right = 615.0
+offset_bottom = 615.0
+location_name = "Farm"
+
+[node name="Label" parent="Locations/Farmlands" index="1"]
+text = "The Farmlands"
+
+[node name="Slums" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 861.0
+offset_top = 542.0
+offset_right = 893.0
+offset_bottom = 574.0
+location_name = "Slums"
+
+[node name="Label" parent="Locations/Slums" index="1"]
+text = "The Slums"
+
+[node name="Academy" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 659.0
+offset_top = 427.0
+offset_right = 691.0
+offset_bottom = 459.0
+location_name = "Academy"
+
+[node name="Label" parent="Locations/Academy" index="1"]
+text = "The Academy"
+
+[node name="Player" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 140.0
+offset_right = 365.0
+offset_bottom = 172.0
+texture = ExtResource("3_nvc0i")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Overlay" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ResourceBar" type="Panel" parent="CanvasLayer/Overlay"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme = ExtResource("1_c2g5l")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/ResourceBar"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResourceIndicator3" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer" instance=ExtResource("4_kh2tm")]
+layout_mode = 2
+
+[node name="ResourceName" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3" index="0"]
+text = "Gold"
+
+[node name="TextureRect" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3" index="1"]
+texture = SubResource("GradientTexture2D_11o0k")
+
+[node name="ResourceIndicator4" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer" instance=ExtResource("4_kh2tm")]
+layout_mode = 2
+
+[node name="ResourceName" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4" index="0"]
+text = "Population"
+
+[node name="TextureRect" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4" index="1"]
+texture = ExtResource("6_c0ry0")
+
+[node name="ResourceAmount" parent="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4" index="2"]
+text = "200"
+
+[node name="ChoicePanel" type="Panel" parent="CanvasLayer/Overlay"]
+visible = false
+custom_minimum_size = Vector2(320, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -200.0
+offset_right = 160.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_styles/panel = SubResource("StyleBoxFlat_f8p6s")
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/ChoicePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChoiceTitle" type="Label" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
+layout_mode = 2
+text = "Choice"
+horizontal_alignment = 1
+
+[node name="ChoiceTitle2" type="Label" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.808998, 0.808998, 0.808998, 1)
+theme_override_font_sizes/font_size = 16
+text = "The situation"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Overlay/ChoicePanel/ChoiceContainer"]
+layout_mode = 2
+
+[node name="ResultPanel" type="Panel" parent="CanvasLayer/Overlay"]
+custom_minimum_size = Vector2(320, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -200.0
+offset_right = 160.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_styles/panel = SubResource("StyleBoxFlat_f8p6s")
+
+[node name="ResultContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/ResultPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResultTitle" type="Label" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+layout_mode = 2
+text = "Event"
+horizontal_alignment = 1
+
+[node name="ResultDescription" type="Label" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Everyone fuckin died or something"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ResultOkay" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+layout_mode = 2
+text = "Okay"
+
+[node name="ResultEvent" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+layout_mode = 2
+text = "Fight"
+
+[node name="BlacksmithMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Blacksmith"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
+theme_override_font_sizes/font_size = 16
+text = "A metallic heartbeat sounds from the valley as the blacksmith reshapes the dull edge of steel into tools and weapons."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button7" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Buy weapons"
+
+[node name="Button8" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Upgrade weapons"
+
+[node name="CloseBlacksmith" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Close"
+
+[node name="MarketMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/MarketMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/MarketMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "The Market"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
+theme_override_font_sizes/font_size = 16
+text = "Merchants and pedestrians barter and shuffle along the sides of the street with a calm buzz of activity."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button6" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Buy supplies"
+
+[node name="Button7" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Sell valuables"
+
+[node name="Button8" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Invest"
+
+[node name="CloseMarket" type="Button" parent="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Close"
+
+[node name="MedicalMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/MedicalMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/MedicalMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "The Hospital"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
+theme_override_font_sizes/font_size = 16
+text = "Doctors work at a leisurely pace, the few sick that are there making their presence known with a sparse cough or groan."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Stop Bleeding (1 gold)
+"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Heal Injuries (10 gold)
+"
+
+[node name="Button3" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Heal Grave Injuries (50 gold)"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Upgrades"
+horizontal_alignment = 1
+
+[node name="Button4" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Cheaper Healing
+"
+
+[node name="Button5" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Emergency Shelters
+"
+
+[node name="CloseMedical" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Close"
+
+[node name="CharacterMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/CharacterMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterTitle" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Character"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_pys5o")
+
+[node name="Character" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_shbpi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CloseInventory" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Close"
+
+[node name="VisitButton" type="Button" parent="CanvasLayer/Overlay"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_c2g5l")
+text = "Visit Location"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+position_smoothing_enabled = true
+
+[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultEvent" to="." method="_on_result_event_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/VisitButton" to="." method="_on_visit_button_pressed"]
+
+[editable path="Locations/Camp"]
+[editable path="Locations/Outlands"]
+[editable path="Locations/Blacksmith"]
+[editable path="Locations/Chambers"]
+[editable path="Locations/Market"]
+[editable path="Locations/Medical"]
+[editable path="Locations/Farmlands"]
+[editable path="Locations/Slums"]
+[editable path="Locations/Academy"]
+[editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3"]
+[editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]

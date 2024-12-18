@@ -1,5 +1,8 @@
 extends TextureRect
 
+signal item_added()
+signal item_removed()
+
 const ITEM_BUTTON = preload("res://scenes/inventory/item_button.tscn")
 
 var item_button: ItemButton
@@ -27,3 +30,5 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	new_item_button.item = data.item
 	new_item_button.allow_drag = true
 	item_button = new_item_button
+	item_button.tree_exiting.connect(item_removed.emit)
+	item_added.emit(data.item)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bncokx5jbxw5s"]
+[gd_scene load_steps=30 format=3 uid="uid://bncokx5jbxw5s"]
 
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
@@ -9,16 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://dntiq0sqll5bj" path="res://assets/textures/icons/person.png" id="6_c0ry0"]
 [ext_resource type="Texture2D" uid="uid://5s3decjnv85p" path="res://assets/textures/icons/dude.png" id="6_shbpi"]
 [ext_resource type="PackedScene" uid="uid://dmes2nd6gbfw5" path="res://scenes/inventory/item_button.tscn" id="8_2hsvd"]
+[ext_resource type="Script" path="res://scenes/map/blacksmith_menu.gd" id="8_emubx"]
 [ext_resource type="PackedScene" uid="uid://c1safyv2w7biw" path="res://scenes/inventory/sell_shop.tscn" id="9_0hr2t"]
 [ext_resource type="Script" path="res://scenes/inventory/item_container.gd" id="9_16x6j"]
 [ext_resource type="PackedScene" uid="uid://dg0ui7mem40lw" path="res://scenes/inventory/shop.tscn" id="9_b65jm"]
 [ext_resource type="PackedScene" uid="uid://cb3d10a6rs8d4" path="res://scenes/inventory/item_slot.tscn" id="10_nse17"]
-[ext_resource type="PackedScene" uid="uid://bgsx2j8h2r5db" path="res://scenes/inventory/upgrade_tree.tscn" id="12_lcj62"]
 [ext_resource type="Script" path="res://resources/items/item.gd" id="12_xi5fo"]
 [ext_resource type="Resource" uid="uid://gjkkrquga68t" path="res://resources/items/consumable_bandage.tres" id="13_guf8o"]
-[ext_resource type="Resource" uid="uid://cldb3yni2gd67" path="res://resources/items/loot_gem_red_crude.tres" id="15_2lqqq"]
-[ext_resource type="Resource" uid="uid://15wxudralavu" path="res://resources/items/loot_gem_red_normal.tres" id="16_lepxj"]
-[ext_resource type="Resource" uid="uid://ctgo3r17ieikw" path="res://resources/items/loot_gem_red_rare.tres" id="17_ydh3o"]
 [ext_resource type="Resource" uid="uid://b30f8nlkl6lrn" path="res://resources/items/weapon_sword_crude.tres" id="20_hvvit"]
 
 [sub_resource type="Gradient" id="Gradient_f2idn"]
@@ -380,6 +377,7 @@ theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
+script = ExtResource("8_emubx")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu"]
 custom_minimum_size = Vector2(416, 0)
@@ -450,23 +448,29 @@ layout_mode = 2
 size_flags_vertical = 8
 text = "Close"
 
-[node name="UpgradeTree" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer"]
+[node name="UpgradeMenu" type="Panel" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeTree"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeMenu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_horizontal = 100
-scroll_vertical = 100
 
-[node name="TreeControl" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeTree/ScrollContainer" instance=ExtResource("12_lcj62")]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeMenu/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="UpgradeButtonContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/UpgradeMenu/ScrollContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="MarketMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
@@ -597,7 +601,8 @@ layout_mode = 2
 size_flags_vertical = 10
 text = "Close"
 
-[node name="FightEndMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+[node name="ItemResultMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 9
@@ -609,10 +614,10 @@ theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/FightEndMenu"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/ItemResultMenu"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/FightEndMenu/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/ItemResultMenu/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -620,18 +625,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer"]
 layout_mode = 2
-text = "Victory!"
+text = "Dropped Items"
 horizontal_alignment = 1
 
-[node name="ItemContainer" type="GridContainer" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
+[node name="ItemContainer" type="GridContainer" parent="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 script = ExtResource("9_16x6j")
 
-[node name="FightEndClose" type="Button" parent="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer"]
+[node name="ItemResultClose" type="Button" parent="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 text = "Close"
 
 [node name="CharacterMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
@@ -746,21 +752,6 @@ allow_drop = true
 [node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = ExtResource("15_2lqqq")
-
-[node name="ItemButton2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("16_lepxj")
-
-[node name="ItemButton3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
-item = ExtResource("17_ydh3o")
-
-[node name="ItemButton4" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
-layout_mode = 2
-allow_drag = true
 item = ExtResource("20_hvvit")
 
 [node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
@@ -805,7 +796,7 @@ position_smoothing_enabled = true
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/FightEndMenu/Panel/VBoxContainer/FightEndClose" to="." method="_on_fight_end_close_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer/ItemResultClose" to="." method="_on_item_result_close_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/CloseCharacter" to="." method="_on_close_character_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/VisitButton" to="." method="_on_visit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/OpenCharacter" to="." method="_on_open_character_pressed"]

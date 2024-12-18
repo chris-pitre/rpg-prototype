@@ -1,6 +1,7 @@
 class_name WorldMap
 extends Control
 
+const ITEM_BUTTON = preload("res://scenes/inventory/item_button.tscn")
 const EVENTS_DIR = "res://resources/events/"
 const EVENT_SCHEDULE_PATH = "res://resources/event_schedule.json"
 const TIME_SCALE = 3
@@ -59,6 +60,8 @@ var current_encounter: Encounter
 @onready var blacksmith_menu = $CanvasLayer/Overlay/BlacksmithMenu
 @onready var medical_menu = $CanvasLayer/Overlay/MedicalMenu
 @onready var market_menu = $CanvasLayer/Overlay/MarketMenu
+@onready var item_menu = $CanvasLayer/Overlay/ItemResultMenu
+@onready var item_menu_container = item_menu.get_node("Panel/VBoxContainer/ItemContainer")
 
 func _ready() -> void:
 	MapEvents.event_neglected.connect(_map_event_neglected)
@@ -153,21 +156,6 @@ func update_state() -> void:
 func start_event(event: MapEvent) -> void:
 	show_choices(event)
 
-func show_event_result(result: MapEventResult) -> void:
-	current_encounter = result.encounter
-	if result.encounter:
-		result_fight.show()
-		result_okay.hide()
-	else:
-		result_fight.hide()
-		result_okay.show()
-	if not result.title.is_empty() and not result.description.is_empty():
-		result_panel.show()
-		result_title.text = result.title
-		result_description.text = result.description
-	else:
-		start_encounter(current_encounter)
-
 func show_choices(event: MapEvent):
 	for choice in choice_container.get_children():
 		if choice is Button:
@@ -205,8 +193,36 @@ func apply_choice(choice: MapEventChoice) -> void:
 	else:
 		show_event_result(choice.success_result)
 
+func show_event_result(result: MapEventResult) -> void:
+	current_encounter = result.encounter
+	if result.encounter:
+		result_fight.show()
+		result_okay.hide()
+	else:
+		if result.items.size() > 0:
+			show_items(result.items)
+		result_fight.hide()
+		result_okay.show()
+	if not result.title.is_empty() and not result.description.is_empty():
+		result_panel.show()
+		result_title.text = result.title
+		result_description.text = result.description
+	else:
+		start_encounter(current_encounter)
+
 func start_encounter(encounter: Encounter) -> void:
 	pass
+
+func end_encounter(encounter: Encounter) -> void:
+	pass
+
+func show_items(items: Array[Item]) -> void:
+	$CanvasLayer/Overlay/ItemResultMenu.show()
+	for item in items:
+		var new_item_button = ITEM_BUTTON.instantiate()
+		item_menu_container.add_child(new_item_button)
+		new_item_button.item = item
+		new_item_button.allow_drag = true
 
 func visit_location(location: MapLocation) -> void:
 	if not location.current_event == null:
@@ -312,5 +328,6 @@ func _health_changed(amt: int) -> void:
 	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar.value = amt / GameState.max_health
 	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar/Label.text = str(amt)
 
-func _on_fight_end_close_pressed() -> void:
-	pass # Replace with function body.
+
+func _on_item_result_close_pressed() -> void:
+	$CanvasLayer/Overlay/ItemResultMenu.hide()

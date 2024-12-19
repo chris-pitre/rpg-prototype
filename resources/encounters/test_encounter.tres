@@ -1,8 +1,33 @@
-[gd_resource type="Resource" script_class="Encounter" load_steps=3 format=3 uid="uid://dcosdg4hr1umy"]
+[gd_resource type="Resource" script_class="Encounter" load_steps=8 format=3 uid="uid://dcosdg4hr1umy"]
 
 [ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="1_ea0fp"]
 [ext_resource type="Resource" uid="uid://bncwg0lb0sva0" path="res://resources/battle_actor/test_enemy.tres" id="1_orywc"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_su014"]
+[ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="2_swhy5"]
+[ext_resource type="Resource" uid="uid://ctgo3r17ieikw" path="res://resources/items/loot_gem_red_rare.tres" id="3_pv40o"]
+
+[sub_resource type="Resource" id="Resource_xthou"]
+script = ExtResource("2_swhy5")
+title = "Failure..."
+description = "lost, damn..."
+gold = 0
+population_change = 0
+items = Array[ExtResource("1_su014")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_riq2g"]
+script = ExtResource("2_swhy5")
+title = "Victory!"
+description = "Yu win"
+gold = 20
+population_change = 0
+items = Array[ExtResource("1_su014")]([ExtResource("3_pv40o")])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
 
 [resource]
 script = ExtResource("1_ea0fp")
 enemy = ExtResource("1_orywc")
+encounter_success = SubResource("Resource_riq2g")
+encounter_failure = SubResource("Resource_xthou")

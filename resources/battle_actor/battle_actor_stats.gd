@@ -3,10 +3,10 @@ class_name BattleActorStats extends Resource
 @export var name: String = ""
 @export var is_player: bool = false
 @export var max_hp: int = 10
-@export var power: int = 10
-@export var speech: int = 10
-@export var agility: int = 10
-@export var piety: int = 10
+@export var power: int = 0
+@export var speech: int = 0
+@export var agility: int = 0
+@export var piety: int = 0
 @export var moves: Array[MoveResource] = []
 @export var move_queues: Array[EnemyMoveQueue] = []
 @export var sprite_frames: SpriteFrames #placeholder for now will be replaced with whatever 3d implementation

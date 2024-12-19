@@ -1,7 +1,22 @@
-[gd_resource type="Resource" script_class="Encounter" load_steps=2 format=3 uid="uid://c5o2nus7hei2e"]
+[gd_resource type="Resource" script_class="Encounter" load_steps=6 format=3 uid="uid://c5o2nus7hei2e"]
 
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_rxqft"]
 [ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="1_xfm4a"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_6moc8"]
+[ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="3_nw1yy"]
+
+[sub_resource type="Resource" id="Resource_dr5ih"]
+script = ExtResource("3_nw1yy")
+name = "Jobber"
+is_player = false
+max_hp = 10
+power = 10
+speech = 10
+agility = 10
+piety = 10
+moves = Array[ExtResource("2_6moc8")]([])
+move_queues = Array[ExtResource("1_rxqft")]([])
 
 [resource]
 script = ExtResource("1_xfm4a")
-enemy = 0
+enemy = SubResource("Resource_dr5ih")

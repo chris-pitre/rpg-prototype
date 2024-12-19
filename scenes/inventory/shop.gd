@@ -29,7 +29,6 @@ func _item_focused(item_button: ItemButton) -> void:
 func _on_buy_button_pressed() -> void:
 	if GameState.gold >= selected_item_button.item.price:
 		if GameState.give_item(selected_item_button.item):
-			selected_item_button.queue_free()
 			GameState.gold -= selected_item_button.item.price
 	else:
 		if text_timeout:

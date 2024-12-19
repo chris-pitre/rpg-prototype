@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpdjmvdtu0ksc"]
+
+[ext_resource type="Script" path="res://scenes/map/main.gd" id="1_7wmmx"]
+[ext_resource type="PackedScene" uid="uid://bncokx5jbxw5s" path="res://scenes/map/map.tscn" id="1_hxntt"]
+[ext_resource type="PackedScene" uid="uid://biqjn62nyirrq" path="res://scenes/battle/battle.tscn" id="2_chq0a"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_7wmmx")
+
+[node name="Map" parent="." instance=ExtResource("1_hxntt")]
+
+[node name="Battle" parent="." instance=ExtResource("2_chq0a")]
+
+[node name="CanvasLayer" parent="Battle" index="0"]
+visible = false
+
+[node name="Player" parent="Battle" index="1"]
+visible = false
+
+[node name="Enemy" parent="Battle" index="2"]
+visible = false
+
+[editable path="Map"]
+[editable path="Map/Locations/Camp"]
+[editable path="Map/Locations/Outlands"]
+[editable path="Map/Locations/Blacksmith"]
+[editable path="Map/Locations/Chambers"]
+[editable path="Map/Locations/Market"]
+[editable path="Map/Locations/Medical"]
+[editable path="Map/Locations/Farm"]
+[editable path="Map/Locations/Slums"]
+[editable path="Map/Locations/Academy"]
+[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5"]
+[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3"]
+[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]
+[editable path="Map/CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell"]
+[editable path="Battle"]

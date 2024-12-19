@@ -13,6 +13,7 @@ var adjacent: Dictionary = {}
 
 var player_tween: Tween
 var current_encounter: Encounter
+var event_flags: Array[String] = []
 
 @onready var map_locations: Array[MapLocation]
 
@@ -40,9 +41,11 @@ var current_encounter: Encounter
 func _ready() -> void:
 	MapEvents.event_neglected.connect(_map_event_neglected)
 	GameState.day_changed.connect(_day_changed)
+	GameState.got_item.connect(_got_item)
 	GameState.gold_changed.connect(_gold_changed)
 	GameState.population_changed.connect(_population_changed)
 	GameState.health_changed.connect(_health_changed)
+	BattleManager.battle_ended.connect(end_encounter)
 	
 	player.global_position = current_location.global_position
 	
@@ -107,7 +110,14 @@ func progress_time() -> void:
 	if GameState.day < event_schedule.days.size(): #update to use MapEvent
 		GameState.day += 1
 		for location in event_schedule.days[GameState.day].keys():
-			get_location_by_name(location).set_event(events[event_schedule.days[GameState.day][location]])
+			var event: MapEvent = events[event_schedule.days[GameState.day][location]]
+			var has_required_flags: bool = true
+			for required_flag in event.require_flags:
+				if not required_flag in event_flags:
+					has_required_flags = false
+					break
+			if has_required_flags:
+				get_location_by_name(location).set_event(event)
 		update_state()
 
 func add_road(loc_one, loc_two) -> void:
@@ -172,26 +182,44 @@ func apply_choice(choice: MapEventChoice) -> void:
 		show_event_result(choice.success_result)
 
 func show_event_result(result: MapEventResult) -> void:
-	if result.encounter:
-		current_encounter = result.encounter
-		start_encounter(current_encounter)
-		result_fight.show()
-		result_okay.hide()
+	if result.items.size() > 0:
+		show_items(result.items)
+	
+	GameState.gold += result.gold
+	GameState.population += result.population_change
+	for flag in result.flags_to_set:
+		if not flag in event_flags:
+			event_flags.append(flag)
+	for flag in result.flags_to_erase:
+		if flag in event_flags:
+			event_flags.erase(flag)
+	
+	if result.title.is_empty() and result.description.is_empty():
+		if result.encounter:
+			current_encounter = result.encounter
+			start_encounter(current_encounter)
+		else:
+			result_panel.hide()
 	else:
-		if result.items.size() > 0:
-			show_items(result.items)
-		result_fight.hide()
-		result_okay.show()
-		if not result.title.is_empty() and not result.description.is_empty():
+		result_title.text = result.title
+		result_description.text = result.description
+		if result.encounter:
 			result_panel.show()
-			result_title.text = result.title
-			result_description.text = result.description
+			result_fight.show()
+			result_okay.hide()
+		else:
+			result_panel.show()
+			result_fight.hide()
+			result_okay.show()
 
 func start_encounter(encounter: Encounter) -> void:
-	pass
+	BattleManager.start_battle.emit(encounter)
 
-func end_encounter(encounter: Encounter) -> void:
-	pass
+func end_encounter(encounter: Encounter, player_victory: bool) -> void:
+	if player_victory:
+		show_event_result(encounter.encounter_success)
+	else:
+		show_event_result(encounter.encounter_failure)
 
 func show_items(items: Array[Item]) -> void:
 	$CanvasLayer/Overlay/ItemResultMenu.show()
@@ -306,6 +334,10 @@ func _health_changed(amt: int) -> void:
 	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar.value = amt / GameState.max_health
 	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar/Label.text = str(amt)
 
-
 func _on_item_result_close_pressed() -> void:
 	$CanvasLayer/Overlay/ItemResultMenu.hide()
+
+func _got_item(item: Item) -> void:
+	var new_item_button = ITEM_BUTTON.instantiate()
+	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer.add_child(new_item_button)
+	new_item_button.item = item

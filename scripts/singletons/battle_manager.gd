@@ -1,6 +1,6 @@
 extends Node
 
-signal start_battle
+signal start_battle(encounter: Encounter)
 
 signal battle_started
 signal battle_ended(player_lost: bool)
@@ -22,6 +22,7 @@ enum PHASES{
 }
 
 var battle_active: bool = false
+var current_encounter: Encounter
 var current_phase: PHASES
 var current_enemy = null
 var execution_timer: Timer
@@ -46,6 +47,7 @@ func _ready() -> void:
 	start_battle.connect(start_new_battle)
 
 func start_new_battle(encounter: Encounter) -> void:
+	current_encounter = encounter
 	enemy = encounter.enemy
 	battle_active = true
 	await battle_started
@@ -80,6 +82,8 @@ func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
 	for i in range(num_steps):
+		if enemy.hp <= 0 or player.hp <= 0:
+			break
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
 		if player_move != null:
@@ -127,7 +131,9 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	player_stats_updated.emit(player.hp)
 	enemy_stats_updated.emit(enemy.hp)
 	
+	print("SDFSFDSKAGSLGSPO")
+	
 	if player.hp <= 0:
-		battle_ended.emit(true)
-	else:
-		battle_ended.emit(false)
+		battle_ended.emit(current_encounter, false)
+	elif enemy.hp <= 0:
+		battle_ended.emit(current_encounter, true)

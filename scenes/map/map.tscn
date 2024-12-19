@@ -212,6 +212,7 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
 
 [node name="Overlay" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -413,10 +414,9 @@ autowrap_mode = 2
 [node name="BlacksmithTabs" type="TabContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 
 [node name="Buy" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_b65jm")]
-visible = false
 layout_mode = 2
 
 [node name="Sell" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_0hr2t")]
@@ -428,6 +428,7 @@ require_type = true
 types = 1
 
 [node name="Upgrade" type="MarginContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
@@ -635,7 +636,9 @@ horizontal_alignment = 1
 
 [node name="ItemContainer" type="GridContainer" parent="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
+columns = 6
 script = ExtResource("9_16x6j")
 
 [node name="ItemResultClose" type="Button" parent="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer"]

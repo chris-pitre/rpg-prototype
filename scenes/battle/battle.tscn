@@ -132,7 +132,8 @@ battle_actor_stats = ExtResource("5_cgh2h")
 [node name="Enemy" parent="." instance=ExtResource("4_i8caq")]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(853, 232)
-scale = Vector2(-1, 1)
+rotation = -3.14159
+scale = Vector2(1, -1)
 battle_actor_stats = ExtResource("6_an2op")
 
 [connection signal="pressed" from="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/ExecuteButton" to="." method="_on_execute_button_pressed"]

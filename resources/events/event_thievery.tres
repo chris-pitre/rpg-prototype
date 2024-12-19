@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="MapEvent" load_steps=15 format=3 uid="uid://cd4fpbr7hx3fh"]
+[gd_resource type="Resource" script_class="MapEvent" load_steps=16 format=3 uid="uid://cd4fpbr7hx3fh"]
 
 [ext_resource type="Script" path="res://resources/events/map_event_choice.gd" id="1_w68yy"]
 [ext_resource type="Script" path="res://resources/items/item.gd" id="3_un4ge"]
 [ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="4_c1klw"]
+[ext_resource type="Resource" uid="uid://bncwg0lb0sva0" path="res://resources/battle_actor/test_enemy.tres" id="4_ccakm"]
 [ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="4_jkaxu"]
 [ext_resource type="Script" path="res://resources/events/map_event.gd" id="5_qigrl"]
 
@@ -14,30 +15,31 @@ gold = 0
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_c55bi"]
 script = ExtResource("4_jkaxu")
-title = "Result"
-description = "Something has happened."
-gold = 0
+title = "Failure"
+description = "The thief knocked you out and ran away, stealing some of your money in the process."
+gold = -10
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_0clen"]
 script = ExtResource("4_jkaxu")
-title = "Result"
-description = "Something has happened."
-gold = 0
+title = "Success!"
+description = "The thief was defeated and sent to prison. The stolen goods were returned and the farmer paid you money for your services."
+gold = 10
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_p4ch8"]
 script = ExtResource("4_c1klw")
+enemy = ExtResource("4_ccakm")
 encounter_success = SubResource("Resource_0clen")
 encounter_failure = SubResource("Resource_c55bi")
 
@@ -50,7 +52,7 @@ gold = 0
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_ux4ip"]
 script = ExtResource("1_w68yy")
@@ -69,7 +71,7 @@ gold = 0
 population_change = -2
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_ulqbr"]
 script = ExtResource("1_w68yy")
@@ -87,7 +89,7 @@ gold = 0
 population_change = -2
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [resource]
 script = ExtResource("5_qigrl")
@@ -96,5 +98,6 @@ road_event = false
 hover_description = "A disturbance on a small farm."
 description = "A farmer complains about their livestock and produce having been stolen in the middle of the night."
 lifetime = 4
+require_flags = Array[String]([])
 choices = Array[ExtResource("1_w68yy")]([SubResource("Resource_ux4ip"), SubResource("Resource_ulqbr")])
 neglect_result = SubResource("Resource_su87t")

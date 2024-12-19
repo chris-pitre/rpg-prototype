@@ -14,7 +14,7 @@ gold = 0
 population_change = 0
 items = Array[ExtResource("1_su014")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_riq2g"]
 script = ExtResource("2_swhy5")
@@ -24,7 +24,7 @@ gold = 20
 population_change = 0
 items = Array[ExtResource("1_su014")]([ExtResource("3_pv40o")])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [resource]
 script = ExtResource("1_ea0fp")

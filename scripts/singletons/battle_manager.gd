@@ -82,7 +82,11 @@ func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
 	for i in range(num_steps):
-		if enemy.hp <= 0 or player.hp <= 0:
+		if player.hp <= 0:
+			battle_ended.emit(current_encounter, false)
+			break
+		elif enemy.hp <= 0:
+			battle_ended.emit(current_encounter, true)
 			break
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
@@ -130,10 +134,3 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	
 	player_stats_updated.emit(player.hp)
 	enemy_stats_updated.emit(enemy.hp)
-	
-	print("SDFSFDSKAGSLGSPO")
-	
-	if player.hp <= 0:
-		battle_ended.emit(current_encounter, false)
-	elif enemy.hp <= 0:
-		battle_ended.emit(current_encounter, true)

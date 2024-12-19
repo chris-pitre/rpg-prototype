@@ -1,4 +1,4 @@
-class_name ActionQueue extends NinePatchRect
+class_name ActionQueue extends TextureRect
 
 @export var is_player: bool = true
 
@@ -9,6 +9,9 @@ func _ready() -> void:
 	if is_player:
 		BattleManager.connect("UI_move_added", _add_end_move)
 	move_timeline.is_player = is_player
+
+func _physics_process(delta: float) -> void:
+	texture.width = int(get_viewport_rect().size.x / BattleManager.num_steps)
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	return is_player and data is MoveResource and data != null and BattleManager.filled_duration >= data.duration

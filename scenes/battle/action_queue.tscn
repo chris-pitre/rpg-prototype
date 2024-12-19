@@ -1,12 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsxivqqdrebe6"]
+[gd_scene load_steps=6 format=3 uid="uid://dsxivqqdrebe6"]
 
-[ext_resource type="Texture2D" uid="uid://dob1lqw2x7nf4" path="res://assets/textures/ui/placeholderninerect.png" id="1_gsdng"]
 [ext_resource type="Script" path="res://scenes/battle/action_queue.gd" id="2_6c5jo"]
 [ext_resource type="PackedScene" uid="uid://bgehgq8hq5sxm" path="res://scenes/battle/move_timeline.tscn" id="3_n1snp"]
 
+[sub_resource type="Gradient" id="Gradient_20fap"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.485777, 0.536105)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aw8mt"]
+gradient = SubResource("Gradient_20fap")
+repeat = 1
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4eerp"]
 
-[node name="ActionQueue" type="NinePatchRect"]
+[node name="ActionQueue" type="TextureRect"]
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,12 +22,9 @@ anchor_bottom = 1.0
 offset_top = 559.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_gsdng")
-region_rect = Rect2(0, 0, 32, 32)
-patch_margin_left = 9
-patch_margin_top = 9
-patch_margin_right = 9
-patch_margin_bottom = 9
+texture = SubResource("GradientTexture2D_aw8mt")
+expand_mode = 2
+stretch_mode = 1
 script = ExtResource("2_6c5jo")
 
 [node name="CursorMargin" type="MarginContainer" parent="."]

@@ -33,6 +33,7 @@ sprite_frames = ExtResource("2_8udk6")
 animation = &"uppercut"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = true
 libraries = {
 "": SubResource("AnimationLibrary_45qh1"),
 "player": ExtResource("2_8l5ao")

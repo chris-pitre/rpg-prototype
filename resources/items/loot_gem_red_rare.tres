@@ -19,4 +19,4 @@ description = "A shiny, iridescent red stone. You can see your reflection in its
 texture = SubResource("GradientTexture2D_mieia")
 price = 40
 can_be_sold = true
-type = 0
+type = 4

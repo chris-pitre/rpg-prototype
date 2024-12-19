@@ -19,4 +19,4 @@ description = "A round, glimmering red stone. Various shapes morph and appear wh
 texture = SubResource("GradientTexture2D_mieia")
 price = 20
 can_be_sold = true
-type = 0
+type = 4

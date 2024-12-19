@@ -1,0 +1,101 @@
+[gd_resource type="Resource" script_class="MapEvent" load_steps=15 format=3 uid="uid://cd4fpbr7hx3fh"]
+
+[ext_resource type="Script" path="res://resources/events/map_event_choice.gd" id="1_w68yy"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="3_un4ge"]
+[ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="4_c1klw"]
+[ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="4_jkaxu"]
+[ext_resource type="Script" path="res://resources/events/map_event.gd" id="5_qigrl"]
+
+[sub_resource type="Resource" id="Resource_yhla1"]
+script = ExtResource("4_jkaxu")
+title = "Track Lost"
+description = "Footsteps and a trail can be found leading away from the farm, which is promising, but they eventually are lost in the woods nearby."
+gold = 0
+population_change = 0
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_c55bi"]
+script = ExtResource("4_jkaxu")
+title = "Result"
+description = "Something has happened."
+gold = 0
+population_change = 0
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_0clen"]
+script = ExtResource("4_jkaxu")
+title = "Result"
+description = "Something has happened."
+gold = 0
+population_change = 0
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_p4ch8"]
+script = ExtResource("4_c1klw")
+enemy = 0
+encounter_success = SubResource("Resource_0clen")
+encounter_failure = SubResource("Resource_c55bi")
+
+[sub_resource type="Resource" id="Resource_77f75"]
+script = ExtResource("4_jkaxu")
+title = "Thief Found"
+description = "The thief was found hiding out and hoarding his ill-gotten goods in an abandoned barn nearby."
+encounter = SubResource("Resource_p4ch8")
+gold = 0
+population_change = 0
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_ux4ip"]
+script = ExtResource("1_w68yy")
+text = "Find The Thief"
+required_gold = 0
+attribute_check = 2
+difficulty = 5
+success_result = SubResource("Resource_77f75")
+fail_result = SubResource("Resource_yhla1")
+
+[sub_resource type="Resource" id="Resource_1pnb6"]
+script = ExtResource("4_jkaxu")
+title = "Tragedy"
+description = "The farmer was found dead on their farm. A scuffle must have occurred, as a trail of blood leads the city guard to the culprit, who was promptly punished."
+gold = 0
+population_change = -2
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[sub_resource type="Resource" id="Resource_ulqbr"]
+script = ExtResource("1_w68yy")
+text = "Do Nothing"
+required_gold = 0
+attribute_check = 0
+difficulty = 10
+success_result = SubResource("Resource_1pnb6")
+
+[sub_resource type="Resource" id="Resource_su87t"]
+script = ExtResource("4_jkaxu")
+title = "Tragedy"
+description = "A farmer was found dead on their farm. A scuffle must have occurred, as a trail of blood lead the city guard to the culprit, who was promptly punished."
+gold = 0
+population_change = -2
+items = Array[ExtResource("3_un4ge")]([])
+flags_to_set = Array[String]([])
+flags_set_value = Array[bool]([])
+
+[resource]
+script = ExtResource("5_qigrl")
+name = "Thievery"
+road_event = false
+hover_description = "A disturbance on a small farm."
+description = "A farmer complains about their livestock and produce having been stolen in the middle of the night."
+lifetime = 4
+choices = Array[ExtResource("1_w68yy")]([SubResource("Resource_ux4ip"), SubResource("Resource_ulqbr")])
+neglect_result = SubResource("Resource_su87t")

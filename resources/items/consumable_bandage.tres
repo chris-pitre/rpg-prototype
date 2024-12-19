@@ -19,4 +19,4 @@ description = "A roll of cloth soaked in a medicinal compound."
 texture = SubResource("GradientTexture2D_mieia")
 price = 4
 can_be_sold = true
-type = 4
+type = 10

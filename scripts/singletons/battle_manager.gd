@@ -3,7 +3,7 @@ extends Node
 signal start_battle
 
 signal battle_started
-signal battle_ended
+signal battle_ended(player_lost: bool)
 
 signal planning_phase_started
 signal execution_phase_started
@@ -126,3 +126,8 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	
 	player_stats_updated.emit(player.hp)
 	enemy_stats_updated.emit(enemy.hp)
+	
+	if player.hp <= 0:
+		battle_ended.emit(true)
+	else:
+		battle_ended.emit(false)

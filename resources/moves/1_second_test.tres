@@ -1,9 +1,21 @@
-[gd_resource type="Resource" script_class="MoveResource" load_steps=3 format=3 uid="uid://d06tqibcoa6wk"]
+[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://d06tqibcoa6wk"]
 
-[ext_resource type="Animation" uid="uid://dmvesboggxjgi" path="res://resources/moves/1_second_test_anim.tres" id="1_0i88e"]
 [ext_resource type="Script" path="res://resources/moves/move.gd" id="1_anor0"]
 
 [resource]
 script = ExtResource("1_anor0")
 move_name = "1 Second Attack"
-move_animation = ExtResource("1_0i88e")
+animation_name = "kick"
+duration = 1.0
+self_beneficial_statuses = 0
+self_negative_statuses = 0
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_beneficial_statuses = 0
+opponent_negative_statuses = 0
+opponent_damage = 1
+opponent_healing = 0
+opponent_stats = 1
+opponent_stat_modifier = -1

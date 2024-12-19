@@ -1,17 +1,20 @@
-[gd_resource type="Resource" script_class="BattleActor" load_steps=6 format=3 uid="uid://nev38w7emj2s"]
+[gd_resource type="Resource" script_class="BattleActorStats" load_steps=7 format=3 uid="uid://nev38w7emj2s"]
 
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_2uxa0"]
 [ext_resource type="Script" path="res://resources/moves/move.gd" id="1_hsso1"]
 [ext_resource type="Resource" uid="uid://d06tqibcoa6wk" path="res://resources/moves/1_second_test.tres" id="2_lg3u1"]
-[ext_resource type="Script" path="res://resources/battle_actor/battle_actor.gd" id="2_mbl1p"]
 [ext_resource type="Resource" uid="uid://c8y01ctkb7fsq" path="res://resources/moves/0.5_second_test.tres" id="3_0h3l4"]
 [ext_resource type="Resource" uid="uid://dsatsw6074bkc" path="res://resources/moves/0.3_second_test.tres" id="4_1732b"]
+[ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="5_dqm3k"]
 
 [resource]
-script = ExtResource("2_mbl1p")
+script = ExtResource("5_dqm3k")
 name = "Awesome Guy"
+is_player = true
 max_hp = 10
 power = 10
 speech = 10
 agility = 10
 piety = 10
 moves = Array[ExtResource("1_hsso1")]([ExtResource("2_lg3u1"), ExtResource("3_0h3l4"), ExtResource("4_1732b")])
+move_queues = Array[ExtResource("1_2uxa0")]([])

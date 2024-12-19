@@ -35,9 +35,27 @@ func _add_move(at_position: Vector2, data: MoveResource) -> bool:
 	move_timeline.occupy_segments(segment_start, segment_end)
 	return true
 
+func add_move_segment(segment: int, data: MoveResource) -> void:
+	BattleManager.add_move(data, false, segment)
+	var segment_end = move_timeline.get_end_segment(segment, data.duration)
+	var move_drop = move_drop_template.instantiate()
+	move_drop.move_resource = data
+	move_drop.set_h_size_flags(0)
+	move_drop.custom_minimum_size = Vector2(data.duration * move_timeline.size[0], 0)
+	move_drop.is_queued = true
+	move_drop.segment_start = segment
+	move_drop.segment_end = segment_end
+	move_timeline.add_child(move_drop)
+	var x_pos = move_timeline.get_x_pos(segment)
+	move_drop.position = Vector2(x_pos, 0)
+	move_timeline.occupy_segments(segment, segment_end)
+
 func _add_end_move(data: MoveResource) -> void:
 	for i in range(BattleManager.num_steps):
 		if _add_move(Vector2(move_timeline.step_size * i, 0), data):
 			break
 	
-	
+func clear_queue() -> void:
+	for i in move_timeline.get_children():
+		i.queue_free()
+	move_timeline.clear_segments()

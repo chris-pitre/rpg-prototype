@@ -44,9 +44,6 @@ var enemy: BattleActorStats
 
 func _ready() -> void:
 	start_battle.connect(start_new_battle)
-	await get_tree().create_timer(1.0).timeout
-	var test_encounter = preload("res://resources/encounters/test_encounter.tres")
-	start_battle.emit(test_encounter)
 
 func start_new_battle(encounter: Encounter) -> void:
 	enemy = encounter.enemy

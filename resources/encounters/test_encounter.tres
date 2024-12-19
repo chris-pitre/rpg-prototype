@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Encounter" load_steps=3 format=3 uid="uid://dcosdg4hr1umy"]
+
+[ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="1_ea0fp"]
+[ext_resource type="Resource" uid="uid://bncwg0lb0sva0" path="res://resources/battle_actor/test_enemy.tres" id="1_orywc"]
+
+[resource]
+script = ExtResource("1_ea0fp")
+enemy = ExtResource("1_orywc")

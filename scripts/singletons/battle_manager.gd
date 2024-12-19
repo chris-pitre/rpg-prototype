@@ -10,6 +10,12 @@ signal execution_phase_started
 
 signal UI_move_added(move: MoveResource)
 
+signal player_animation(animation_name: String, duration: float)
+signal enemy_animation(animation_name: String, duration: float)
+
+signal player_stats_updated(new_value: int)
+signal enemy_stats_updated(new_value: int)
+
 enum PHASES{
 	PLANNING,
 	EXECUTION
@@ -33,20 +39,25 @@ var num_steps: int = timeline_length / time_step
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
 
-var player: BattleActor = preload("res://resources/battle_actor/test_player.tres")
+var player: BattleActorStats = preload("res://resources/battle_actor/test_player.tres")
+var enemy: BattleActorStats
 
 func _ready() -> void:
 	start_battle.connect(start_new_battle)
-	planning_phase_started.connect(start_planning_phase)
 	await get_tree().create_timer(1.0).timeout
-	start_battle.emit()
+	var test_encounter = preload("res://resources/encounters/test_encounter.tres")
+	start_battle.emit(test_encounter)
 
-func start_new_battle() -> void:
+func start_new_battle(encounter: Encounter) -> void:
+	enemy = encounter.enemy
 	battle_active = true
-	battle_started.emit()
+	await battle_started
+	start_planning_phase()
 	
 func start_planning_phase() -> void:
+	filled_duration = timeline_length
 	current_phase = PHASES.PLANNING
+	planning_phase_started.emit()
 	queued_player_moves = {}
 	queued_enemy_moves = {}
 
@@ -68,6 +79,53 @@ func remove_move(move: MoveResource, is_player: bool, segment_start: int, segmen
 			MoveTimeline.occupied_enemy_segments[i] = false
 		queued_enemy_moves.erase(segment_start)
 
-func execute_queue() -> void:
+func start_execution_phase() -> void:
+	current_phase = PHASES.EXECUTION
+	execution_phase_started.emit()
 	for i in range(num_steps):
+		var player_move = queued_player_moves.get(i)
+		var enemy_move = queued_enemy_moves.get(i)
+		if player_move != null:
+			player_animation.emit(player_move.animation_name, player_move.duration)
+		if enemy_move != null:
+			enemy_animation.emit(enemy_move.animation_name, enemy_move.duration)
 		await get_tree().create_timer(time_step).timeout
+	start_planning_phase()
+	
+
+func execute_action(current: BattleActorStats, other: BattleActorStats, move: MoveResource) -> void:
+	current.current_beneficial_statuses = move.self_beneficial_statuses
+	current.current_negative_statuses = move.self_negative_statuses
+	current.hp += move.self_healing 
+	if current.current_negative_statuses & 2:
+		current.hp -= move.self_damage * 2
+	else:
+		current.hp -= move.self_damage
+	if move.self_stats & 1:
+		current.stat_array[0] += move.self_stat_modifier
+	if move.self_stats & 2:
+		current.stat_array[1] += move.self_stat_modifier
+	if move.self_stats & 4:
+		current.stat_array[2] += move.self_stat_modifier
+	if move.self_stats & 8:
+		current.stat_array[3] += move.self_stat_modifier
+		
+	other.current_beneficial_statuses = move.opponent_beneficial_statuses
+	other.current_negative_statuses = move.opponent_negative_statuses
+	other.hp += move.opponent_healing
+	if ~(current.current_beneficial_statuses & other.current_beneficial_statuses):
+		if other.current_negative_statuses & 2:
+			other.hp -= move.opponent_damage * 2
+		else:
+			other.hp -= move.opponent_damage
+	if move.self_stats & 1:
+		other.stat_array[0] += move.opponent_stat_modifier
+	if move.self_stats & 2:
+		other.stat_array[1] += move.opponent_stat_modifier
+	if move.self_stats & 4:
+		other.stat_array[2] += move.opponent_stat_modifier
+	if move.self_stats & 8:
+		other.stat_array[3] += move.opponent_stat_modifier
+	
+	player_stats_updated.emit(player.hp)
+	enemy_stats_updated.emit(enemy.hp)

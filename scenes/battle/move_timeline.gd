@@ -9,6 +9,7 @@ static var occupied_enemy_segments: Array[bool] = []
 
 func _ready() -> void:
 	occupied_player_segments = []
+	occupied_enemy_segments = []
 	for i in range(BattleManager.num_steps + 1):
 		occupied_player_segments.append(false)
 		occupied_enemy_segments.append(false)
@@ -54,3 +55,13 @@ func check_segments(segment_start: int, segment_end: int) -> bool:
 		elif not is_player and occupied_enemy_segments[i]:
 			return false
 	return true
+
+func clear_segments() -> void:
+	if is_player:
+		occupied_player_segments = []
+		for i in range(BattleManager.num_steps + 1):
+			occupied_player_segments.append(false)
+	else:
+		occupied_enemy_segments = []
+		for i in range(BattleManager.num_steps + 1):
+			occupied_enemy_segments.append(false)

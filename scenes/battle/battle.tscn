@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://biqjn62nyirrq"]
+[gd_scene load_steps=7 format=3 uid="uid://biqjn62nyirrq"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_ari4w"]
 [ext_resource type="PackedScene" uid="uid://dsxivqqdrebe6" path="res://scenes/battle/action_queue.tscn" id="2_f2uam"]
-[ext_resource type="Texture2D" uid="uid://dl6iqsg6mrmv5" path="res://icon.svg" id="2_f7ri4"]
 [ext_resource type="Texture2D" uid="uid://dob1lqw2x7nf4" path="res://assets/textures/ui/placeholderninerect.png" id="3_34m7t"]
+[ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/battle/BattleActor2D.tscn" id="4_i8caq"]
+[ext_resource type="Resource" uid="uid://nev38w7emj2s" path="res://resources/battle_actor/test_player.tres" id="5_cgh2h"]
+[ext_resource type="Resource" uid="uid://bncwg0lb0sva0" path="res://resources/battle_actor/test_enemy.tres" id="6_an2op"]
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_ari4w")
@@ -23,6 +25,42 @@ offset_top = 0.0
 offset_bottom = 40.0
 grow_vertical = 1
 is_player = false
+
+[node name="PlayerHP" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.228
+anchor_top = 0.827
+anchor_right = 0.228
+anchor_bottom = 0.827
+offset_left = -9.65601
+offset_top = -10.896
+offset_right = 9.34399
+offset_bottom = 12.104
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerHP"]
+layout_mode = 2
+text = "10"
+
+[node name="EnemyHP" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.749
+anchor_top = 0.507
+anchor_right = 0.749
+anchor_bottom = 0.507
+offset_left = -9.84802
+offset_top = -11.536
+offset_right = 9.15198
+offset_bottom = 11.464
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/EnemyHP"]
+layout_mode = 2
+text = "10"
 
 [node name="ActionSelect" type="NinePatchRect" parent="CanvasLayer"]
 visible = false
@@ -87,13 +125,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Battle Start!"
 
-[node name="GoodGuy" type="Sprite2D" parent="."]
-position = Vector2(266, 464)
-texture = ExtResource("2_f7ri4")
+[node name="Player" parent="." instance=ExtResource("4_i8caq")]
+position = Vector2(271, 442)
+battle_actor_stats = ExtResource("5_cgh2h")
 
-[node name="BadGuy" type="Sprite2D" parent="."]
+[node name="Enemy" parent="." instance=ExtResource("4_i8caq")]
 modulate = Color(1, 0, 0, 1)
-position = Vector2(860, 246)
-texture = ExtResource("2_f7ri4")
+position = Vector2(853, 232)
+scale = Vector2(-1, 1)
+battle_actor_stats = ExtResource("6_an2op")
 
 [connection signal="pressed" from="CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/ExecuteButton" to="." method="_on_execute_button_pressed"]

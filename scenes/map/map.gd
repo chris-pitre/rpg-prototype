@@ -3,34 +3,8 @@ extends Control
 
 const ITEM_BUTTON = preload("res://scenes/inventory/item_button.tscn")
 const EVENTS_DIR = "res://resources/events/"
-const EVENT_SCHEDULE_PATH = "res://resources/event_schedule.json"
+const EVENT_SCHEDULE_PATH = "res://resources/events/event_schedule.json"
 const TIME_SCALE = 3
-
-enum EVENTS {
-	NONE,
-	JOBBER,
-	SICKNESS,
-	COLLAPSE,
-	CORRUPTION,
-	SCIENTIST,
-}
-
-enum MIDPOINT_EVENTS {
-	NONE,
-	ANIMALS,
-	THIEVES,
-	TERRAIN,
-	MERCHANT,
-	FIRE
-}
-
-enum RESULT {
-	NONE,
-	DEATH,
-	LIFE,
-	UNREST,
-	RICH
-}
 
 var event_schedule: Dictionary
 var road_events: Dictionary = {}
@@ -165,15 +139,19 @@ func show_choices(event: MapEvent):
 		var new_choice = Button.new()
 		new_choice.size_flags_vertical = Control.SIZE_SHRINK_END
 		new_choice.text = choice.text
+		if choice.required_gold > 0:
+			new_choice.text += " (%d gold)" % choice.required_gold
+			if GameState.gold < choice.required_gold:
+				new_choice.disabled = true
 		match choice.attribute_check:
 			MapEventChoice.POWER:
-				new_choice.text += " (POW)"
+				new_choice.text += " (POW DC %d)" % choice.difficulty
 			MapEventChoice.AGILITY:
-				new_choice.text += " (AGI)"
+				new_choice.text += " (AGI DC %d)" % choice.difficulty
 			MapEventChoice.SPEECH:
-				new_choice.text += " (SPC)"
+				new_choice.text += " (SPC DC %d)" % choice.difficulty
 			MapEventChoice.PIETY:
-				new_choice.text += " (PTY)"
+				new_choice.text += " (PTY DC %d)" % choice.difficulty
 		choice_container.add_child(new_choice)
 		new_choice.pressed.connect(
 			func():
@@ -190,12 +168,13 @@ func apply_choice(choice: MapEventChoice) -> void:
 			show_event_result(choice.success_result)
 		else:
 			show_event_result(choice.fail_result)
-	else:
+	elif choice.success_result:
 		show_event_result(choice.success_result)
 
 func show_event_result(result: MapEventResult) -> void:
-	current_encounter = result.encounter
 	if result.encounter:
+		current_encounter = result.encounter
+		start_encounter(current_encounter)
 		result_fight.show()
 		result_okay.hide()
 	else:
@@ -203,12 +182,10 @@ func show_event_result(result: MapEventResult) -> void:
 			show_items(result.items)
 		result_fight.hide()
 		result_okay.show()
-	if not result.title.is_empty() and not result.description.is_empty():
-		result_panel.show()
-		result_title.text = result.title
-		result_description.text = result.description
-	else:
-		start_encounter(current_encounter)
+		if not result.title.is_empty() and not result.description.is_empty():
+			result_panel.show()
+			result_title.text = result.title
+			result_description.text = result.description
 
 func start_encounter(encounter: Encounter) -> void:
 	pass
@@ -228,6 +205,7 @@ func visit_location(location: MapLocation) -> void:
 	if not location.current_event == null:
 		start_event(location.current_event)
 		location.current_event = null
+		location.tooltip_text = ""
 	match location.location_name:
 		"Blacksmith":
 			visit_button.show()

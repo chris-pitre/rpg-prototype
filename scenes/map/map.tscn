@@ -168,7 +168,7 @@ location_name = "Medical"
 [node name="Label" parent="Locations/Medical" index="1"]
 text = "The Medical District"
 
-[node name="Farmlands" parent="Locations" instance=ExtResource("2_p1lux")]
+[node name="Farm" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
 offset_left = 583.0
 offset_top = 583.0
@@ -176,7 +176,7 @@ offset_right = 615.0
 offset_bottom = 615.0
 location_name = "Farm"
 
-[node name="Label" parent="Locations/Farmlands" index="1"]
+[node name="Label" parent="Locations/Farm" index="1"]
 text = "The Farmlands"
 
 [node name="Slums" parent="Locations" instance=ExtResource("2_p1lux")]
@@ -423,6 +423,10 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="ItemSlot" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell/VBoxContainer/CenterContainer/VBoxContainer" index="0"]
+require_type = true
+types = 1
+
 [node name="Upgrade" type="MarginContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
@@ -441,7 +445,6 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 require_type = true
-type = 1
 
 [node name="CloseBlacksmith" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -807,9 +810,10 @@ position_smoothing_enabled = true
 [editable path="Locations/Chambers"]
 [editable path="Locations/Market"]
 [editable path="Locations/Medical"]
-[editable path="Locations/Farmlands"]
+[editable path="Locations/Farm"]
 [editable path="Locations/Slums"]
 [editable path="Locations/Academy"]
 [editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5"]
 [editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3"]
 [editable path="CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]
+[editable path="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell"]

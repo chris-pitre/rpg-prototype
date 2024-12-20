@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponUpgrade" load_steps=2 format=3 uid="uid://b38yvv4ltrpok"]
+
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_kg25u"]
+
+[resource]
+script = ExtResource("1_kg25u")
+name = "Heavier Hits"
+description = "Posture damage is increased by 5."
+price = 100
+damage_offset = 0
+posture_damage_offset = 5
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponUpgrade" load_steps=2 format=3 uid="uid://bbqj1ve85d5ns"]
+
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_xi0eh"]
+
+[resource]
+script = ExtResource("1_xi0eh")
+name = "Faster Windup"
+description = "Time taken for actions in windup reduced by one timestep."
+price = 100
+damage_offset = 0
+posture_damage_offset = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0

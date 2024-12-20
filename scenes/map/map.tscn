@@ -411,16 +411,25 @@ text = "A metallic heartbeat sounds from the valley as the blacksmith reshapes t
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="BlacksmithTabs" type="TabContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
+[node name="MembershipContainer" type="CenterContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+
+[node name="PurchaseMembership" type="Button" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/MembershipContainer"]
+layout_mode = 2
+text = "Purchase Membership (50g)"
+
+[node name="BlacksmithTabs" type="TabContainer" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
 
 [node name="Buy" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_b65jm")]
+visible = false
 layout_mode = 2
 
 [node name="Sell" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs" instance=ExtResource("9_0hr2t")]
-visible = false
 layout_mode = 2
 
 [node name="ItemSlot" parent="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell/VBoxContainer/CenterContainer/VBoxContainer" index="0"]
@@ -573,34 +582,55 @@ autowrap_mode = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
 layout_mode = 2
-text = "Stop Bleeding (1 gold)
-"
-
-[node name="Button2" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Heal Injuries (10 gold)
-"
-
-[node name="Button3" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Heal Grave Injuries (50 gold)"
-
-[node name="Label2" type="Label" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Upgrades"
-horizontal_alignment = 1
-
-[node name="Button4" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Cheaper Healing
-"
-
-[node name="Button5" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Emergency Shelters
-"
+text = "Heal To Full (20 gold)"
 
 [node name="CloseMedical" type="Button" parent="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Close"
+
+[node name="AcademyMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme = ExtResource("1_c2g5l")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/AcademyMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "The Academy"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
+theme_override_font_sizes/font_size = 16
+text = "Students and teachers"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Heal To Full (20 gold)"
+
+[node name="CloseMedical" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Close"
@@ -799,6 +829,7 @@ position_smoothing_enabled = true
 
 [connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultFight" to="." method="_on_result_fight_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/MembershipContainer/PurchaseMembership" to="." method="_on_purchase_membership_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MapEvent" load_steps=6 format=3 uid="uid://mlpn28hgrxnb"]
+
+[ext_resource type="Script" path="res://resources/events/map_event_choice.gd" id="1_udhvw"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="2_xxdk8"]
+[ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="3_utp7w"]
+[ext_resource type="Script" path="res://resources/events/map_event.gd" id="4_smidm"]
+
+[sub_resource type="Resource" id="Resource_sst77"]
+script = ExtResource("3_utp7w")
+title = "Welcome"
+description = "Kill three of the villan's goons to win..."
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_xxdk8")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[resource]
+script = ExtResource("4_smidm")
+name = "Welcome"
+road_event = false
+hover_description = "Hi"
+description = "Hi"
+lifetime = 0
+require_flags = Array[String]([])
+choices = Array[ExtResource("1_udhvw")]([])
+neglect_result = SubResource("Resource_sst77")

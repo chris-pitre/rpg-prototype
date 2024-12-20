@@ -1,14 +1,12 @@
 {
 	"days": [
 		{
-			"Slums": "Jobber"
+			"Camp": "Welcome"
 		},
 		{},
 		{},
 		{},
-		{
-			"Camp": "Ooh, a gem!"
-		},
+		{},
 		{
 			"Market": "Hysterical Towncrier"
 		},

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://b30f8nlkl6lrn"]
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://bthx14876ybmi"]
 
-[ext_resource type="Script" path="res://resources/items/item.gd" id="1_37pt0"]
-[ext_resource type="Script" path="res://resources/items/weapon_attributes.gd" id="2_8ltha"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_d64ii"]
+[ext_resource type="Script" path="res://resources/items/weapon_attributes.gd" id="2_5dnfn"]
 
 [sub_resource type="Gradient" id="Gradient_dy24e"]
 interpolation_mode = 1
@@ -13,8 +13,8 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="Resource" id="Resource_41clp"]
-script = ExtResource("2_8ltha")
+[sub_resource type="Resource" id="Resource_tmcm0"]
+script = ExtResource("2_5dnfn")
 type = 1
 damage = 1
 posture_damage_offset = 0
@@ -23,11 +23,11 @@ total_active_time_offset = 0
 total_recovery_time_offset = 0
 
 [resource]
-script = ExtResource("1_37pt0")
-name = "Chipped Machete"
-description = "A sharp tool weathered by time and rain."
+script = ExtResource("1_d64ii")
+name = "Mercenary's Shortsword"
+description = "A sword with a small hilt and blade, but deadly enough for most jobs."
 texture = SubResource("GradientTexture2D_mieia")
 price = 0
 can_be_sold = false
 type = 1
-weapon_attributes = SubResource("Resource_41clp")
+weapon_attributes = SubResource("Resource_tmcm0")

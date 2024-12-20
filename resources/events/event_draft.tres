@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MapEvent" load_steps=14 format=3 uid="uid://bndayhxqrg5gg"]
+[gd_resource type="Resource" script_class="MapEvent" load_steps=13 format=3 uid="uid://bndayhxqrg5gg"]
 
 [ext_resource type="Script" path="res://resources/events/map_event_choice.gd" id="1_wc63r"]
 [ext_resource type="Resource" uid="uid://c5o2nus7hei2e" path="res://resources/encounters/empty.tres" id="2_hxgqk"]
@@ -8,23 +8,23 @@
 
 [sub_resource type="Resource" id="Resource_d7i1d"]
 script = ExtResource("4_ig7q2")
-title = "Crowd Is Riled"
+title = "Failure"
 description = "Your attempt at placating the crowd has been met with more anger and worry. You leave the town square in order to avoid the outrage."
 gold = 0
 population_change = 0
 items = Array[ExtResource("3_rnbpk")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_bhffk"]
 script = ExtResource("4_ig7q2")
-title = "Crowd Winds Down"
+title = "Success"
 description = "You yell out, quieting down the crowd. You try to reason that not everything is as bad as it seems, which seems to work. The crowd no longer buzzes as angrily as it was, and some even look hopeful."
 gold = 0
 population_change = 0
 items = Array[ExtResource("3_rnbpk")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_y352l"]
 script = ExtResource("1_wc63r")
@@ -37,24 +37,24 @@ fail_result = SubResource("Resource_d7i1d")
 
 [sub_resource type="Resource" id="Resource_e86m6"]
 script = ExtResource("4_ig7q2")
-title = "City Guard"
+title = "Failure"
 description = "A group of city guards notices your attempt before it starts to catch wind, which starts a chase through the various alleyways of the city. Eventually, you shake all but one guard."
 encounter = ExtResource("2_hxgqk")
 gold = 0
 population_change = 0
 items = Array[ExtResource("3_rnbpk")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_c7u11"]
 script = ExtResource("4_ig7q2")
-title = "Result"
+title = "Success"
 description = "You play into the fears and anxiety of the crowd, raising the tension in the crowd. A fight breaks out near the front of the crowd, near the city guard."
 gold = 0
 population_change = 0
 items = Array[ExtResource("3_rnbpk")]([])
 flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
+flags_to_erase = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_b6ly3"]
 script = ExtResource("1_wc63r")
@@ -72,16 +72,6 @@ required_gold = 0
 attribute_check = 0
 difficulty = 10
 
-[sub_resource type="Resource" id="Resource_su87t"]
-script = ExtResource("4_ig7q2")
-title = "Result"
-description = "Something has happened."
-gold = 0
-population_change = 0
-items = Array[ExtResource("3_rnbpk")]([])
-flags_to_set = Array[String]([])
-flags_set_value = Array[bool]([])
-
 [resource]
 script = ExtResource("5_ae2ic")
 name = "Mandatory Draft"
@@ -92,5 +82,5 @@ description = "A line of high-ranking men stand in a line on a balcony in front 
 \"They were right, they are coming!\"
 \"So the rumors were true...\""
 lifetime = 5
+require_flags = Array[String]([])
 choices = Array[ExtResource("1_wc63r")]([SubResource("Resource_y352l"), SubResource("Resource_b6ly3"), SubResource("Resource_fnyan")])
-neglect_result = SubResource("Resource_su87t")

@@ -85,14 +85,15 @@ func _draw() -> void:
 	for key in adjacent.keys():
 		var val = adjacent[key]
 		for adj in val:
-			draw_line(
-				key.global_position + Vector2.ONE * 16,
-				adj.global_position + Vector2.ONE * 16,
-				Color.GRAY,
-				6,
-				true
-			)
-			draw_circle((key.global_position + adj.global_position + Vector2.ONE * 32) / 2, 10, Color.GRAY)
+			if not (key.disabled or adj.disabled):
+				draw_line(
+					key.global_position + Vector2.ONE * 16,
+					adj.global_position + Vector2.ONE * 16,
+					Color.GRAY,
+					6,
+					true
+				)
+				draw_circle((key.global_position + adj.global_position + Vector2.ONE * 32) / 2, 10, Color.GRAY)
 
 func _physics_process(delta: float) -> void:
 	var move_vector = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
@@ -190,9 +191,14 @@ func show_event_result(result: MapEventResult) -> void:
 	for flag in result.flags_to_set:
 		if not flag in event_flags:
 			event_flags.append(flag)
+			if flag.begins_with("Disable"):
+				get_location_by_name(flag.substr(7)).disabled = true
 	for flag in result.flags_to_erase:
 		if flag in event_flags:
 			event_flags.erase(flag)
+			if flag.begins_with("Disable"):
+				get_location_by_name(flag.substr(7)).disabled = false
+	queue_redraw()
 	
 	if result.title.is_empty() and result.description.is_empty():
 		if result.encounter:
@@ -344,3 +350,9 @@ func _got_item(item: Item) -> void:
 	var new_item_button = ITEM_BUTTON.instantiate()
 	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer.add_child(new_item_button)
 	new_item_button.item = item
+
+func _on_purchase_membership_pressed() -> void:
+	if GameState.gold >= 50:
+		GameState.gold -= 50
+		$CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/MembershipContainer.hide()
+		$CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs.show()

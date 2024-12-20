@@ -9,8 +9,18 @@ enum TYPE {
 }
 
 @export var type: TYPE = TYPE.SWORD
-@export var upgrades: Array[String]
-@export var posture_damage_multiplier: float
-@export var windup_time_amount_offset: float = 0.0
-@export var active_time_amount_offset: float = 0.0
-@export var recovery_time_amount_offset: float = 0.0
+@export var damage: int = 1
+@export var total_damage_offset: int
+@export var total_posture_damage_offset: int
+@export var total_windup_time_offset: int = 0
+@export var total_active_time_offset: int = 0
+@export var total_recovery_time_offset: int = 0
+
+var upgrades: Array[WeaponUpgrade] = []
+
+func add_upgrade(upgrade: WeaponUpgrade) -> void:
+	total_damage_offset += upgrade.damage_offset
+	total_posture_damage_offset += upgrade.posture_damage_offset
+	total_windup_time_offset += upgrade.windup_time_offset
+	total_active_time_offset += upgrade.active_time_offset
+	total_recovery_time_offset += upgrade.recovery_time_offset

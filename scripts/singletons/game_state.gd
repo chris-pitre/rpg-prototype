@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func reset() -> void:
 	day = -1
-	population= 200
+	population = 200
 	gold = 0
 	health = 5
 

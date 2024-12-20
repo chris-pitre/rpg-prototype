@@ -228,7 +228,6 @@ func end_encounter(encounter: Encounter, player_victory: bool) -> void:
 		show_event_result(encounter.encounter_failure)
 
 func show_items(items: Array[Item]) -> void:
-	print("bruh")
 	$CanvasLayer/Overlay/ItemResultMenu.show()
 	for child in item_menu_container.get_children():
 		child.queue_free()

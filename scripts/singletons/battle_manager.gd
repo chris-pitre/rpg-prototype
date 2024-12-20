@@ -21,18 +21,21 @@ enum PHASES{
 	EXECUTION
 }
 
+const MOVES_DIR = "res://resources/moves/"
+
+var moves = {}
 var battle_active: bool = false
 var current_encounter: Encounter
 var current_phase: PHASES
 var current_enemy = null
 var execution_timer: Timer
 
-var timeline_length: float = 1.0:
+var timeline_length: float = 2.0:
 	set(new_timeline_length):
 		timeline_length = new_timeline_length
 		num_steps = timeline_length / time_step
-var filled_duration: float = 1.0
-var time_step: float = 0.025:
+var filled_duration: float = 2.0
+var time_step: float = 0.05:
 	set(new_time_step):
 		time_step = new_time_step
 		num_steps = timeline_length / time_step
@@ -45,6 +48,14 @@ var enemy: BattleActorStats
 
 func _ready() -> void:
 	start_battle.connect(start_new_battle)
+	
+	var dir = DirAccess.open(MOVES_DIR)
+	if dir:
+		for file_name in dir.get_files():
+			file_name = file_name.trim_suffix(".remap")
+			var move = ResourceLoader.load(MOVES_DIR + "/" + file_name)
+			if move is MoveResource:
+				moves[move.move_name] = move
 
 func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter
@@ -92,9 +103,9 @@ func start_execution_phase() -> void:
 			break
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
-		if player_move != null:
+		if player_move != null and player_move.animation_name != "<null>":
 			player_animation.emit(player_move.animation_name, player_move.duration)
-		if enemy_move != null:
+		if enemy_move != null and enemy_move.animation_name != "<null>":
 			enemy_animation.emit(enemy_move.animation_name, enemy_move.duration)
 		await get_tree().create_timer(time_step).timeout
 	start_planning_phase()

@@ -9,13 +9,13 @@ func swap_to_map(encounter: Encounter, victory: bool) -> void:
 	$Map/Background.show()
 	$Map/CanvasLayer.show()
 	$Battle/CanvasLayer.hide()
-	$Battle/Player.hide()
-	$Battle/Enemy.hide()
+	$Battle/PlayerActor.hide()
+	$Battle/EnemyActor.hide()
 
 func swap_to_battle(encounter: Encounter) -> void:
 	$Map.hide()
 	$Map/Background.hide()
 	$Map/CanvasLayer.hide()
 	$Battle/CanvasLayer.show()
-	$Battle/Player.show()
-	$Battle/Enemy.show()
+	$Battle/PlayerActor.show()
+	$Battle/EnemyActor.show()

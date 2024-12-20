@@ -1,7 +1,7 @@
 class_name MoveResource extends Resource
 
 @export var move_name: String
-@export var animation_name: String
+@export var animation_name: String = "<null>"
 @export var duration: float = 0.0
 
 @export_category("Self Effects")
@@ -20,6 +20,7 @@ class_name MoveResource extends Resource
 @export_flags("Power", "Speech", "Agility", "Piety") var opponent_stats: int = 0
 @export var opponent_stat_modifier: int = 0
 
-func _init(p_move_name="Attack"):
+func _init(p_move_name="Attack", p_animation_name="<null>"):
 	move_name = p_move_name
+	animation_name = p_animation_name
 	

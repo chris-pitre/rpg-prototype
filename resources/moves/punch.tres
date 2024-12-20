@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://dsatsw6074bkc"]
+[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://dffqe0piuplmu"]
 
-[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_lq3t3"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_dywox"]
 
 [resource]
-script = ExtResource("1_lq3t3")
-move_name = "0.3 Second Attack"
+script = ExtResource("1_dywox")
+move_name = "Punch"
 animation_name = "punch"
-duration = 0.3
+duration = 0.2
 self_beneficial_statuses = 0
 self_negative_statuses = 0
 self_damage = 0
@@ -15,7 +15,7 @@ self_stats = 0
 self_stat_modifier = 0
 opponent_beneficial_statuses = 0
 opponent_negative_statuses = 0
-opponent_damage = 5
+opponent_damage = 1
 opponent_healing = 0
 opponent_stats = 0
 opponent_stat_modifier = 0

@@ -1,11 +1,7 @@
-[gd_resource type="Resource" script_class="BattleActorStats" load_steps=8 format=3 uid="uid://bncwg0lb0sva0"]
+[gd_resource type="Resource" script_class="BattleActorStats" load_steps=4 format=3 uid="uid://bncwg0lb0sva0"]
 
 [ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_cvcb4"]
-[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_ydp8y"]
 [ext_resource type="Resource" uid="uid://c0s6xox7gks8r" path="res://resources/enemy_move_queue/enemy_kick_queue.tres" id="2_0judp"]
-[ext_resource type="Resource" uid="uid://d06tqibcoa6wk" path="res://resources/moves/1_second_test.tres" id="2_2s1d6"]
-[ext_resource type="Resource" uid="uid://c8y01ctkb7fsq" path="res://resources/moves/0.5_second_test.tres" id="3_wu3mt"]
-[ext_resource type="Resource" uid="uid://dsatsw6074bkc" path="res://resources/moves/0.3_second_test.tres" id="4_v41ai"]
 [ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="5_inavw"]
 
 [resource]
@@ -17,5 +13,5 @@ power = 10
 speech = 10
 agility = 10
 piety = 10
-moves = Array[ExtResource("1_ydp8y")]([ExtResource("2_2s1d6"), ExtResource("3_wu3mt"), ExtResource("4_v41ai")])
+moves = Array[String]([])
 move_queues = Array[ExtResource("1_cvcb4")]([ExtResource("2_0judp")])

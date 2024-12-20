@@ -1,29 +1,36 @@
-class_name MoveTimeline extends Control
+class_name MoveTimeline extends Container
 
-@onready var step_size: float = size[0] / BattleManager.num_steps
-
+var step_size: float
 var is_player: bool = true
 
 static var occupied_player_segments: Array[bool] = []
 static var occupied_enemy_segments: Array[bool] = []
 
 func _ready() -> void:
+	BattleManager.start_battle.connect(_battle_start)
+
+func _battle_start(encounter: Encounter) -> void:
 	occupied_player_segments = []
 	occupied_enemy_segments = []
+	step_size = (get_viewport_rect().size.x - 20) / BattleManager.num_steps
 	for i in range(BattleManager.num_steps + 1):
 		occupied_player_segments.append(false)
 		occupied_enemy_segments.append(false)
-	
-func _process(delta: float) -> void:
-	step_size = size[0] / BattleManager.num_steps
+	for i in range(BattleManager.num_steps + 1):
+		var label = Label.new()
+		label.text = str(get_x_pos(i))
+		label.position.x = get_x_pos(i)
+		label.position.y = i * -20
+		label.z_index = 60
+		add_child(label)
 
 func get_segment_num(x_position: int) -> int:
-	return x_position / step_size
+	return floor(x_position / step_size)
 	
 func get_end_segment(segment_start: int, duration: float) -> int:
-	return get_segment_num((segment_start * step_size) + (BattleManager.timeline_length * duration * size[0]))
+	return get_segment_num((segment_start * step_size) + ((duration / BattleManager.timeline_length) * size[0]))
 
-func get_x_pos(segment_num: int) -> int:
+func get_x_pos(segment_num: int) -> float:
 	return segment_num * step_size
 
 func occupy_segments(segment_start: int, segment_end: int) -> bool:
@@ -65,3 +72,8 @@ func clear_segments() -> void:
 		occupied_enemy_segments = []
 		for i in range(BattleManager.num_steps + 1):
 			occupied_enemy_segments.append(false)
+
+
+func _on_child_entered_tree(node: Node) -> void:
+	if node == MoveDragAndDrop:
+		node.custom_minimum_size = Vector2((node.move_resource.duration / BattleManager.timeline_length) * size.x, 0)

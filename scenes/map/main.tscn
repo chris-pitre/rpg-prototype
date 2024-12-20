@@ -14,10 +14,10 @@ script = ExtResource("1_7wmmx")
 [node name="CanvasLayer" parent="Battle" index="0"]
 visible = false
 
-[node name="Player" parent="Battle" index="1"]
+[node name="PlayerActor" parent="Battle" index="1"]
 visible = false
 
-[node name="Enemy" parent="Battle" index="2"]
+[node name="EnemyActor" parent="Battle" index="2"]
 visible = false
 
 [editable path="Map"]

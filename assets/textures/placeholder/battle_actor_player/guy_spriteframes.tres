@@ -1,9 +1,22 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://mx5228t1s44m"]
+[gd_resource type="SpriteFrames" load_steps=18 format=3 uid="uid://mx5228t1s44m"]
 
 [ext_resource type="Texture2D" uid="uid://c32iu3ia8ndna" path="res://assets/textures/placeholder/battle_actor_player/guykick.png" id="1_83cax"]
 [ext_resource type="Texture2D" uid="uid://dc0sh7pohjj8y" path="res://assets/textures/placeholder/battle_actor_player/guypunch.png" id="2_1trls"]
+[ext_resource type="Texture2D" uid="uid://dqjvje16jmxk5" path="res://assets/textures/placeholder/battle_actor_player/guyswordraise.png" id="2_fytow"]
+[ext_resource type="Texture2D" uid="uid://ttv7oisu4or2" path="res://assets/textures/placeholder/battle_actor_player/guyswordswingdown.png" id="2_wu76m"]
 [ext_resource type="Texture2D" uid="uid://dg1ed8asvtkuk" path="res://assets/textures/placeholder/battle_actor_player/guystand.png" id="3_l5tn3"]
+[ext_resource type="Texture2D" uid="uid://dco35fwgarads" path="res://assets/textures/placeholder/battle_actor_player/guykick2.png" id="4_enlus"]
 [ext_resource type="Texture2D" uid="uid://cmd5tvbyjseyq" path="res://assets/textures/placeholder/battle_actor_player/guyuppercut.png" id="4_usqvw"]
+[ext_resource type="Texture2D" uid="uid://c1fw31ny31x42" path="res://assets/textures/placeholder/battle_actor_player/guykickwindup.png" id="5_nodip"]
+[ext_resource type="Texture2D" uid="uid://dxcr2tsndknya" path="res://assets/textures/placeholder/battle_actor_player/guyswordpose.png" id="6_cvvmo"]
+[ext_resource type="Texture2D" uid="uid://bmd1mk186din4" path="res://assets/textures/placeholder/battle_actor_player/guypunchwindup.png" id="8_0k0yo"]
+[ext_resource type="Texture2D" uid="uid://bw0mo2s8d2g86" path="res://assets/textures/placeholder/battle_actor_player/guyshove.png" id="9_jwjle"]
+[ext_resource type="Texture2D" uid="uid://bjhg17q4h7t8s" path="res://assets/textures/placeholder/battle_actor_player/guyshovewindup.png" id="10_qnpu8"]
+[ext_resource type="Texture2D" uid="uid://cht82mvfam0lp" path="res://assets/textures/placeholder/battle_actor_player/guyswordstab.png" id="11_kihwf"]
+[ext_resource type="Texture2D" uid="uid://8x8xatj8xqss" path="res://assets/textures/placeholder/battle_actor_player/guyswordblock.png" id="12_gjnrf"]
+[ext_resource type="Texture2D" uid="uid://dlpjbuuf16rdc" path="res://assets/textures/placeholder/battle_actor_player/guyswordtail.png" id="13_o6jo7"]
+[ext_resource type="Texture2D" uid="uid://c6eso8rhjsiay" path="res://assets/textures/placeholder/battle_actor_player/guystabwindup.png" id="15_ytbst"]
+[ext_resource type="Texture2D" uid="uid://dmsu1hi5sheoj" path="res://assets/textures/placeholder/battle_actor_player/guyswordswingup.png" id="17_5p3fw"]
 
 [resource]
 animations = [{
@@ -17,10 +30,50 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_wu76m")
+}],
+"loop": true,
+"name": &"downslash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fytow")
+}],
+"loop": true,
+"name": &"highguard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("1_83cax")
 }],
 "loop": true,
 "name": &"kick",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_enlus")
+}],
+"loop": true,
+"name": &"kick2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_nodip")
+}],
+"loop": true,
+"name": &"kick_windup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_cvvmo")
+}],
+"loop": true,
+"name": &"longpoint",
 "speed": 5.0
 }, {
 "frames": [{
@@ -33,9 +86,73 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("8_0k0yo")
+}],
+"loop": true,
+"name": &"punch_windup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_jwjle")
+}],
+"loop": true,
+"name": &"shove",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_qnpu8")
+}],
+"loop": true,
+"name": &"shove_windup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_gjnrf")
+}],
+"loop": true,
+"name": &"swordblock",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_o6jo7")
+}],
+"loop": true,
+"name": &"tailguard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_kihwf")
+}],
+"loop": true,
+"name": &"thrust",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_ytbst")
+}],
+"loop": true,
+"name": &"thrust_windup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_usqvw")
 }],
 "loop": true,
 "name": &"uppercut",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_5p3fw")
+}],
+"loop": true,
+"name": &"upslash",
 "speed": 5.0
 }]

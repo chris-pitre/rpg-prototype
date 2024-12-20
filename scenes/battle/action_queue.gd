@@ -11,7 +11,7 @@ func _ready() -> void:
 	move_timeline.is_player = is_player
 
 func _physics_process(delta: float) -> void:
-	texture.width = int(get_viewport_rect().size.x / BattleManager.num_steps)
+	texture.width = (get_viewport_rect().size.x - 20) / BattleManager.num_steps
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	return is_player and data is MoveResource and data != null and BattleManager.filled_duration >= data.duration
@@ -28,7 +28,7 @@ func _add_move(at_position: Vector2, data: MoveResource) -> bool:
 	var move_drop = move_drop_template.instantiate()
 	move_drop.move_resource = data
 	move_drop.set_h_size_flags(0)
-	move_drop.custom_minimum_size = Vector2(data.duration * move_timeline.size[0], 0)
+	move_drop.custom_minimum_size = Vector2((data.duration / BattleManager.timeline_length) * move_timeline.size[0], 0)
 	move_drop.is_queued = true
 	move_drop.segment_start = segment_start
 	move_drop.segment_end = segment_end
@@ -44,7 +44,8 @@ func add_move_segment(segment: int, data: MoveResource) -> void:
 	var move_drop = move_drop_template.instantiate()
 	move_drop.move_resource = data
 	move_drop.set_h_size_flags(0)
-	move_drop.custom_minimum_size = Vector2(data.duration * move_timeline.size[0], 0)
+	move_drop.custom_minimum_size = Vector2((data.duration / BattleManager.timeline_length) * move_timeline.size[0], 0)
+	#node.custom_minimum_size = Vector2((node.move_resource.duration / BattleManager.timeline_length) * size.x, 0)
 	move_drop.is_queued = true
 	move_drop.segment_start = segment
 	move_drop.segment_end = segment_end
@@ -54,8 +55,10 @@ func add_move_segment(segment: int, data: MoveResource) -> void:
 	move_timeline.occupy_segments(segment, segment_end)
 
 func _add_end_move(data: MoveResource) -> void:
-	for i in range(BattleManager.num_steps):
-		if _add_move(Vector2(move_timeline.step_size * i, 0), data):
+	if _add_move(Vector2(0, 0), data):
+		return
+	for i in range(1, BattleManager.num_steps):
+		if _add_move(Vector2(move_timeline.step_size * i - (move_timeline.step_size / 2), 0), data):
 			break
 	
 func clear_queue() -> void:

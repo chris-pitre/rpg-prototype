@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="EnemyMoveQueue" load_steps=3 format=3 uid="uid://c0s6xox7gks8r"]
 
-[ext_resource type="Resource" uid="uid://d06tqibcoa6wk" path="res://resources/moves/1_second_test.tres" id="1_4cuaq"]
 [ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_25kk3"]
+[ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="1_80k47"]
 
 [resource]
 script = ExtResource("1_25kk3")
 queue = {
-0: ExtResource("1_4cuaq")
+0: ExtResource("1_80k47")
 }

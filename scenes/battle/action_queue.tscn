@@ -5,8 +5,8 @@
 
 [sub_resource type="Gradient" id="Gradient_20fap"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.485777, 0.536105)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.4, 0.6, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_aw8mt"]
 gradient = SubResource("Gradient_20fap")
@@ -55,4 +55,3 @@ theme_override_constants/margin_bottom = 10
 
 [node name="MoveTimeline" parent="MarginContainer" instance=ExtResource("3_n1snp")]
 layout_mode = 2
-mouse_filter = 1

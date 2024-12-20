@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://dr4qjxy81wjkm"]
+
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_kckyn"]
+
+[resource]
+script = ExtResource("1_kckyn")
+move_name = "Kick"
+animation_name = "kick"
+duration = 0.5
+self_beneficial_statuses = 2
+self_negative_statuses = 0
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_beneficial_statuses = 0
+opponent_negative_statuses = 0
+opponent_damage = 2
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

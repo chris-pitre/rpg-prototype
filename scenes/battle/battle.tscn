@@ -132,11 +132,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Battle Start!"
 
-[node name="Player" parent="." instance=ExtResource("4_i8caq")]
+[node name="PlayerActor" parent="." instance=ExtResource("4_i8caq")]
+unique_name_in_owner = true
 position = Vector2(271, 442)
 battle_actor_stats = ExtResource("5_cgh2h")
 
-[node name="Enemy" parent="." instance=ExtResource("4_i8caq")]
+[node name="EnemyActor" parent="." instance=ExtResource("4_i8caq")]
+unique_name_in_owner = true
 modulate = Color(1, 0, 0, 1)
 position = Vector2(853, 232)
 rotation = -3.14159

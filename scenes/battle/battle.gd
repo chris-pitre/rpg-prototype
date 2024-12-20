@@ -20,6 +20,8 @@ func _start_battle(encounter: Encounter) -> void:
 	tween.tween_property($CanvasLayer/BattlePopup, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.6)
 	await tween.tween_property($CanvasLayer/BattlePopup, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.6).set_delay(1.0).finished
 	$CanvasLayer/BattlePopup.visible = false
+	%PlayerActor.battle_actor_stats = BattleManager.player
+	%EnemyActor.battle_actor_stats = BattleManager.enemy
 	_get_player_moves()
 	BattleManager.battle_started.emit()
 
@@ -49,7 +51,7 @@ func _move_cursor(margin: int) -> void:
 func _get_player_moves() -> void:
 	for move in BattleManager.player.moves:
 		var move_drag_and_drop = move_drag_and_drop_scene.instantiate()
-		move_drag_and_drop.move_resource = move
+		move_drag_and_drop.move_resource = BattleManager.moves[move]
 		$CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer.add_child(move_drag_and_drop)
 
 func _clear_player_moves() -> void:

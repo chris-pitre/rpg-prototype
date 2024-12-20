@@ -16,8 +16,11 @@ func _do_animation(animation_name: String, duration: float) -> void:
 	$AnimationPlayer.speed_scale = 1.0 / duration
 	$AnimationPlayer.play("player/"+animation_name)
 
-func _execute_move(move_idx: int) -> void:
+func _execute_move(move_name: String) -> void:
 	if battle_actor_stats.is_player:
-		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, battle_actor_stats.moves[move_idx])
+		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, BattleManager.moves[move_name])
 	else:
-		BattleManager.execute_action(BattleManager.enemy, BattleManager.player, battle_actor_stats.moves[move_idx])
+		BattleManager.execute_action(BattleManager.enemy, BattleManager.player, BattleManager.moves[move_name])
+
+func _change_phase_state(new_phase_state: BattleActorStats.PHASE_STATE):
+	battle_actor_stats.current_phase_state = new_phase_state

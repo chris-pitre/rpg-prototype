@@ -3,7 +3,7 @@ extends Node
 signal start_battle(encounter: Encounter)
 
 signal battle_started
-signal battle_ended(player_lost: bool)
+signal battle_ended(encounter: Encounter, player_lost: bool)
 
 signal planning_phase_started
 signal execution_phase_started
@@ -48,8 +48,10 @@ func _ready() -> void:
 
 func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter
-	enemy = encounter.enemy
+	enemy = encounter.enemy.duplicate()
 	battle_active = true
+	player_stats_updated.emit(player.hp)
+	enemy_stats_updated.emit(enemy.hp)
 	await battle_started
 	start_planning_phase()
 	

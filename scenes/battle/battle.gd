@@ -12,6 +12,7 @@ func _ready() -> void:
 	BattleManager.planning_phase_started.connect(_start_planning)
 	BattleManager.player_stats_updated.connect(_adjust_player_hp)
 	BattleManager.enemy_stats_updated.connect(_adjust_enemy_hp)
+	BattleManager.battle_ended.connect(_end_battle)
 	
 func _start_battle(encounter: Encounter) -> void:
 	$CanvasLayer/BattlePopup.visible = true
@@ -50,6 +51,16 @@ func _get_player_moves() -> void:
 		var move_drag_and_drop = move_drag_and_drop_scene.instantiate()
 		move_drag_and_drop.move_resource = move
 		$CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer.add_child(move_drag_and_drop)
+
+func _clear_player_moves() -> void:
+	for move in $CanvasLayer/ActionSelect/MarginContainer/VSplitContainer/VBoxContainer.get_children():
+		move.queue_free()
+
+func _end_battle(encounter: Encounter, player_lost: bool) -> void:
+	_clear_player_moves()
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE)
+	await tween.tween_property($CanvasLayer/ActionSelect, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.6).finished
+	$CanvasLayer/ActionSelect.visible = false 
 
 func _adjust_player_hp(new_value: int) -> void:
 	player_hp_label.text = str(new_value)

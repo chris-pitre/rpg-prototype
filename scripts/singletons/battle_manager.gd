@@ -3,7 +3,7 @@ extends Node
 signal start_battle(encounter: Encounter)
 
 signal battle_started
-signal battle_ended(player_lost: bool)
+signal battle_ended(encounter: Encounter, player_lost: bool)
 
 signal planning_phase_started
 signal execution_phase_started
@@ -48,8 +48,10 @@ func _ready() -> void:
 
 func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter
-	enemy = encounter.enemy
+	enemy = encounter.enemy.duplicate()
 	battle_active = true
+	player_stats_updated.emit(player.hp)
+	enemy_stats_updated.emit(enemy.hp)
 	await battle_started
 	start_planning_phase()
 	
@@ -82,7 +84,11 @@ func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
 	for i in range(num_steps):
-		if enemy.hp <= 0 or player.hp <= 0:
+		if player.hp <= 0:
+			battle_ended.emit(current_encounter, false)
+			break
+		elif enemy.hp <= 0:
+			battle_ended.emit(current_encounter, true)
 			break
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
@@ -130,10 +136,3 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	
 	player_stats_updated.emit(player.hp)
 	enemy_stats_updated.emit(enemy.hp)
-	
-	print("SDFSFDSKAGSLGSPO")
-	
-	if player.hp <= 0:
-		battle_ended.emit(current_encounter, false)
-	elif enemy.hp <= 0:
-		battle_ended.emit(current_encounter, true)

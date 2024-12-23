@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm7kvfolwpr2e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cbqx4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(1, 1, 1, 1)
+
+[node name="EmptyActionBlock" type="Panel"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cbqx4")

@@ -590,6 +590,7 @@ size_flags_vertical = 10
 text = "Close"
 
 [node name="AcademyMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 9

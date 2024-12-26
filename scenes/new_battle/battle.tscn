@@ -1,19 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=7 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_b746w"]
-[ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/battle/action_queue.tscn" id="2_epcs7"]
-[ext_resource type="PackedScene" uid="uid://0aybd8lkr45k" path="res://scenes/battle/action_block.tscn" id="4_3iqdw"]
-[ext_resource type="Script" path="res://scenes/battle/action_block_trash.gd" id="5_2ilxr"]
-[ext_resource type="Script" path="res://scenes/battle/battle_action.gd" id="5_tratd"]
+[ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
+[ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_eulhc"]
+[ext_resource type="PackedScene" uid="uid://0aybd8lkr45k" path="res://scenes/new_battle/action_block.tscn" id="4_3iqdw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
 bg_color = Color(1, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_h64bn"]
-script = ExtResource("5_tratd")
-name = "Action"
-description = "This is an action"
-length = 1
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -49,7 +44,7 @@ offset_top = 563.0
 offset_right = 59.0
 offset_bottom = 603.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
-script = ExtResource("5_2ilxr")
+script = ExtResource("3_eulhc")
 
 [node name="RightMargin" type="MarginContainer" parent="."]
 layout_mode = 1

@@ -1,0 +1,13 @@
+[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://civjnrbisreta"]
+
+[sub_resource type="Gradient" id="Gradient_rv78m"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.188811, 0.444056, 0.727273)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[resource]
+gradient = SubResource("Gradient_rv78m")
+width = 16
+height = 16
+fill_to = Vector2(1, 1)
+repeat = 1

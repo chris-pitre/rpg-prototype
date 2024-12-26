@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/map/main.gd" id="1_7wmmx"]
 [ext_resource type="PackedScene" uid="uid://bncokx5jbxw5s" path="res://scenes/map/map.tscn" id="1_hxntt"]
-[ext_resource type="PackedScene" uid="uid://biqjn62nyirrq" path="res://scenes/old_battle/battle.tscn" id="2_chq0a"]
+[ext_resource type="PackedScene" uid="uid://d0oyhmdiuhgjd" path="res://scenes/new_battle/battle.tscn" id="2_chq0a"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_7wmmx")

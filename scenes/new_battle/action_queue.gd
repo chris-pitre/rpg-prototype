@@ -40,8 +40,9 @@ func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> v
 		add_child(new_action_block)
 		move_child(new_action_block, index)
 		action_blocks[timestep] = new_action_block
-	print(action_blocks)
 
+func add_enemy_action_block(index: int, action_block: ActionBlock) -> void:
+	pass
 
 func remove_action_block(action_block: ActionBlock) -> void:
 	var idx_to_replace = action_block.get_index()

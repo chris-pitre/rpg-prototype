@@ -4,9 +4,12 @@
 
 [resource]
 script = ExtResource("1_dywox")
-move_name = "Punch"
+name = "Punch"
 animation_name = "punch"
-duration = 0.2
+windup = 0
+active = 1
+recovery = 1
+length = 2
 self_beneficial_statuses = 0
 self_negative_statuses = 0
 self_damage = 0

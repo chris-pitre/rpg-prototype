@@ -2,7 +2,12 @@ class_name MoveResource extends Resource
 
 @export var name: String
 @export var animation_name: String = "<null>"
-@export var length: int = 1
+@export var windup: int = 1
+@export var active: int = 1
+@export var recovery: int = 1
+var length: int:
+	get:
+		return windup + active + recovery
 
 @export_category("Self Effects")
 @export_flags("High Guard", "Middle Guard", "Low Guard") var self_beneficial_statuses: int = 0

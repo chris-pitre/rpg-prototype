@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
 [ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_2vcsj"]
-[ext_resource type="Resource" uid="uid://cqx6x3no00un0" path="res://resources/moves/doublekick_1.tres" id="3_ru4em"]
 [ext_resource type="PackedScene" uid="uid://0aybd8lkr45k" path="res://scenes/new_battle/action_block.tscn" id="4_3iqdw"]
 [ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="4_jbfoi"]
+[ext_resource type="Resource" uid="uid://dffqe0piuplmu" path="res://resources/moves/punch.tres" id="5_factx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
 bg_color = Color(1, 0, 0, 1)
@@ -18,6 +18,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g3efr")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(296, 262)
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionQueue" parent="Panel" instance=ExtResource("2_epcs7")]
+layout_mode = 1
+offset_bottom = 32.0
+theme_override_constants/separation = 0
+
+[node name="Trash" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 563.0
+offset_right = 59.0
+offset_bottom = 603.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
+script = ExtResource("3_2vcsj")
 
 [node name="RightMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -59,7 +86,7 @@ size_flags_vertical = 3
 [node name="ActionBlock" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
 layout_mode = 2
 text = "d"
-action = ExtResource("3_ru4em")
+action = ExtResource("5_factx")
 
 [node name="ActionBlock2" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
 layout_mode = 2
@@ -99,7 +126,7 @@ layout_mode = 1
 offset_bottom = 32.0
 theme_override_constants/separation = 0
 
-[node name="Trash" type="Panel" parent="."]
+[node name="Trash2" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 19.0
 offset_top = 563.0

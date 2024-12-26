@@ -80,16 +80,16 @@ func add_move(move: MoveResource, is_player: bool, segment_start: int) -> void:
 	else:
 		queued_enemy_moves[segment_start] = move
 
-func remove_move(move: MoveResource, is_player: bool, segment_start: int, segment_end: int) -> void:
-	filled_duration += move.duration
-	if is_player:
-		for i in range(segment_start, segment_end):
-			MoveTimeline.occupied_player_segments[i] = false
-		queued_player_moves.erase(segment_start)
-	else:
-		for i in range(segment_start, segment_end):
-			MoveTimeline.occupied_enemy_segments[i] = false
-		queued_enemy_moves.erase(segment_start)
+#func remove_move(move: MoveResource, is_player: bool, segment_start: int, segment_end: int) -> void:
+	#filled_duration += move.duration
+	#if is_player:
+		#for i in range(segment_start, segment_end):
+			#MoveTimeline.occupied_player_segments[i] = false
+		#queued_player_moves.erase(segment_start)
+	#else:
+		#for i in range(segment_start, segment_end):
+			#MoveTimeline.occupied_enemy_segments[i] = false
+		#queued_enemy_moves.erase(segment_start)
 
 func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION

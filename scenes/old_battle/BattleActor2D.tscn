@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://hc72175g0g3m"]
 
-[ext_resource type="Script" path="res://scenes/battle/battle_actor_2d.gd" id="1_yvdj5"]
+[ext_resource type="Script" path="res://scenes/old_battle/battle_actor_2d.gd" id="1_yvdj5"]
 [ext_resource type="AnimationLibrary" uid="uid://upgj0xhqo74g" path="res://resources/moves/animation_libraries/player.tres" id="2_8l5ao"]
 [ext_resource type="SpriteFrames" uid="uid://mx5228t1s44m" path="res://assets/textures/placeholder/battle_actor_player/guy_spriteframes.tres" id="2_8udk6"]
 

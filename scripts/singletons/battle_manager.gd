@@ -55,7 +55,7 @@ func _ready() -> void:
 			file_name = file_name.trim_suffix(".remap")
 			var move = ResourceLoader.load(MOVES_DIR + "/" + file_name)
 			if move is MoveResource:
-				moves[move.move_name] = move
+				moves[move.name] = move
 
 func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter

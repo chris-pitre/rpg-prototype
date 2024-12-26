@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_qqr60")
-move_name = "Double Kick"
+name = "Double Kick"
 animation_name = "doublekick"
-duration = 1.0
+length = 10
 self_beneficial_statuses = 2
 self_negative_statuses = 0
 self_damage = 0

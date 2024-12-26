@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://0aybd8lkr45k"]
 
-[ext_resource type="Script" path="res://scenes/battle/action_block.gd" id="1_enqxj"]
+[ext_resource type="Script" path="res://scenes/new_battle/action_block.gd" id="1_kxr2r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rrpnc"]
 bg_color = Color(1, 0.291248, 0.539464, 1)
@@ -10,6 +10,8 @@ offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_rrpnc")
-script = ExtResource("1_enqxj")
+clip_text = true
+script = ExtResource("1_kxr2r")
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bgehgq8hq5sxm"]
 
-[ext_resource type="Script" path="res://scenes/battle/move_timeline.gd" id="1_86eh5"]
+[ext_resource type="Script" path="res://scenes/old_battle/move_timeline.gd" id="1_86eh5"]
 
 [node name="MoveTimeline" type="Container"]
 anchors_preset = 8

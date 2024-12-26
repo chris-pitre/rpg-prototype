@@ -1,6 +1,8 @@
 extends HBoxContainer
 
-const EMPTY_BLOCK = preload("res://scenes/battle/empty_action_block.tscn")
+const EMPTY_BLOCK = preload("res://scenes/new_battle/empty_action_block.tscn")
+
+@export var is_player_queue: bool = false
 
 var action_blocks: Dictionary
 var max_timestep: int = 32
@@ -30,12 +32,15 @@ func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> v
 		action_blocks.erase(action_blocks.find_key(action_block))
 		for i in range(action_block.action.length):
 			move_child(get_child(index), action_block.get_index())
+		move_child(action_block, index)
+		action_blocks[timestep] = action_block
 	else:
-		action_block.get_parent().remove_child(action_block)
-		action_block.tree_exiting.connect(remove_action_block.bind(action_block))
-		add_child(action_block)
-	move_child(action_block, index)
-	action_blocks[timestep] = action_block
+		var new_action_block = action_block.duplicate()
+		new_action_block.tree_exiting.connect(remove_action_block.bind(new_action_block))
+		add_child(new_action_block)
+		move_child(new_action_block, index)
+		action_blocks[timestep] = new_action_block
+	print(action_blocks)
 
 
 func remove_action_block(action_block: ActionBlock) -> void:
@@ -58,6 +63,9 @@ func _on_action_block_delete_pressed(action_block: ActionBlock) -> void:
 
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	if not is_player_queue:
+		return false
+	
 	if not data is ActionDragData:
 		return false
 	

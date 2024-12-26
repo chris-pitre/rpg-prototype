@@ -1,4 +1,4 @@
-class_name ActionQueue extends TextureRect
+class_name ActionQueue extends HBoxContainer
 
 @export var is_player: bool = true
 

@@ -210,6 +210,7 @@ func show_event_result(result: MapEventResult) -> void:
 		result_title.text = result.title
 		result_description.text = result.description
 		if result.encounter:
+			current_encounter = result.encounter
 			result_panel.show()
 			result_fight.show()
 			result_okay.hide()

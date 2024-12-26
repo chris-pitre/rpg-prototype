@@ -17,37 +17,37 @@ items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
 flags_to_erase = Array[String]([])
 
-[sub_resource type="Resource" id="Resource_c55bi"]
+[sub_resource type="Resource" id="Resource_uxkc1"]
 script = ExtResource("4_jkaxu")
-title = "Failure"
-description = "The thief knocked you out and ran away, stealing some of your money in the process."
-gold = -10
+title = "Result"
+description = "Something has happened."
+gold = 0
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
 flags_to_erase = Array[String]([])
 
-[sub_resource type="Resource" id="Resource_0clen"]
+[sub_resource type="Resource" id="Resource_c5u6l"]
 script = ExtResource("4_jkaxu")
-title = "Success!"
-description = "The thief was defeated and sent to prison. The stolen goods were returned and the farmer paid you money for your services."
-gold = 10
+title = "Result"
+description = "Something has happened."
+gold = 0
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
 flags_to_set = Array[String]([])
 flags_to_erase = Array[String]([])
 
-[sub_resource type="Resource" id="Resource_p4ch8"]
+[sub_resource type="Resource" id="Resource_r5w0j"]
 script = ExtResource("4_c1klw")
 enemy = ExtResource("4_ccakm")
-encounter_success = SubResource("Resource_0clen")
-encounter_failure = SubResource("Resource_c55bi")
+encounter_success = SubResource("Resource_c5u6l")
+encounter_failure = SubResource("Resource_uxkc1")
 
 [sub_resource type="Resource" id="Resource_77f75"]
 script = ExtResource("4_jkaxu")
 title = "Thief Found"
 description = "The thief was found hiding out and hoarding his ill-gotten goods in an abandoned barn nearby."
-encounter = SubResource("Resource_p4ch8")
+encounter = SubResource("Resource_r5w0j")
 gold = 0
 population_change = 0
 items = Array[ExtResource("3_un4ge")]([])
@@ -59,7 +59,7 @@ script = ExtResource("1_w68yy")
 text = "Find The Thief"
 required_gold = 0
 attribute_check = 2
-difficulty = 5
+difficulty = 0
 success_result = SubResource("Resource_77f75")
 fail_result = SubResource("Resource_yhla1")
 

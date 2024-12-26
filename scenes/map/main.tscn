@@ -10,14 +10,9 @@ script = ExtResource("1_7wmmx")
 [node name="Map" parent="." instance=ExtResource("1_hxntt")]
 
 [node name="Battle" parent="." instance=ExtResource("2_chq0a")]
-
-[node name="CanvasLayer" parent="Battle" index="0"]
 visible = false
 
-[node name="PlayerActor" parent="Battle" index="1"]
-visible = false
-
-[node name="EnemyActor" parent="Battle" index="2"]
+[node name="CanvasLayer" parent="Battle" index="2"]
 visible = false
 
 [editable path="Map"]
@@ -35,3 +30,4 @@ visible = false
 [editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]
 [editable path="Map/CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell"]
 [editable path="Battle"]
+[editable path="Battle/EnemyBattleActor"]

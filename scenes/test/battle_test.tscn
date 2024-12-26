@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7rc8mxion4s1"]
+
+[ext_resource type="Script" path="res://scenes/test/battle_test.gd" id="1_k2tyr"]
+[ext_resource type="PackedScene" uid="uid://d0oyhmdiuhgjd" path="res://scenes/new_battle/battle.tscn" id="2_i3yja"]
+
+[node name="battle_test" type="Node"]
+script = ExtResource("1_k2tyr")
+
+[node name="Battle" parent="." instance=ExtResource("2_i3yja")]
+visible = false

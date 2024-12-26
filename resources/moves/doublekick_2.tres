@@ -4,9 +4,11 @@
 
 [resource]
 script = ExtResource("1_7kuhv")
-move_name = "sub_Double Kick"
+name = "sub_Double Kick"
 animation_name = "<null>"
-duration = 0.0
+windup = 1
+active = 1
+recovery = 1
 self_beneficial_statuses = 2
 self_negative_statuses = 0
 self_damage = 0

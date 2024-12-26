@@ -6,10 +6,9 @@
 script = ExtResource("1_kckyn")
 name = "Kick"
 animation_name = "kick"
-windup = 1
+windup = 10
 active = 1
-recovery = 1
-length = 3
+recovery = 5
 self_beneficial_statuses = 2
 self_negative_statuses = 0
 self_damage = 0

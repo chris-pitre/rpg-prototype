@@ -14,6 +14,7 @@ func _ready() -> void:
 func _get_drag_data(at_position: Vector2) -> Variant:
 	var preview = Label.new()
 	preview.text = action.name
+	preview.z_index = 60
 	set_drag_preview(preview)
 	
 	return ActionDragData.new(self, action, preview)

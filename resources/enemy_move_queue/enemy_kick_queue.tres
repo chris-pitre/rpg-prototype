@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_25kk3")
 queue = {
-0: ExtResource("1_80k47")
+0: ExtResource("1_80k47"),
+1: ExtResource("1_80k47")
 }

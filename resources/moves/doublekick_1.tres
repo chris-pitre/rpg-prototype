@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_qqr60")
 name = "Double Kick"
-animation_name = "doublekick"
-length = 10
+animation_name = "<null>"
+windup = 1
+active = 1
+recovery = 1
 self_beneficial_statuses = 2
 self_negative_statuses = 0
 self_damage = 0

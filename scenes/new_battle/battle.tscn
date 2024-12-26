@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=9 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
+[ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/new_battle/BattleActor2D.tscn" id="2_rpfhh"]
 [ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_2vcsj"]
 [ext_resource type="PackedScene" uid="uid://0aybd8lkr45k" path="res://scenes/new_battle/action_block.tscn" id="4_3iqdw"]
 [ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="4_jbfoi"]
@@ -19,26 +20,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g3efr")
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(296, 262)
+[node name="PlayerBattleActor" parent="." instance=ExtResource("2_rpfhh")]
+position = Vector2(215, 461)
+is_player = true
 
-[node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="EnemyBattleActor" parent="." instance=ExtResource("2_rpfhh")]
+position = Vector2(865, 227)
 
-[node name="ActionQueue" parent="Panel" instance=ExtResource("2_epcs7")]
-layout_mode = 1
-offset_bottom = 32.0
-theme_override_constants/separation = 0
+[node name="AnimatedSprite2D" parent="EnemyBattleActor" index="0"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(-2, 2)
 
-[node name="Trash" type="Panel" parent="."]
-layout_mode = 0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Trash" type="Panel" parent="CanvasLayer"]
 offset_left = 19.0
 offset_top = 563.0
 offset_right = 59.0
@@ -46,8 +41,7 @@ offset_bottom = 603.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
 script = ExtResource("3_2vcsj")
 
-[node name="RightMargin" type="MarginContainer" parent="."]
-layout_mode = 1
+[node name="RightMargin" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -60,11 +54,11 @@ theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 64
 
-[node name="ActionPanel" type="Panel" parent="RightMargin"]
+[node name="ActionPanel" type="Panel" parent="CanvasLayer/RightMargin"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="RightMargin/ActionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/RightMargin/ActionPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,63 +70,56 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RightMargin/ActionPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ActionBlock" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
+[node name="ActionBlock" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
 layout_mode = 2
 text = "d"
 action = ExtResource("5_factx")
 
-[node name="ActionBlock2" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
+[node name="ActionBlock2" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
 layout_mode = 2
 text = "d"
 action = ExtResource("4_jbfoi")
 
-[node name="ExecuteButton" type="Button" parent="RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
+[node name="ExecuteButton" type="Button" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Execute Actions
 "
 
-[node name="PlayerActionPanel" type="Panel" parent="."]
+[node name="PlayerActionPanel" type="Panel" parent="CanvasLayer"]
 custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -32.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="PlayerActionQueue" parent="PlayerActionPanel" instance=ExtResource("2_epcs7")]
+[node name="PlayerActionQueue" parent="CanvasLayer/PlayerActionPanel" instance=ExtResource("2_epcs7")]
 layout_mode = 1
 offset_bottom = 32.0
 theme_override_constants/separation = 0
 is_player_queue = true
 
-[node name="EnemyActionPanel" type="Panel" parent="."]
+[node name="EnemyActionPanel" type="Panel" parent="CanvasLayer"]
 custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 32.0
 grow_horizontal = 2
 
-[node name="EnemyActionQueue" parent="EnemyActionPanel" instance=ExtResource("2_epcs7")]
+[node name="EnemyActionQueue" parent="CanvasLayer/EnemyActionPanel" instance=ExtResource("2_epcs7")]
 layout_mode = 1
 offset_bottom = 32.0
 theme_override_constants/separation = 0
 
-[node name="Trash2" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 563.0
-offset_right = 59.0
-offset_bottom = 603.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
-script = ExtResource("3_2vcsj")
+[connection signal="button_down" from="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
 
-[connection signal="button_down" from="RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
+[editable path="EnemyBattleActor"]

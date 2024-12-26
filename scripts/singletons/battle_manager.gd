@@ -30,16 +30,8 @@ var current_phase: PHASES
 var current_enemy = null
 var execution_timer: Timer
 
-var timeline_length: float = 2.0:
-	set(new_timeline_length):
-		timeline_length = new_timeline_length
-		num_steps = timeline_length / time_step
-var filled_duration: float = 2.0
-var time_step: float = 0.05:
-	set(new_time_step):
-		time_step = new_time_step
-		num_steps = timeline_length / time_step
-var num_steps: int = timeline_length / time_step
+var max_timestep: int = 60
+var time_step: float = 0.05
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
 
@@ -67,34 +59,15 @@ func start_new_battle(encounter: Encounter) -> void:
 	start_planning_phase()
 	
 func start_planning_phase() -> void:
-	filled_duration = timeline_length
 	current_phase = PHASES.PLANNING
 	planning_phase_started.emit()
 	queued_player_moves = {}
 	queued_enemy_moves = {}
 
-func add_move(move: MoveResource, is_player: bool, segment_start: int) -> void:
-	filled_duration -= move.duration
-	if is_player:
-		queued_player_moves[segment_start] = move
-	else:
-		queued_enemy_moves[segment_start] = move
-
-#func remove_move(move: MoveResource, is_player: bool, segment_start: int, segment_end: int) -> void:
-	#filled_duration += move.duration
-	#if is_player:
-		#for i in range(segment_start, segment_end):
-			#MoveTimeline.occupied_player_segments[i] = false
-		#queued_player_moves.erase(segment_start)
-	#else:
-		#for i in range(segment_start, segment_end):
-			#MoveTimeline.occupied_enemy_segments[i] = false
-		#queued_enemy_moves.erase(segment_start)
-
 func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
-	for i in range(num_steps):
+	for i in range(max_timestep):
 		if player.hp <= 0:
 			battle_ended.emit(current_encounter, false)
 			break
@@ -103,10 +76,10 @@ func start_execution_phase() -> void:
 			break
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
-		if player_move != null and player_move.animation_name != "<null>":
-			player_animation.emit(player_move.animation_name, player_move.duration)
-		if enemy_move != null and enemy_move.animation_name != "<null>":
-			enemy_animation.emit(enemy_move.animation_name, enemy_move.duration)
+		if player_move != null and player_move.action.animation_name != "<null>":
+			player_animation.emit(player_move.action.animation_name, player_move.action.length)
+		if enemy_move != null and enemy_move.action.animation_name != "<null>":
+			enemy_animation.emit(enemy_move.action.animation_name, enemy_move.action.length)
 		await get_tree().create_timer(time_step).timeout
 	start_planning_phase()
 	

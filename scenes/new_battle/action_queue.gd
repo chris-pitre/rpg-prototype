@@ -5,15 +5,19 @@ const EMPTY_BLOCK = preload("res://scenes/new_battle/empty_action_block.tscn")
 @export var is_player_queue: bool = false
 
 var action_blocks: Dictionary
-var max_timestep: int = 32
 
 func _ready() -> void:
-	for i in range(max_timestep):
+	for i in range(BattleManager.max_timestep):
 		var new_empty = EMPTY_BLOCK.instantiate()
 		add_child(new_empty)
+	BattleManager.planning_phase_started.connect(reset_blocks)
 
 func update_blocks() -> void:
 	pass
+
+func reset_blocks() -> void:
+	for block in action_blocks.values():
+		remove_action_block(block)
 
 func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> void:
 	var action_range = range(index, index + action_block.action.length)
@@ -36,13 +40,11 @@ func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> v
 		action_blocks[timestep] = action_block
 	else:
 		var new_action_block = action_block.duplicate()
-		new_action_block.tree_exiting.connect(remove_action_block.bind(new_action_block))
+		#new_action_block.tree_exiting.connect(remove_action_block.bind(new_action_block))
 		add_child(new_action_block)
 		move_child(new_action_block, index)
 		action_blocks[timestep] = new_action_block
-
-func add_enemy_action_block(index: int, action_block: ActionBlock) -> void:
-	pass
+	_get_action_blocks()
 
 func remove_action_block(action_block: ActionBlock) -> void:
 	var idx_to_replace = action_block.get_index()
@@ -51,12 +53,13 @@ func remove_action_block(action_block: ActionBlock) -> void:
 	action_blocks.erase(action_blocks.find_key(action_block))
 	if not action_block.is_queued_for_deletion():
 		remove_child.call_deferred(action_block)
-		action_block.queue_free()
+		action_block.queue_free.call_deferred()
 	
 	for i in range(amt_to_replace):
 		var new_empty = EMPTY_BLOCK.instantiate()
 		add_child.call_deferred(new_empty)
 		move_child.call_deferred(new_empty, idx_to_replace)
+	_get_action_blocks()
 
 
 func _on_action_block_delete_pressed(action_block: ActionBlock) -> void:
@@ -76,7 +79,7 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	var index_from_pos = _position_to_index(at_position, action_block)
 	var timestep_from_pos = _position_to_timestep(at_position)
 	
-	if timestep_from_pos + action.length > max_timestep: # Avoid running past end of queue
+	if timestep_from_pos + action.length > BattleManager.max_timestep: # Avoid running past end of queue
 		return false
 	
 	var intersecting_timesteps = range(timestep_from_pos, timestep_from_pos + action.length)
@@ -96,10 +99,10 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	add_action_block(_position_to_index(at_position, action_block), _position_to_timestep(at_position), action_block)
 
 func _position_to_timestep(pos: Vector2) -> int:
-	return floor((pos.x / size.x) * max_timestep)
+	return floor((pos.x / size.x) * BattleManager.max_timestep)
 
 func _position_to_index(pos: Vector2, data: Variant) -> int:
-	var base_at_timestep = floor((pos.x / size.x) * max_timestep)
+	var base_at_timestep = floor((pos.x / size.x) * BattleManager.max_timestep)
 	
 	var compensate_extra_length = 0
 	for occupied_timestep: int in action_blocks.keys():
@@ -108,3 +111,9 @@ func _position_to_index(pos: Vector2, data: Variant) -> int:
 			compensate_extra_length += (action_block.action.length - 1)
 	
 	return base_at_timestep - compensate_extra_length
+
+func _get_action_blocks() -> void:
+	if is_player_queue:
+		BattleManager.queued_player_moves = action_blocks 
+	else:
+		BattleManager.queued_enemy_moves = action_blocks

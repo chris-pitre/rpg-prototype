@@ -12,5 +12,5 @@ power = 10
 speech = 10
 agility = 10
 piety = 10
-moves = Array[String](["Kick", "Double Kick", "Punch"])
+moves = Array[String](["Kick", "Double Kick", "Punch", "Oberhaw", "Unterhaw"])
 move_queues = Array[ExtResource("1_2uxa0")]([])

@@ -1,13 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=6 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
 [ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/new_battle/BattleActor2D.tscn" id="2_rpfhh"]
 [ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_2vcsj"]
-[ext_resource type="PackedScene" uid="uid://0aybd8lkr45k" path="res://scenes/new_battle/action_block.tscn" id="4_3iqdw"]
-[ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="4_jbfoi"]
-[ext_resource type="Resource" uid="uid://dffqe0piuplmu" path="res://resources/moves/punch.tres" id="5_factx"]
-[ext_resource type="Resource" uid="uid://cqx6x3no00un0" path="res://resources/moves/doublekick_1.tres" id="6_0e3a5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
 bg_color = Color(1, 0, 0, 1)
@@ -43,6 +39,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
 script = ExtResource("3_2vcsj")
 
 [node name="RightMargin" type="MarginContainer" parent="CanvasLayer"]
+visible = false
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -77,21 +74,6 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="ActionBlock" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
-layout_mode = 2
-text = "d"
-action = ExtResource("5_factx")
-
-[node name="ActionBlock3" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
-layout_mode = 2
-text = "d"
-action = ExtResource("6_0e3a5")
-
-[node name="ActionBlock2" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("4_3iqdw")]
-layout_mode = 2
-text = "d"
-action = ExtResource("4_jbfoi")
 
 [node name="ExecuteButton" type="Button" parent="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2

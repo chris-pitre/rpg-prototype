@@ -16,15 +16,10 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	preview.text = action.name
 	preview.z_index = 60
 	set_drag_preview(preview)
+	mouse_filter = MOUSE_FILTER_IGNORE
 	
 	return ActionDragData.new(self, action, preview)
-
-func _on_button_down() -> void:
-	mouse_filter = MOUSE_FILTER_IGNORE
-
-func _on_button_up() -> void:
-	mouse_filter = MOUSE_FILTER_STOP
-
+	
 func _set_action(_action: MoveResource) -> void:
 	action = _action
 	$NameLabel.text = _action.name

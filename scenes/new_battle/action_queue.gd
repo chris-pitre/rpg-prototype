@@ -1,3 +1,4 @@
+class_name ActionQueue
 extends HBoxContainer
 
 const EMPTY_BLOCK = preload("res://scenes/new_battle/empty_action_block.tscn")

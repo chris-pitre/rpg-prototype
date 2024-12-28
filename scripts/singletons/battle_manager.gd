@@ -77,9 +77,9 @@ func start_execution_phase() -> void:
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
 		if player_move != null and player_move.action.animation_name != "<null>":
-			player_animation.emit(player_move.action.animation_name, player_move.action.length)
+			player_animation.emit(player_move.action.animation_name, player_move.action)
 		if enemy_move != null and enemy_move.action.animation_name != "<null>":
-			enemy_animation.emit(enemy_move.action.animation_name, enemy_move.action.length)
+			enemy_animation.emit(enemy_move.action.animation_name, enemy_move.action)
 		await get_tree().create_timer(time_step).timeout
 	start_planning_phase()
 	

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Encounter" load_steps=7 format=3 uid="uid://chbvm7gm86a1p"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_g6kxx"]
+[ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="2_8dgla"]
+[ext_resource type="Resource" uid="uid://cx8ihnx7na8aq" path="res://resources/battle_actor/enemy_vagrant.tres" id="3_as3q8"]
+[ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="4_s75vv"]
+
+[sub_resource type="Resource" id="Resource_6eiid"]
+script = ExtResource("2_8dgla")
+title = "Failure"
+description = "The vagrant knocks you unconscious, and steals your money."
+gold = -20
+population_change = 0
+items = Array[ExtResource("1_g6kxx")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_ues7y"]
+script = ExtResource("2_8dgla")
+title = "Victory!"
+description = "The vagrant backs off, limping away."
+gold = 20
+population_change = 0
+items = Array[ExtResource("1_g6kxx")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[resource]
+script = ExtResource("4_s75vv")
+enemy = ExtResource("3_as3q8")
+encounter_success = SubResource("Resource_ues7y")
+encounter_failure = SubResource("Resource_6eiid")

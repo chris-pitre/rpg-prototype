@@ -2,6 +2,7 @@ extends Node
 
 signal day_changed(day: int)
 signal got_item(item: Item)
+signal got_action(action: BattleAction)
 signal population_changed(amt: int)
 signal gold_changed(amt: int)
 signal max_health_changed(amt: int)
@@ -43,6 +44,9 @@ func reset() -> void:
 func give_item(item: Item) -> bool:
 	got_item.emit(item)
 	return true
+
+func give_action(action: BattleAction) -> void:
+	got_action.emit(action)
 
 func _set_population(amt: int) -> void:
 	population = amt

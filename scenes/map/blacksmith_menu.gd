@@ -3,7 +3,7 @@ extends MarginContainer
 const UPGRADES_DIR = "res://resources/upgrades/"
 
 var upgrades: Array[WeaponUpgrade]
-var current_weapon_attributes: WeaponAttributes
+var current_weapon: ItemWeapon
 
 @onready var upgrade_menu = $HBoxContainer/UpgradeMenu
 @onready var upgrade_item_slot = $HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Upgrade/CenterContainer/VBoxContainer/ItemSlot
@@ -21,11 +21,11 @@ func _ready() -> void:
 			if upgrade is WeaponUpgrade:
 				upgrades.append(upgrade)
 
-func _upgrade_item_added(item: Item) -> void:
+func _upgrade_item_added(item: ItemWeapon) -> void:
 	upgrade_menu.show()
-	current_weapon_attributes = item.weapon_attributes
+	current_weapon = item
 	for upgrade in upgrades:
-		if not current_weapon_attributes.upgrades.has(upgrade):
+		if not current_weapon.upgrades.has(upgrade):
 			var new_upgrade_button = Button.new()
 			upgrade_button_container.add_child(new_upgrade_button)
 			new_upgrade_button.text = upgrade.name
@@ -34,12 +34,14 @@ func _upgrade_item_added(item: Item) -> void:
 
 
 func _upgrade_item_removed() -> void:
-	current_weapon_attributes = null
+	for child in upgrade_button_container.get_children():
+		remove_child(child)
+		child.queue_free()
+	current_weapon = null
 	upgrade_menu.hide()
 
 
 func _upgrade_button_pressed(upgrade_button: Button, upgrade: WeaponUpgrade) -> void:
 	if GameState.gold >= upgrade.price:
 		upgrade_button.queue_free()
-		current_weapon_attributes.add_upgrade(upgrade)
-	
+		current_weapon.add_upgrade(upgrade)

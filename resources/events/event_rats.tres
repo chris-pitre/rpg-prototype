@@ -1,0 +1,144 @@
+[gd_resource type="Resource" script_class="MapEvent" load_steps=22 format=3 uid="uid://clwc4mxrmpysv"]
+
+[ext_resource type="Script" path="res://resources/events/map_event_choice.gd" id="1_u6otx"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="2_8k6bi"]
+[ext_resource type="Script" path="res://resources/events/map_event_result.gd" id="3_i1cgb"]
+[ext_resource type="Script" path="res://resources/encounters/encounter.gd" id="4_3lubs"]
+[ext_resource type="Resource" uid="uid://cldb3yni2gd67" path="res://resources/items/loot_gem_red_crude.tres" id="4_vn7ol"]
+[ext_resource type="Script" path="res://resources/events/map_event.gd" id="5_6m07t"]
+[ext_resource type="Resource" uid="uid://d251387ari5yt" path="res://resources/battle_actor/enemy_ratman.tres" id="5_psqi1"]
+
+[sub_resource type="Resource" id="Resource_r875u"]
+script = ExtResource("3_i1cgb")
+title = "Loss..."
+description = "You get beaten back by the rats, and they steal some of your money."
+gold = -10
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_hbpca"]
+script = ExtResource("3_i1cgb")
+title = "Victory!"
+description = "You beat the ratman back, and he retreats with his pack of rats into the woods."
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([ExtResource("4_vn7ol")])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_wrcam"]
+script = ExtResource("4_3lubs")
+enemy = ExtResource("5_psqi1")
+encounter_success = SubResource("Resource_hbpca")
+encounter_failure = SubResource("Resource_r875u")
+
+[sub_resource type="Resource" id="Resource_lk3nk"]
+script = ExtResource("3_i1cgb")
+title = "Failure"
+description = "The rats and the ratman don't understand the series of noises that come out of your mouth, and seem agitated."
+encounter = SubResource("Resource_wrcam")
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_biamc"]
+script = ExtResource("2_8k6bi")
+name = "ItemName"
+description = "Description"
+price = 0
+can_be_sold = true
+type = 0
+
+[sub_resource type="Resource" id="Resource_j5oaa"]
+script = ExtResource("3_i1cgb")
+title = "Success!"
+description = "Somehow, you manage to convince the man to leave you and your camp alone, despite the fact that they don't seem to understand the common tongue."
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([SubResource("Resource_biamc")])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_geaj1"]
+script = ExtResource("1_u6otx")
+text = "Ratspeak"
+required_gold = 0
+attribute_check = 3
+difficulty = 15
+success_result = SubResource("Resource_j5oaa")
+fail_result = SubResource("Resource_lk3nk")
+
+[sub_resource type="Resource" id="Resource_vtjeu"]
+script = ExtResource("4_3lubs")
+enemy = ExtResource("5_psqi1")
+encounter_success = SubResource("Resource_hbpca")
+encounter_failure = SubResource("Resource_r875u")
+
+[sub_resource type="Resource" id="Resource_7evve"]
+script = ExtResource("3_i1cgb")
+title = "Failure"
+description = "The rat man and the rats are strangely fast, and they catch you with your back to a wall."
+encounter = SubResource("Resource_vtjeu")
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_if3vp"]
+script = ExtResource("3_i1cgb")
+title = "Success!"
+description = "You manage to escape the rat man and his pack of rats, leading them away from the camp in the process."
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_h6p05"]
+script = ExtResource("1_u6otx")
+text = "Run"
+required_gold = 0
+attribute_check = 2
+difficulty = 10
+success_result = SubResource("Resource_if3vp")
+fail_result = SubResource("Resource_7evve")
+
+[sub_resource type="Resource" id="Resource_fwqt3"]
+script = ExtResource("4_3lubs")
+enemy = ExtResource("5_psqi1")
+encounter_success = SubResource("Resource_hbpca")
+encounter_failure = SubResource("Resource_r875u")
+
+[sub_resource type="Resource" id="Resource_hm45u"]
+script = ExtResource("3_i1cgb")
+title = ""
+description = ""
+encounter = SubResource("Resource_fwqt3")
+gold = 0
+population_change = 0
+items = Array[ExtResource("2_8k6bi")]([])
+flags_to_set = Array[String]([])
+flags_to_erase = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_jircc"]
+script = ExtResource("1_u6otx")
+text = "Fight"
+required_gold = 0
+attribute_check = 0
+difficulty = 10
+success_result = SubResource("Resource_hm45u")
+
+[resource]
+script = ExtResource("5_6m07t")
+name = "Pack of Feral Rats"
+road_event = true
+hover_description = ""
+description = "A pack of feral rats is trying to steal food from your camp. A man comes forward from the pack of rats, acting as their representative. The man makes a series of chittering noises and squeaks."
+lifetime = -1
+require_flags = Array[String]([])
+choices = Array[ExtResource("1_u6otx")]([SubResource("Resource_geaj1"), SubResource("Resource_h6p05"), SubResource("Resource_jircc")])

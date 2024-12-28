@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://bbs2t7we64yet"]
+
+[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_jmdtc"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_jmdtc")
+weapon_type = 0
+damage = 1
+total_damage_offset = 0
+total_posture_damage_offset = 0
+total_windup_time_offset = 0
+total_active_time_offset = 0
+total_recovery_time_offset = 0
+name = "Exquisite Longsword"
+description = "An ornately engraved longsword with a wide guard and ergonomic grip, but sharp build."
+price = 0
+can_be_sold = false
+type = 1

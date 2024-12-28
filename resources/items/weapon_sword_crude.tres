@@ -1,34 +1,19 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://b30f8nlkl6lrn"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://b30f8nlkl6lrn"]
 
-[ext_resource type="Script" path="res://resources/items/item.gd" id="1_37pt0"]
-[ext_resource type="Script" path="res://resources/items/weapon_attributes.gd" id="2_8ltha"]
+[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_e5622"]
 
-[sub_resource type="Gradient" id="Gradient_dy24e"]
-interpolation_mode = 1
-colors = PackedColorArray(0.408329, 0.408329, 0.408329, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mieia"]
-gradient = SubResource("Gradient_dy24e")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
-[sub_resource type="Resource" id="Resource_41clp"]
-script = ExtResource("2_8ltha")
-type = 1
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_e5622")
+weapon_type = 0
 damage = 1
 total_damage_offset = 0
 total_posture_damage_offset = 0
 total_windup_time_offset = 0
 total_active_time_offset = 0
 total_recovery_time_offset = 0
-
-[resource]
-script = ExtResource("1_37pt0")
 name = "Chipped Machete"
 description = "A sharp tool weathered by time and rain."
-texture = SubResource("GradientTexture2D_mieia")
 price = 0
 can_be_sold = false
 type = 1
-weapon_attributes = SubResource("Resource_41clp")

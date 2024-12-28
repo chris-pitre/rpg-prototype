@@ -1,14 +1,7 @@
-class_name WeaponAttributes
-extends Resource
+class_name ItemWeapon
+extends Item
 
-enum TYPE {
-	FISTS,
-	SWORD,
-	MACE,
-	SPEAR,
-}
-
-@export var type: TYPE = TYPE.SWORD
+@export_enum("Fists", "Sword", "Mace", "Spear") var weapon_type: int = 0
 @export var damage: int = 1
 @export var total_damage_offset: int
 @export var total_posture_damage_offset: int

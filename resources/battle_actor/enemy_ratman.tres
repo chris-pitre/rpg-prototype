@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BattleActorStats" load_steps=4 format=3 uid="uid://d251387ari5yt"]
+
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_wpo23"]
+[ext_resource type="Resource" uid="uid://byw4lt7jr230x" path="res://resources/enemy_move_queue/enemy_punch_queue.tres" id="2_1svyq"]
+[ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="2_1uroy"]
+
+[resource]
+script = ExtResource("2_1uroy")
+name = "Ratman"
+is_player = false
+max_hp = 100
+power = 0
+speech = 0
+agility = 0
+piety = 0
+moves = Array[String]([])
+move_queues = Array[ExtResource("1_wpo23")]([ExtResource("2_1svyq")])

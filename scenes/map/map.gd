@@ -1,6 +1,8 @@
 class_name WorldMap
 extends Control
 
+signal location_resolved
+
 const ITEM_BUTTON = preload("res://scenes/inventory/item_button.tscn")
 const EVENTS_DIR = "res://resources/events/"
 const EVENT_SCHEDULE_PATH = "res://resources/events/event_schedule.json"
@@ -37,6 +39,7 @@ var event_flags: Array[String] = []
 @onready var market_menu = $CanvasLayer/Overlay/MarketMenu
 @onready var item_menu = $CanvasLayer/Overlay/ItemResultMenu
 @onready var item_menu_container = item_menu.get_node("Panel/VBoxContainer/ItemContainer")
+@onready var academy_menu = $CanvasLayer/Overlay/AcademyMenu
 
 func _ready() -> void:
 	MapEvents.event_neglected.connect(_map_event_neglected)
@@ -71,7 +74,10 @@ func _ready() -> void:
 			file_name = file_name.trim_suffix(".remap")
 			var event = ResourceLoader.load(EVENTS_DIR + "/" + file_name)
 			if event is MapEvent:
-				events[event.name] = event
+				if event.road_event:
+					road_events[event.name] = event
+				else:
+					events[event.name] = event
 	
 	var file = FileAccess.open(EVENT_SCHEDULE_PATH, FileAccess.READ)
 	var json = JSON.new()
@@ -206,6 +212,7 @@ func show_event_result(result: MapEventResult) -> void:
 			start_encounter(current_encounter)
 		else:
 			result_panel.hide()
+			resolve_location()
 	else:
 		result_title.text = result.title
 		result_description.text = result.description
@@ -227,6 +234,7 @@ func end_encounter(encounter: Encounter, player_victory: bool) -> void:
 		show_event_result(encounter.encounter_success)
 	else:
 		show_event_result(encounter.encounter_failure)
+	resolve_location()
 
 func show_items(items: Array[Item]) -> void:
 	$CanvasLayer/Overlay/ItemResultMenu.show()
@@ -239,7 +247,9 @@ func show_items(items: Array[Item]) -> void:
 		new_item_button.allow_drag = true
 
 func visit_location(location: MapLocation) -> void:
-	if not location.current_event == null:
+	if location.current_event == null:
+		resolve_location()
+	else:
 		start_event(location.current_event)
 		location.current_event = null
 		location.tooltip_text = ""
@@ -258,11 +268,17 @@ func move_to_location(map_location: MapLocation) -> void:
 	player_tween.tween_property(player, "global_position", map_location.global_position, 1.0)
 	player_tween.finished.connect(_player_second_tween_finished.bind(map_location))
 
-func get_midpoint_event() -> bool:
-	return false #Get random event
+func get_midpoint_event() -> MapEvent:
+	var roll = GameState.rng.rand_weighted([1.0, 0.0])
+	var event_list = road_events.values()
+	if roll == 0:
+		var event = event_list[GameState.rng.randi_range(0, event_list.size() - 1)]
+		return event
+	return null
 
-func start_midpoint_event(event: MapEvent) -> void:
-	pass
+func resolve_location() -> void:
+	location_resolved.emit()
+	progress_time()
 
 func _map_location_pressed(map_location: MapLocation) -> void:
 	if player_tween:
@@ -279,18 +295,21 @@ func _map_location_pressed(map_location: MapLocation) -> void:
 		player_tween.finished.connect(_player_first_tween_finished.bind(map_location))
 
 func _player_first_tween_finished(map_location: MapLocation) -> void:
+	var midpoint_event = get_midpoint_event()
+	if midpoint_event:
+		start_event(midpoint_event)
+		await location_resolved
 	player_tween = get_tree().create_tween()
 	player_tween.tween_property(player, "global_position", map_location.global_position, 1.0 / TIME_SCALE)
 	player_tween.finished.connect(_player_second_tween_finished.bind(map_location))
 
 func _player_second_tween_finished(map_location: MapLocation) -> void:
-	if not get_midpoint_event():
-		current_location = map_location
-		visit_location(current_location)
-		progress_time()
+	current_location = map_location
+	visit_location(current_location)
 
 func _on_result_okay_pressed() -> void:
 	result_panel.hide()
+	resolve_location()
 
 func _on_result_fight_pressed() -> void:
 	result_panel.hide()
@@ -311,6 +330,8 @@ func _on_visit_button_pressed() -> void:
 			market_menu.show()
 		"Medical":
 			medical_menu.show()
+		"Academy":
+			academy_menu.show()
 
 func _on_close_blacksmith_pressed() -> void:
 	blacksmith_menu.hide()
@@ -323,6 +344,9 @@ func _on_close_market_pressed() -> void:
 func _on_close_medical_pressed() -> void:
 	medical_menu.hide()
 	visit_button.show()
+
+func _on_close_academy_pressed() -> void:
+	academy_menu.hide()
 
 func _on_open_character_pressed() -> void:
 	$CanvasLayer/Overlay/CharacterMenu.show()

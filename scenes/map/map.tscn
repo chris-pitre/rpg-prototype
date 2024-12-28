@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bncokx5jbxw5s"]
+[gd_scene load_steps=33 format=3 uid="uid://bncokx5jbxw5s"]
 
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
@@ -16,7 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://cb3d10a6rs8d4" path="res://scenes/inventory/item_slot.tscn" id="10_nse17"]
 [ext_resource type="Script" path="res://resources/items/item.gd" id="12_xi5fo"]
 [ext_resource type="Resource" uid="uid://gjkkrquga68t" path="res://resources/items/consumable_bandage.tres" id="13_guf8o"]
-[ext_resource type="Resource" uid="uid://b30f8nlkl6lrn" path="res://resources/items/weapon_sword_crude.tres" id="20_hvvit"]
+[ext_resource type="Script" path="res://scenes/map/medical_menu.gd" id="14_qoh11"]
+[ext_resource type="Script" path="res://scenes/map/academy_menu.gd" id="15_vfc57"]
+[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="19_bjh2u"]
 
 [sub_resource type="Gradient" id="Gradient_f2idn"]
 
@@ -75,6 +77,22 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_1mtvg"]
+resource_local_to_scene = true
+script = ExtResource("19_bjh2u")
+weapon_type = 0
+damage = 1
+total_damage_offset = 0
+total_posture_damage_offset = 0
+total_windup_time_offset = 0
+total_active_time_offset = 0
+total_recovery_time_offset = 0
+name = "Chipped Machete"
+description = "A sharp tool weathered by time and rain."
+price = 0
+can_be_sold = false
+type = 1
 
 [node name="Map" type="Control"]
 layout_mode = 3
@@ -554,6 +572,7 @@ theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
+script = ExtResource("14_qoh11")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Overlay/MedicalMenu"]
 layout_mode = 2
@@ -590,7 +609,6 @@ size_flags_vertical = 10
 text = "Close"
 
 [node name="AcademyMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
-visible = false
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 9
@@ -601,6 +619,7 @@ theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
+script = ExtResource("15_vfc57")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Overlay/AcademyMenu"]
 layout_mode = 2
@@ -623,17 +642,22 @@ custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
 theme_override_font_sizes/font_size = 16
-text = "Students and teachers"
+text = "insert description here"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
 layout_mode = 2
-text = "Heal To Full (20 gold)"
+size_flags_vertical = 3
 
-[node name="CloseMedical" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CloseAcademy" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
 text = "Close"
 
 [node name="ItemResultMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
@@ -789,7 +813,7 @@ allow_drop = true
 [node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = ExtResource("20_hvvit")
+item = SubResource("Resource_1mtvg")
 
 [node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2
@@ -833,7 +857,9 @@ position_smoothing_enabled = true
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/MembershipContainer/PurchaseMembership" to="." method="_on_purchase_membership_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/Button" to="CanvasLayer/Overlay/MedicalMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer/CloseAcademy" to="." method="_on_close_academy_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer/ItemResultClose" to="." method="_on_item_result_close_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/CloseCharacter" to="." method="_on_close_character_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/VisitButton" to="." method="_on_visit_button_pressed"]

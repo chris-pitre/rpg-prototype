@@ -7,3 +7,4 @@ extends Resource
 @export var active: int = 1
 @export var recovery: int = 1
 @export var length: int = 3
+@export var price: int = 100

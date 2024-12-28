@@ -24,8 +24,7 @@ func _get_player_moves() -> void:
 		action_palette.add_child(new_action_block)
 
 func _on_execute_button_button_down() -> void:
-	var rng = RandomNumberGenerator.new()
-	var enemy_move_queue = BattleManager.enemy.move_queues[rng.randi_range(0, BattleManager.enemy.move_queues.size() - 1)]
+	var enemy_move_queue = BattleManager.enemy.move_queues[GameState.rng.randi_range(0, BattleManager.enemy.move_queues.size() - 1)]
 	var total_length = 0
 	for move in enemy_move_queue.queue:
 		var move_pos = move + total_length

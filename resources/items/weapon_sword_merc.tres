@@ -1,33 +1,19 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://bthx14876ybmi"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://bthx14876ybmi"]
 
-[ext_resource type="Script" path="res://resources/items/item.gd" id="1_d64ii"]
-[ext_resource type="Script" path="res://resources/items/weapon_attributes.gd" id="2_5dnfn"]
+[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_nvamc"]
 
-[sub_resource type="Gradient" id="Gradient_dy24e"]
-interpolation_mode = 1
-colors = PackedColorArray(0.408329, 0.408329, 0.408329, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mieia"]
-gradient = SubResource("Gradient_dy24e")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
-[sub_resource type="Resource" id="Resource_tmcm0"]
-script = ExtResource("2_5dnfn")
-type = 1
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_nvamc")
+weapon_type = 0
 damage = 1
-posture_damage_offset = 0
+total_damage_offset = 0
+total_posture_damage_offset = 0
 total_windup_time_offset = 0
 total_active_time_offset = 0
 total_recovery_time_offset = 0
-
-[resource]
-script = ExtResource("1_d64ii")
 name = "Mercenary's Shortsword"
 description = "A sword with a small hilt and blade, but deadly enough for most jobs."
-texture = SubResource("GradientTexture2D_mieia")
 price = 0
 can_be_sold = false
 type = 1
-weapon_attributes = SubResource("Resource_tmcm0")

@@ -9,7 +9,7 @@
 script = ExtResource("3_utp7w")
 title = "Welcome"
 description = "Kill three of the villan's goons to win..."
-gold = 0
+gold = 50
 population_change = 0
 items = Array[ExtResource("2_xxdk8")]([])
 flags_to_set = Array[String]([])

@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_xi0eh"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_xi0eh")
 name = "Faster Windup"
 description = "Time taken for actions in windup reduced by one timestep."

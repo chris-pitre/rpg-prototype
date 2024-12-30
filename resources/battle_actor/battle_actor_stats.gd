@@ -13,8 +13,13 @@ class_name BattleActorStats extends Resource
 @export var animation_lib: AnimationLibrary
 
 var hp: int
-var current_beneficial_statuses: int = 0
-var current_negative_statuses: int = 0
+var current_guard: GuardStatus.GUARD = GuardStatus.GUARD.NONE
+var stat_modifiers: Array[StatStatus] = []
+var stun: StunnedStatus = null: 
+	set(new_stun):
+		stun = new_stun
+		if stun != null:
+			stun.stun = stun.stun_timesteps
 var stat_array: Array[int] = [0, 0, 0, 0]
 var posture: int = 100
 var current_phase_state: PHASE_STATE = PHASE_STATE.BLOCKING
@@ -24,17 +29,6 @@ enum PHASE_STATE {
 	ACTIVE,
 	RECOVERY,
 	BLOCKING
-}
-
-enum BENEFICIAL_STATUSES {
-	HIGH_GUARD,
-	MID_GUARD,
-	LOW_GUARD
-}
-
-enum NEGATIVE_STATUSES {
-	STUNNED,
-	ENFEEBLED
 }
 
 func _init(p_name="John", p_max_hp=10, p_power=0, p_speech=0, p_agility=0, p_piety=0, p_moves:Array[String] = [], p_sprite_frames: SpriteFrames=null, p_animation_lib: AnimationLibrary=null) -> void:

@@ -1,22 +1,29 @@
-[gd_resource type="Resource" script_class="MoveResource" load_steps=2 format=3 uid="uid://bjutu5yrlhpyq"]
+[gd_resource type="Resource" script_class="MoveResource" load_steps=5 format=3 uid="uid://bjutu5yrlhpyq"]
 
 [ext_resource type="Script" path="res://resources/moves/move.gd" id="1_7kuhv"]
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_oj2bx"]
+[ext_resource type="Script" path="res://resources/statuses/custom_statuses/stunned_status.gd" id="2_g2v5u"]
+
+[sub_resource type="Resource" id="Resource_ndyeg"]
+script = ExtResource("2_g2v5u")
+stun_timesteps = 10
+name = "<null>"
 
 [resource]
 script = ExtResource("1_7kuhv")
 name = "sub_Double Kick"
 animation_name = "<null>"
+attack_direction = 1
 windup = 1
 active = 1
 recovery = 1
-self_beneficial_statuses = 2
-self_negative_statuses = 0
+self_stat_statuses = Array[ExtResource("1_oj2bx")]([])
 self_damage = 0
 self_healing = 0
 self_stats = 0
 self_stat_modifier = 0
-opponent_beneficial_statuses = 0
-opponent_negative_statuses = 1
+opponent_stat_statuses = Array[ExtResource("1_oj2bx")]([])
+opponent_stun_status = SubResource("Resource_ndyeg")
 opponent_damage = 3
 opponent_healing = 0
 opponent_stats = 0

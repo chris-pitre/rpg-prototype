@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BattleActorStats" load_steps=3 format=3 uid="uid://nev38w7emj2s"]
 
-[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_2uxa0"]
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_t2jo2"]
 [ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="5_dqm3k"]
 
 [resource]
@@ -13,4 +13,4 @@ speech = 10
 agility = 10
 piety = 10
 moves = Array[String](["Kick", "Double Kick", "Punch", "Oberhaw", "Unterhaw"])
-move_queues = Array[ExtResource("1_2uxa0")]([])
+move_queues = Array[ExtResource("1_t2jo2")]([])

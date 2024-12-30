@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://j3yxrv6hmkar"]
+
+[ext_resource type="Script" path="res://scenes/new_battle/status_list.gd" id="1_asyl7"]
+
+[node name="StatusList" type="VBoxContainer"]
+script = ExtResource("1_asyl7")
+
+[node name="GuardLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="StunLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2

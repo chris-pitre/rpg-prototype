@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StatStatus" load_steps=2 format=3 uid="uid://cnhkfc8xyybsr"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_k5pdx"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_k5pdx")
+stat_direction = 1
+damage_type = 2
+multiplier = 0.5
+name = "<null>"

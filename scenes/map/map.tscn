@@ -78,7 +78,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_1mtvg"]
+[sub_resource type="Resource" id="Resource_appx5"]
 resource_local_to_scene = true
 script = ExtResource("19_bjh2u")
 weapon_type = 0
@@ -813,7 +813,7 @@ allow_drop = true
 [node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = SubResource("Resource_1mtvg")
+item = SubResource("Resource_appx5")
 
 [node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GuardStatus" load_steps=2 format=3 uid="uid://bg1k1a021d2kj"]
+
+[ext_resource type="Script" path="res://resources/statuses/guard_statuses/guard_status.gd" id="1_3joom"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_3joom")
+guard_type = 3
+name = "Low Guard"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GuardStatus" load_steps=2 format=3 uid="uid://b5t3ua4e1rk6s"]
+
+[ext_resource type="Script" path="res://resources/statuses/guard_statuses/guard_status.gd" id="1_340dc"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_340dc")
+guard_type = 2
+name = "Middle Guard"

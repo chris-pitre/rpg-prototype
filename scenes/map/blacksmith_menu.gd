@@ -2,7 +2,7 @@ extends MarginContainer
 
 const UPGRADES_DIR = "res://resources/upgrades/"
 
-var upgrades: Array[WeaponUpgrade]
+#var upgrades: Array[WeaponUpgrade]
 var current_weapon: ItemWeapon
 
 @onready var upgrade_menu = $HBoxContainer/UpgradeMenu
@@ -13,18 +13,18 @@ func _ready() -> void:
 	upgrade_item_slot.item_added.connect(_upgrade_item_added)
 	upgrade_item_slot.item_removed.connect(_upgrade_item_removed)
 	
-	var dir = DirAccess.open(UPGRADES_DIR)
-	if dir:
-		for file_name in dir.get_files():
-			file_name = file_name.trim_suffix(".remap")
-			var upgrade = ResourceLoader.load(UPGRADES_DIR + "/" + file_name)
-			if upgrade is WeaponUpgrade:
-				upgrades.append(upgrade)
+	#var dir = DirAccess.open(UPGRADES_DIR)
+	#if dir:
+		#for file_name in dir.get_files():
+			#file_name = file_name.trim_suffix(".remap")
+			#var upgrade = ResourceLoader.load(UPGRADES_DIR + "/" + file_name)
+			#if upgrade is WeaponUpgrade:
+				#upgrades.append(upgrade)
 
 func _upgrade_item_added(item: ItemWeapon) -> void:
 	upgrade_menu.show()
 	current_weapon = item
-	for upgrade in upgrades:
+	for upgrade in item.purchasable_upgrades:
 		if not current_weapon.upgrades.has(upgrade):
 			var new_upgrade_button = Button.new()
 			upgrade_button_container.add_child(new_upgrade_button)

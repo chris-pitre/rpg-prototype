@@ -1,6 +1,13 @@
 class_name ItemWeapon
 extends Item
 
+enum {
+	FISTS,
+	SWORD,
+	MACE,
+	SPEAR
+}
+
 @export_enum("Fists", "Sword", "Mace", "Spear") var weapon_type: int = 0
 @export var damage: int = 1
 @export var total_damage_offset: int
@@ -8,6 +15,7 @@ extends Item
 @export var total_windup_time_offset: int = 0
 @export var total_active_time_offset: int = 0
 @export var total_recovery_time_offset: int = 0
+@export var purchasable_upgrades: Array[WeaponUpgrade]
 
 var upgrades: Array[WeaponUpgrade] = []
 

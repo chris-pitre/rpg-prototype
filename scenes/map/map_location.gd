@@ -27,17 +27,25 @@ func update_state() -> void:
 		
 
 func update_icon() -> void:
-	match days_left:
-		3:
-			event_icon.texture = load("res://assets/textures/icons/skull1.png")
-		2:
-			event_icon.texture = load("res://assets/textures/icons/skull2.png")
-		1:
-			event_icon.texture = load("res://assets/textures/icons/skull3.png")
-		0: 
-			event_icon.texture = null
-		_:
-			event_icon.texture = load("res://assets/textures/icons/reddot.png")
+	if not current_event:
+		return
+	
+	if current_event.urgent:
+		match days_left:
+			3:
+				event_icon.texture = load("res://assets/textures/icons/skull1.png")
+			2:
+				event_icon.texture = load("res://assets/textures/icons/skull2.png")
+			1:
+				event_icon.texture = load("res://assets/textures/icons/skull3.png")
+			0: 
+				event_icon.texture = null
+			_:
+				event_icon.texture = load("res://assets/textures/icons/reddot.png")
+		$NotUrgent.visible = false
+	else:
+		event_icon.texture = null
+		$NotUrgent.visible = true
 
 func set_event(event: MapEvent) -> void:
 	current_event = event

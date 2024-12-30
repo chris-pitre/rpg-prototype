@@ -1,6 +1,9 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://bthx14876ybmi"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=5 format=3 uid="uid://bthx14876ybmi"]
 
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_jsmpn"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_nvamc"]
+[ext_resource type="Resource" uid="uid://cibegufyvch6q" path="res://resources/upgrades/weapon_upgrade_faster_recovery.tres" id="2_fxbrr"]
+[ext_resource type="Resource" uid="uid://bbqj1ve85d5ns" path="res://resources/upgrades/weapon_upgrade_faster_windup.tres" id="3_corjs"]
 
 [resource]
 resource_local_to_scene = true
@@ -12,6 +15,7 @@ total_posture_damage_offset = 0
 total_windup_time_offset = 0
 total_active_time_offset = 0
 total_recovery_time_offset = 0
+purchasable_upgrades = Array[ExtResource("1_jsmpn")]([ExtResource("2_fxbrr"), ExtResource("3_corjs")])
 name = "Mercenary's Shortsword"
 description = "A sword with a small hilt and blade, but deadly enough for most jobs."
 price = 0

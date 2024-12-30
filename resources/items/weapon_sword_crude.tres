@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://b30f8nlkl6lrn"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=3 format=3 uid="uid://b30f8nlkl6lrn"]
 
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_a7vxv"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_e5622"]
 
 [resource]
@@ -12,6 +13,7 @@ total_posture_damage_offset = 0
 total_windup_time_offset = 0
 total_active_time_offset = 0
 total_recovery_time_offset = 0
+purchasable_upgrades = Array[ExtResource("1_a7vxv")]([])
 name = "Chipped Machete"
 description = "A sharp tool weathered by time and rain."
 price = 0

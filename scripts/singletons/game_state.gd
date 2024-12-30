@@ -28,6 +28,7 @@ var stats: Array[int] = [
 	0, # speech
 	0  # piety
 ]
+var learned_actions: Dictionary
 
 func _ready() -> void:
 	if RANDOM_SEED:
@@ -47,6 +48,12 @@ func give_item(item: Item) -> bool:
 
 func give_action(action: BattleAction) -> void:
 	got_action.emit(action)
+
+func learn_action(weapon_type: int, action: BattleAction) -> void:
+	if not learned_actions.keys().has(weapon_type):
+		learned_actions[weapon_type]
+	elif not learned_actions[weapon_type].has(action):
+		learned_actions[weapon_type].append(action)
 
 func _set_population(amt: int) -> void:
 	population = amt

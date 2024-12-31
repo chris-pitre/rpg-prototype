@@ -1,21 +1,34 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=5 format=3 uid="uid://bthx14876ybmi"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=8 format=3 uid="uid://bthx14876ybmi"]
 
 [ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_jsmpn"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_nvamc"]
+[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="1_q5k8u"]
 [ext_resource type="Resource" uid="uid://cibegufyvch6q" path="res://resources/upgrades/weapon_upgrade_faster_recovery.tres" id="2_fxbrr"]
 [ext_resource type="Resource" uid="uid://bbqj1ve85d5ns" path="res://resources/upgrades/weapon_upgrade_faster_windup.tres" id="3_corjs"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="6_6x2lj"]
+
+[sub_resource type="Resource" id="Resource_l33rj"]
+script = ExtResource("6_6x2lj")
+damage_offset = 0
+posture_damage_offset = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+damage_defense = 0
+posture_defense = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_nvamc")
-weapon_type = 0
-damage = 1
-total_damage_offset = 0
-total_posture_damage_offset = 0
-total_windup_time_offset = 0
-total_active_time_offset = 0
-total_recovery_time_offset = 0
+weapon_type = 1
+base_damage = 10
+stat_block = SubResource("Resource_l33rj")
 purchasable_upgrades = Array[ExtResource("1_jsmpn")]([ExtResource("2_fxbrr"), ExtResource("3_corjs")])
+purchasable_actions = Array[ExtResource("1_q5k8u")]([])
 name = "Mercenary's Shortsword"
 description = "A sword with a small hilt and blade, but deadly enough for most jobs."
 price = 0

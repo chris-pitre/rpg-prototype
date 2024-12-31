@@ -20,7 +20,7 @@ var stun: StunnedStatus = null:
 		stun = new_stun
 		if stun != null:
 			stun.stun = stun.stun_timesteps
-var stat_array: Array[int] = [0, 0, 0, 0]
+var stat_block: StatBlock = StatBlock.new()
 var posture: int = 100
 var current_phase_state: PHASE_STATE = PHASE_STATE.BLOCKING
 
@@ -35,18 +35,5 @@ func _init(p_name="John", p_max_hp=10, p_power=0, p_speech=0, p_agility=0, p_pie
 	name = p_name
 	max_hp = p_max_hp
 	power = p_power
-	stat_array[0] = power
-	speech = p_speech
-	stat_array[1] = speech
-	agility = p_agility
-	stat_array[2] = agility
-	piety = p_piety
-	stat_array[3] = piety
 	moves = p_moves
 	hp = max_hp
-
-func reset_stats() -> void:
-	stat_array[0] = power
-	stat_array[1] = speech
-	stat_array[2] = agility
-	stat_array[3] = piety

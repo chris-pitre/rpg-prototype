@@ -1,8 +1,8 @@
 class_name ItemSlot
 extends TextureRect
 
-signal item_added()
-signal item_removed()
+signal item_added(item: Item)
+signal item_removed(item: Item)
 
 const ITEM_BUTTON = preload("res://scenes/inventory/item_button.tscn")
 
@@ -12,7 +12,18 @@ var extra_condition: Callable
 @export var require_type: bool = false
 @export_flags("Weapon", "Material", "Valuable", "Consumable", "Accessory") var types: int = 0
 
-@onready var center_container = $SellItemContainer
+@onready var center_container = $CenterContainer
+@onready var type_label = $TypeLabel
+
+func _ready() -> void:
+	match types:
+		1:
+			type_label.text = "Weapon"
+		16:
+			type_label.text = "Accessory"
+		_:
+			type_label.text = ""
+		
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if not data is ItemDrag:
@@ -36,5 +47,22 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	new_item_button.item = data.item
 	new_item_button.allow_drag = true
 	item_button = new_item_button
-	item_button.tree_exiting.connect(item_removed.emit)
-	item_added.emit(data.item)
+	item_button.tree_exiting.connect(_on_item_removed.bind(data.item))
+	_on_item_added(data.item)
+
+func _on_item_added(item: Item) -> void:
+	item_added.emit(item)
+	
+	type_label.text = ""
+
+func _on_item_removed(item: Item) -> void:
+	item_removed.emit(item)
+	
+	match types:
+		1:
+			type_label.text = "Weapon"
+		16:
+			type_label.text = "Accessory"
+		_:
+			type_label.text = ""
+	

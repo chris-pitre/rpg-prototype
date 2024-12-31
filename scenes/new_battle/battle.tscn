@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=9 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
 [ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/new_battle/BattleActor2D.tscn" id="2_rpfhh"]
 [ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_2vcsj"]
+[ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="4_fviya"]
 [ext_resource type="PackedScene" uid="uid://dhja7uxi2y2ho" path="res://scenes/new_battle/action_queue_indicator.tscn" id="5_qjfvv"]
 [ext_resource type="PackedScene" uid="uid://j3yxrv6hmkar" path="res://scenes/new_battle/status_list.tscn" id="6_5iup2"]
 
@@ -44,6 +45,7 @@ offset_right = -10.0
 offset_bottom = -42.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("4_fviya")
 theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
 script = ExtResource("3_2vcsj")
 
@@ -56,6 +58,7 @@ anchor_bottom = 1.0
 offset_left = -528.0
 grow_horizontal = 0
 grow_vertical = 2
+theme = ExtResource("4_fviya")
 theme_override_constants/margin_left = 64
 theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 64
@@ -98,6 +101,7 @@ anchor_bottom = 1.0
 offset_top = -32.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("4_fviya")
 
 [node name="PlayerActionQueue" parent="CanvasLayer/PlayerActionPanel" instance=ExtResource("2_epcs7")]
 layout_mode = 1
@@ -114,6 +118,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
+theme = ExtResource("4_fviya")
 
 [node name="EnemyActionQueue" parent="CanvasLayer/EnemyActionPanel" instance=ExtResource("2_epcs7")]
 layout_mode = 1
@@ -131,6 +136,7 @@ offset_top = -0.00799561
 offset_bottom = -0.00799561
 grow_vertical = 0
 size_flags_horizontal = 0
+theme = ExtResource("4_fviya")
 is_player = true
 
 [node name="EnemyStatusList" parent="CanvasLayer" instance=ExtResource("6_5iup2")]
@@ -143,6 +149,10 @@ offset_top = -0.0480003
 offset_bottom = -0.0480003
 grow_horizontal = 0
 size_flags_horizontal = 0
+theme = ExtResource("4_fviya")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
 
 [connection signal="button_down" from="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
 

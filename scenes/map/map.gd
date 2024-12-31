@@ -17,6 +17,7 @@ var player_tween: Tween
 var current_encounter: Encounter
 var event_flags: Array[String] = []
 var cam_zoom: float = 0.0
+var mouse_drag: bool = false
 
 @onready var map_locations: Array[MapLocation]
 
@@ -66,7 +67,8 @@ func _ready() -> void:
 	add_road("Chambers", "Academy")
 	add_road("Chambers", "Pub")
 	add_road("Market", "Slums")
-	add_road("Market", "Pub")
+	add_road("Academy", "Market")
+	add_road("Academy", "Pub")
 	add_road("Blacksmith", "Pub")
 	add_road("Medical", "Pub")
 	add_road("Farm", "Woods")
@@ -120,6 +122,12 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			cam_zoom -= 0.1
 		cam_zoom = clamp(cam_zoom, -0.5, 0.5)
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			mouse_drag = event.pressed
+	if event is InputEventMouseMotion:
+		if mouse_drag:
+			camera.global_position -= event.relative / (cam_zoom + 1.0)
+	
 
 func _process(delta: float) -> void:
 	var move_vector = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
@@ -201,7 +209,16 @@ func show_choices(event: MapEvent):
 
 func apply_choice(choice: MapEventChoice) -> void:
 	if choice.fail_result:
-		var roll = GameState.rng.randi_range(1, 20) + GameState.stats[choice.attribute_check - 1]
+		var roll = GameState.rng.randi_range(1, 20)
+		match choice.attribute_check:
+			MapEventChoice.POWER:
+				roll += GameState.stat_block.stat_power_offset
+			MapEventChoice.AGILITY:
+				roll += GameState.stat_block.stat_agility_offset
+			MapEventChoice.SPEECH:
+				roll += GameState.stat_block.stat_speech_offset
+			MapEventChoice.PIETY:
+				roll += GameState.stat_block.stat_piety_offset
 		if roll >= choice.difficulty:
 			show_event_result(choice.success_result)
 		else:

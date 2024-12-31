@@ -1,19 +1,32 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=3 format=3 uid="uid://b30f8nlkl6lrn"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=6 format=3 uid="uid://b30f8nlkl6lrn"]
 
 [ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_a7vxv"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_e5622"]
+[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="1_jjhq4"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="4_1ryvd"]
+
+[sub_resource type="Resource" id="Resource_eskjx"]
+script = ExtResource("4_1ryvd")
+damage_offset = 0
+posture_damage_offset = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+damage_defense = 0
+posture_defense = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_e5622")
-weapon_type = 0
-damage = 1
-total_damage_offset = 0
-total_posture_damage_offset = 0
-total_windup_time_offset = 0
-total_active_time_offset = 0
-total_recovery_time_offset = 0
+weapon_type = 1
+base_damage = 10
+stat_block = SubResource("Resource_eskjx")
 purchasable_upgrades = Array[ExtResource("1_a7vxv")]([])
+purchasable_actions = Array[ExtResource("1_jjhq4")]([])
 name = "Chipped Machete"
 description = "A sharp tool weathered by time and rain."
 price = 0

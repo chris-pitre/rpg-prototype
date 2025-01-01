@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bncokx5jbxw5s"]
+[gd_scene load_steps=36 format=3 uid="uid://bncokx5jbxw5s"]
 
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dsdjofo441itv" path="res://assets/textures/icons/star.png" id="3_nvc0i"]
 [ext_resource type="PackedScene" uid="uid://ctyajqqxhjbch" path="res://scenes/map/resource_indicator.tscn" id="4_kh2tm"]
 [ext_resource type="Texture2D" uid="uid://dntiq0sqll5bj" path="res://assets/textures/icons/person.png" id="6_c0ry0"]
-[ext_resource type="Texture2D" uid="uid://5s3decjnv85p" path="res://assets/textures/icons/dude.png" id="6_shbpi"]
 [ext_resource type="PackedScene" uid="uid://dmes2nd6gbfw5" path="res://scenes/inventory/item_button.tscn" id="8_2hsvd"]
 [ext_resource type="Script" path="res://scenes/map/blacksmith_menu.gd" id="8_emubx"]
 [ext_resource type="PackedScene" uid="uid://c1safyv2w7biw" path="res://scenes/inventory/sell_shop.tscn" id="9_0hr2t"]
@@ -18,7 +17,11 @@
 [ext_resource type="Resource" uid="uid://gjkkrquga68t" path="res://resources/items/consumable_bandage.tres" id="13_guf8o"]
 [ext_resource type="Script" path="res://scenes/map/medical_menu.gd" id="14_qoh11"]
 [ext_resource type="Script" path="res://scenes/map/academy_menu.gd" id="15_vfc57"]
+[ext_resource type="Script" path="res://scenes/map/character_menu.gd" id="17_fjo3k"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="19_bjh2u"]
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="19_knc5o"]
+[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="20_vsuqc"]
+[ext_resource type="Resource" uid="uid://buceht5bgcah6" path="res://resources/items/accessory_ring_damage_common.tres" id="23_iu4tc"]
 
 [sub_resource type="Gradient" id="Gradient_f2idn"]
 
@@ -78,16 +81,13 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_j88wu"]
+[sub_resource type="Resource" id="Resource_ihgmd"]
 resource_local_to_scene = true
 script = ExtResource("19_bjh2u")
-weapon_type = 0
-damage = 1
-total_damage_offset = 0
-total_posture_damage_offset = 0
-total_windup_time_offset = 0
-total_active_time_offset = 0
-total_recovery_time_offset = 0
+weapon_type = 1
+base_damage = 10
+purchasable_upgrades = Array[ExtResource("19_knc5o")]([])
+purchasable_actions = Array[ExtResource("20_vsuqc")]([])
 name = "Chipped Machete"
 description = "A sharp tool weathered by time and rain."
 price = 0
@@ -99,6 +99,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 1044.0
+offset_bottom = 786.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_c2g5l")
@@ -114,6 +116,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Locations" type="Control" parent="."]
 anchors_preset = 0
@@ -122,43 +125,98 @@ offset_bottom = 40.0
 
 [node name="Camp" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 186.0
-offset_top = 115.0
-offset_right = 218.0
-offset_bottom = 147.0
+offset_left = 561.0
+offset_top = 337.0
+offset_right = 593.0
+offset_bottom = 369.0
 location_name = "Camp"
 
 [node name="Label" parent="Locations/Camp" index="1"]
 text = "The Camp"
 
-[node name="Outlands" parent="Locations" instance=ExtResource("2_p1lux")]
+[node name="Woods" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 559.0
-offset_top = 144.0
-offset_right = 591.0
-offset_bottom = 176.0
-location_name = "Outlands"
+offset_left = 766.0
+offset_top = 524.0
+offset_right = 798.0
+offset_bottom = 556.0
+location_name = "Woods"
 
-[node name="Label" parent="Locations/Outlands" index="1"]
-text = "The Outlands"
+[node name="Label" parent="Locations/Woods" index="1"]
+text = "The Woods"
+
+[node name="Countryside" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 791.0
+offset_top = 730.0
+offset_right = 823.0
+offset_bottom = 762.0
+location_name = "Countryside"
+
+[node name="Label" parent="Locations/Countryside" index="1"]
+text = "The Countryside"
+
+[node name="Lake" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 1010.0
+offset_top = 629.0
+offset_right = 1042.0
+offset_bottom = 661.0
+location_name = "Lake"
+
+[node name="Label" parent="Locations/Lake" index="1"]
+text = "The Lake"
 
 [node name="Blacksmith" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 109.0
-offset_top = 407.0
-offset_right = 141.0
-offset_bottom = 439.0
+offset_left = 133.0
+offset_top = 1062.0
+offset_right = 165.0
+offset_bottom = 1094.0
 location_name = "Blacksmith"
 
 [node name="Label" parent="Locations/Blacksmith" index="1"]
 text = "The Blacksmith"
 
+[node name="Pub" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 1086.0
+offset_right = 444.0
+offset_bottom = 1118.0
+location_name = "Pub"
+
+[node name="Label" parent="Locations/Pub" index="1"]
+text = "The Public House"
+
+[node name="Cliffs" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 1351.0
+offset_right = 95.0
+offset_bottom = 1383.0
+location_name = "Cliffs"
+
+[node name="Label" parent="Locations/Cliffs" index="1"]
+text = "The Cliffside"
+
+[node name="Chasm" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = -157.0
+offset_top = 1511.0
+offset_right = -125.0
+offset_bottom = 1543.0
+location_name = "Chasm"
+
+[node name="Label" parent="Locations/Chasm" index="1"]
+text = "The Chasm"
+
 [node name="Chambers" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 489.0
-offset_top = 314.0
-offset_right = 521.0
-offset_bottom = 346.0
+offset_left = 411.0
+offset_top = 905.0
+offset_right = 443.0
+offset_bottom = 937.0
 location_name = "Chambers"
 
 [node name="Label" parent="Locations/Chambers" index="1"]
@@ -166,32 +224,54 @@ text = "The High Chambers"
 
 [node name="Market" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 872.0
-offset_top = 355.0
-offset_right = 904.0
-offset_bottom = 387.0
+offset_left = 879.0
+offset_top = 922.0
+offset_right = 911.0
+offset_bottom = 954.0
 location_name = "Market"
 
 [node name="Label" parent="Locations/Market" index="1"]
 text = "The Market District"
 
+[node name="Wall" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 1268.0
+offset_top = 1118.0
+offset_right = 1300.0
+offset_bottom = 1150.0
+location_name = "Wall"
+
+[node name="Label" parent="Locations/Wall" index="1"]
+text = "The Wall"
+
 [node name="Medical" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 306.0
-offset_top = 553.0
-offset_right = 338.0
-offset_bottom = 585.0
+offset_left = 454.0
+offset_top = 1315.0
+offset_right = 486.0
+offset_bottom = 1347.0
 location_name = "Medical"
 
 [node name="Label" parent="Locations/Medical" index="1"]
 text = "The Medical District"
 
+[node name="Logging" parent="Locations" instance=ExtResource("2_p1lux")]
+layout_mode = 0
+offset_left = 1568.0
+offset_top = 1176.0
+offset_right = 1600.0
+offset_bottom = 1208.0
+location_name = "Logging"
+
+[node name="Label" parent="Locations/Logging" index="1"]
+text = "The Logging Site"
+
 [node name="Farm" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 583.0
-offset_top = 583.0
-offset_right = 615.0
-offset_bottom = 615.0
+offset_left = 545.0
+offset_top = 601.0
+offset_right = 577.0
+offset_bottom = 633.0
 location_name = "Farm"
 
 [node name="Label" parent="Locations/Farm" index="1"]
@@ -199,10 +279,10 @@ text = "The Farmlands"
 
 [node name="Slums" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 861.0
-offset_top = 542.0
-offset_right = 893.0
-offset_bottom = 574.0
+offset_left = 1022.0
+offset_top = 1144.0
+offset_right = 1054.0
+offset_bottom = 1176.0
 location_name = "Slums"
 
 [node name="Label" parent="Locations/Slums" index="1"]
@@ -210,10 +290,10 @@ text = "The Slums"
 
 [node name="Academy" parent="Locations" instance=ExtResource("2_p1lux")]
 layout_mode = 0
-offset_left = 659.0
-offset_top = 427.0
-offset_right = 691.0
-offset_bottom = 459.0
+offset_left = 651.0
+offset_top = 1008.0
+offset_right = 683.0
+offset_bottom = 1040.0
 location_name = "Academy"
 
 [node name="Label" parent="Locations/Academy" index="1"]
@@ -391,6 +471,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 64.0
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
@@ -567,6 +648,7 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
@@ -609,11 +691,13 @@ size_flags_vertical = 10
 text = "Close"
 
 [node name="AcademyMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
+visible = false
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
@@ -621,10 +705,16 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
 script = ExtResource("15_vfc57")
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/AcademyMenu"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu"]
+custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer"]
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -632,12 +722,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 text = "The Academy"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="Description" type="Label" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.65834, 0.65834, 0.65834, 1)
@@ -646,19 +736,51 @@ text = "insert description here"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
 
-[node name="CloseAcademy" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer"]
+[node name="WeaponSlot" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_nse17")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+types = 1
+
+[node name="CloseAcademy" type="Button" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Close"
+
+[node name="ActionsMenu" type="Panel" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/ActionsMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/ActionsMenu/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ActionButtonContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/ActionsMenu/ScrollContainer/MarginContainer"]
+layout_mode = 2
 
 [node name="ItemResultMenu" type="MarginContainer" parent="CanvasLayer/Overlay"]
 visible = false
@@ -667,6 +789,7 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
@@ -713,11 +836,13 @@ anchor_bottom = 1.0
 offset_left = -64.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_c2g5l")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 64
+script = ExtResource("17_fjo3k")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Overlay/CharacterMenu"]
 layout_mode = 2
@@ -746,30 +871,6 @@ theme_override_constants/margin_bottom = 8
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
-layout_mode = 2
-
-[node name="TextureRect2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
-layout_mode = 2
-
-[node name="TextureRect3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
-layout_mode = 2
-
-[node name="TextureRect4" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("10_nse17")]
-layout_mode = 2
-
-[node name="Character" type="TextureRect" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("6_shbpi")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="Healthbar" type="TextureProgressBar" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 step = 0.05
@@ -787,6 +888,78 @@ grow_vertical = 2
 theme_override_constants/outline_size = 8
 text = "5 hp"
 horizontal_alignment = 1
+
+[node name="EquipSlotContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="WeaponSlot" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
+layout_mode = 2
+types = 1
+
+[node name="AccessorySlot" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
+layout_mode = 2
+types = 16
+
+[node name="AccessorySlot2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
+layout_mode = 2
+types = 16
+
+[node name="AccessorySlot3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
+layout_mode = 2
+types = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabelContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="DamageOffset" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "damageoffset: 0"
+
+[node name="PostureDamageOffset" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "posturedamageoffset: 0"
+
+[node name="DamageDefense" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "damagedefense: 0"
+
+[node name="PostureDefense" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "posturedefense: 0"
+
+[node name="WindupOffset" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "windupoffset: 0"
+
+[node name="ActiveOffset" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "activeoffset: 0"
+
+[node name="RecoveryOffset" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "recoveryoffset: 0"
+
+[node name="Power" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "power: 0"
+
+[node name="Agility" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "agility: 0"
+
+[node name="Speech" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "speech: 0"
+
+[node name="Piety" type="Label" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/StatLabelContainer"]
+layout_mode = 2
+text = "piety: 0"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2
@@ -813,7 +986,12 @@ allow_drop = true
 [node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = SubResource("Resource_j88wu")
+item = SubResource("Resource_ihgmd")
+
+[node name="ItemButton2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
+layout_mode = 2
+allow_drag = true
+item = ExtResource("23_iu4tc")
 
 [node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2
@@ -849,8 +1027,11 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
+position = Vector2(576, 328)
 position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="BattleCamera" type="Camera2D" parent="."]
 
 [connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultFight" to="." method="_on_result_fight_pressed"]
@@ -859,18 +1040,27 @@ position_smoothing_enabled = true
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/Button" to="CanvasLayer/Overlay/MedicalMenu" method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MedicalMenu/Panel/VBoxContainer/CloseMedical" to="." method="_on_close_medical_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/AcademyMenu/Panel/VBoxContainer/CloseAcademy" to="." method="_on_close_academy_pressed"]
+[connection signal="item_added" from="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer/ScrollContainer/VBoxContainer/WeaponSlot" to="CanvasLayer/Overlay/AcademyMenu" method="_on_weapon_slot_item_added"]
+[connection signal="item_removed" from="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer/ScrollContainer/VBoxContainer/WeaponSlot" to="CanvasLayer/Overlay/AcademyMenu" method="_on_weapon_slot_item_removed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/AcademyMenu/HBoxContainer/Panel/VBoxContainer/CloseAcademy" to="." method="_on_close_academy_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/ItemResultMenu/Panel/VBoxContainer/ItemResultClose" to="." method="_on_item_result_close_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/CloseCharacter" to="." method="_on_close_character_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/VisitButton" to="." method="_on_visit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/OpenCharacter" to="." method="_on_open_character_pressed"]
 
 [editable path="Locations/Camp"]
-[editable path="Locations/Outlands"]
+[editable path="Locations/Woods"]
+[editable path="Locations/Countryside"]
+[editable path="Locations/Lake"]
 [editable path="Locations/Blacksmith"]
+[editable path="Locations/Pub"]
+[editable path="Locations/Cliffs"]
+[editable path="Locations/Chasm"]
 [editable path="Locations/Chambers"]
 [editable path="Locations/Market"]
+[editable path="Locations/Wall"]
 [editable path="Locations/Medical"]
+[editable path="Locations/Logging"]
 [editable path="Locations/Farm"]
 [editable path="Locations/Slums"]
 [editable path="Locations/Academy"]

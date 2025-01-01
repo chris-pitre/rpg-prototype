@@ -7,9 +7,9 @@ signal population_changed(amt: int)
 signal gold_changed(amt: int)
 signal max_health_changed(amt: int)
 signal health_changed(amt: int)
-signal stats_changed(stats: Array[int])
+signal stat_block_changed(stat_block: StatBlock)
 
-const RANDOM_SEED: bool = true
+const RANDOM_SEED: bool = false
 
 @onready var rng = RandomNumberGenerator.new()
 var day: int = -1:
@@ -22,12 +22,9 @@ var max_health: int = 5:
 	set = _set_max_health
 var health: int = 5:
 	set = _set_health
-var stats: Array[int] = [
-	0, # power
-	0, # agility
-	0, # speech
-	0  # piety
-]
+var learned_actions: Dictionary
+var stat_block = StatBlock.new():
+	set = _set_stat_block
 
 func _ready() -> void:
 	if RANDOM_SEED:
@@ -48,6 +45,12 @@ func give_item(item: Item) -> bool:
 func give_action(action: BattleAction) -> void:
 	got_action.emit(action)
 
+func learn_action(weapon_type: int, action: BattleAction) -> void:
+	if not learned_actions.keys().has(weapon_type):
+		learned_actions[weapon_type]
+	elif not learned_actions[weapon_type].has(action):
+		learned_actions[weapon_type].append(action)
+
 func _set_population(amt: int) -> void:
 	population = amt
 	population_changed.emit(amt)
@@ -67,3 +70,7 @@ func _set_health(amt: int) -> void:
 func _set_day(_day: int) -> void:
 	day = _day
 	day_changed.emit(day)
+
+func _set_stat_block(_stat_block: StatBlock) -> void:
+	stat_block = _stat_block
+	stat_block_changed.emit(stat_block)

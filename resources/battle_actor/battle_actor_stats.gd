@@ -17,7 +17,7 @@ var posture: int = 100: set = _set_posture
 var current_guard: GuardStatus.GUARD = GuardStatus.GUARD.NONE
 var stat_modifiers: Array[StatStatus] = []
 var stun: StunnedStatus = null: set = _set_stun
-var stat_array: Array[int] = [0, 0, 0, 0]
+var stat_block: StatBlock = StatBlock.new()
 var current_phase_state: PHASE_STATE = PHASE_STATE.BLOCKING
 
 enum PHASE_STATE {
@@ -31,20 +31,7 @@ func _init(p_name="John", p_max_hp=100, p_power=0, p_speech=0, p_agility=0, p_pi
 	name = p_name
 	max_hp = p_max_hp
 	power = p_power
-	stat_array[0] = power
-	speech = p_speech
-	stat_array[1] = speech
-	agility = p_agility
-	stat_array[2] = agility
-	piety = p_piety
-	stat_array[3] = piety
 	moves = p_moves
-
-func reset_stats() -> void:
-	stat_array[0] = power
-	stat_array[1] = speech
-	stat_array[2] = agility
-	stat_array[3] = piety
 
 func add_status(status: StatStatus) -> void:
 	print(status)

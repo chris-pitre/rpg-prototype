@@ -16,6 +16,8 @@ var adjacent: Dictionary = {}
 var player_tween: Tween
 var current_encounter: Encounter
 var event_flags: Array[String] = []
+var cam_zoom: float = 0.0
+var mouse_drag: bool = false
 
 @onready var map_locations: Array[MapLocation]
 
@@ -47,7 +49,6 @@ func _ready() -> void:
 	GameState.got_item.connect(_got_item)
 	GameState.gold_changed.connect(_gold_changed)
 	GameState.population_changed.connect(_population_changed)
-	GameState.health_changed.connect(_health_changed)
 	BattleManager.battle_ended.connect(end_encounter)
 	
 	player.global_position = current_location.global_position
@@ -57,16 +58,29 @@ func _ready() -> void:
 			map_locations.append(child)
 			child.pressed.connect(_map_location_pressed.bind(child))
 	
-	add_road("Camp", "Outlands")
-	add_road("Outlands", "Market")
+	add_road("Camp", "Woods")
+	add_road("Woods", "Countryside")
+	add_road("Countryside", "Market")
 	add_road("Blacksmith", "Chambers")
 	add_road("Chambers", "Market")
 	add_road("Chambers", "Market")
 	add_road("Chambers", "Academy")
-	add_road("Medical", "Farm")
-	add_road("Academy", "Farm")
+	add_road("Chambers", "Pub")
+	add_road("Market", "Slums")
+	add_road("Academy", "Market")
+	add_road("Academy", "Pub")
+	add_road("Blacksmith", "Pub")
+	add_road("Medical", "Pub")
+	add_road("Farm", "Woods")
+	add_road("Farm", "Countryside")
 	add_road("Academy", "Slums")
 	add_road("Academy", "Market")
+	add_road("Medical", "Cliffs")
+	add_road("Blacksmith", "Cliffs")
+	add_road("Wall", "Slums")
+	add_road("Wall", "Logging")
+	add_road("Countryside", "Lake")
+	add_road("Cliffs", "Chasm")
 	
 	var dir = DirAccess.open(EVENTS_DIR)
 	if dir:
@@ -101,11 +115,26 @@ func _draw() -> void:
 				)
 				draw_circle((key.global_position + adj.global_position + Vector2.ONE * 32) / 2, 10, Color.GRAY)
 
-func _physics_process(delta: float) -> void:
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			cam_zoom += 0.1
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			cam_zoom -= 0.1
+		cam_zoom = clamp(cam_zoom, -0.5, 0.5)
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			mouse_drag = event.pressed
+	if event is InputEventMouseMotion:
+		if mouse_drag:
+			camera.global_position -= event.relative / (cam_zoom + 1.0)
+	
+
+func _process(delta: float) -> void:
 	var move_vector = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
 	camera.global_position += move_vector * delta * 640.0
 	if Input.is_physical_key_pressed(KEY_R):
 		get_tree().reload_current_scene()
+	camera.zoom = camera.zoom.lerp(Vector2.ONE * (cam_zoom + 1.0), delta * 32)
 
 func get_location_by_name(name: String) -> MapLocation:
 	for location in map_locations:
@@ -180,7 +209,16 @@ func show_choices(event: MapEvent):
 
 func apply_choice(choice: MapEventChoice) -> void:
 	if choice.fail_result:
-		var roll = GameState.rng.randi_range(1, 20) + GameState.stats[choice.attribute_check - 1]
+		var roll = GameState.rng.randi_range(1, 20)
+		match choice.attribute_check:
+			MapEventChoice.POWER:
+				roll += GameState.stat_block.stat_power_offset
+			MapEventChoice.AGILITY:
+				roll += GameState.stat_block.stat_agility_offset
+			MapEventChoice.SPEECH:
+				roll += GameState.stat_block.stat_speech_offset
+			MapEventChoice.PIETY:
+				roll += GameState.stat_block.stat_piety_offset
 		if roll >= choice.difficulty:
 			show_event_result(choice.success_result)
 		else:
@@ -269,7 +307,7 @@ func move_to_location(map_location: MapLocation) -> void:
 	player_tween.finished.connect(_player_second_tween_finished.bind(map_location))
 
 func get_midpoint_event() -> MapEvent:
-	var roll = GameState.rng.rand_weighted([1.0, 0.0])
+	var roll = GameState.rng.rand_weighted([0.2, 0.8])
 	var event_list = road_events.values()
 	if roll == 0:
 		var event = event_list[GameState.rng.randi_range(0, event_list.size() - 1)]
@@ -362,10 +400,6 @@ func _gold_changed(amt: int) -> void:
 
 func _population_changed(amt: int) -> void:
 	$CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4/ResourceAmount.text = str(amt)
-
-func _health_changed(amt: int) -> void:
-	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar.value = amt / GameState.max_health
-	$CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/Healthbar/Label.text = str(amt)
 
 func _on_item_result_close_pressed() -> void:
 	$CanvasLayer/Overlay/ItemResultMenu.hide()

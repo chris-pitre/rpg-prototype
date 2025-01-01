@@ -8,7 +8,13 @@
 [sub_resource type="Resource" id="Resource_sst77"]
 script = ExtResource("3_utp7w")
 title = "Welcome"
-description = "Kill three of the villan's goons to win..."
+description = "Welcome to your first day on the job in the Novis Orbis Company settlement! 
+
+Given the job title of Protector by the Grand Overseer, please survey and prevent threats whether internal or external from interfering with our conquest of the new continent.
+
+Once permanent settlement is sufficiently viable, your payment will be sent overseas to your estate.
+
+~ The Advisor"
 gold = 50
 population_change = 0
 items = Array[ExtResource("2_xxdk8")]([])

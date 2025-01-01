@@ -1,17 +1,36 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=2 format=3 uid="uid://bbs2t7we64yet"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=10 format=3 uid="uid://bbs2t7we64yet"]
 
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_jmdtc"]
+[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="1_o4olx"]
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_y5duh"]
+[ext_resource type="Resource" uid="uid://cibegufyvch6q" path="res://resources/upgrades/weapon_upgrade_faster_recovery.tres" id="2_aniqs"]
+[ext_resource type="Resource" uid="uid://bbqj1ve85d5ns" path="res://resources/upgrades/weapon_upgrade_faster_windup.tres" id="3_crdb8"]
+[ext_resource type="Resource" uid="uid://b38yvv4ltrpok" path="res://resources/upgrades/weapon_upgrade_heavy_hitter.tres" id="4_4ht5q"]
+[ext_resource type="Resource" uid="uid://bwoadm2yuan3n" path="res://resources/upgrades/weapon_upgrade_larger_active.tres" id="5_4m0jb"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="8_l3bhb"]
+
+[sub_resource type="Resource" id="Resource_j4mb4"]
+script = ExtResource("8_l3bhb")
+damage_offset = 0
+posture_damage_offset = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+damage_defense = 0
+posture_defense = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_jmdtc")
-weapon_type = 0
-damage = 1
-total_damage_offset = 0
-total_posture_damage_offset = 0
-total_windup_time_offset = 0
-total_active_time_offset = 0
-total_recovery_time_offset = 0
+weapon_type = 1
+base_damage = 10
+stat_block = SubResource("Resource_j4mb4")
+purchasable_upgrades = Array[ExtResource("1_y5duh")]([ExtResource("2_aniqs"), ExtResource("3_crdb8"), ExtResource("4_4ht5q"), ExtResource("5_4m0jb")])
+purchasable_actions = Array[ExtResource("1_o4olx")]([])
 name = "Exquisite Longsword"
 description = "An ornately engraved longsword with a wide guard and ergonomic grip, but sharp build."
 price = 0

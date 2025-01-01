@@ -76,6 +76,7 @@ difficulty = 10
 script = ExtResource("5_ae2ic")
 name = "Mandatory Draft"
 road_event = false
+urgent = false
 hover_description = "Important news at the High Chambers."
 description = "A line of high-ranking men stand in a line on a balcony in front of the High Chambers. In response to the news about the barbarians, the city is imposing a mandatory draft on all men. A wave of unrest travels through the crowd as the word is spread.
 

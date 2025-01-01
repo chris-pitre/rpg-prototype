@@ -5,11 +5,12 @@ extends Control
 @onready var action_palette_margin := $CanvasLayer/RightMargin
 @onready var action_palette := $CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/VBoxContainer
 @onready var action_block := preload("res://scenes/new_battle/action_block.tscn")
+@onready var camera = $Camera2D
 
 func _ready() -> void:
 	BattleManager.start_battle.connect(_start_battle)
 	BattleManager.planning_phase_started.connect(_show_action_palette)
-	
+
 func _start_battle(encounter: Encounter) -> void:
 	visible = true
 	_get_player_moves()

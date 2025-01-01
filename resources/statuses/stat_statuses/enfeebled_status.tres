@@ -8,4 +8,5 @@ script = ExtResource("1_dx5ti")
 stat_direction = 0
 damage_type = 0
 multiplier = 1.5
+duration_timesteps = 20
 name = "Enfeebled"

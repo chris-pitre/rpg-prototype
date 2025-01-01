@@ -1,44 +1,70 @@
 class_name BattleActor2D extends Node2D
 
 @export var is_player: bool
+
+@onready var anim_sprite := $AnimatedSprite2D
+@onready var health_bar := $HealthBar
+@onready var health_label := $HealthBar/HealthLabel
+@onready var posture_bar := $PostureBar
+@onready var posture_label := $PostureBar/PostureLabel
+
 var current_move: MoveResource
 
 func _ready() -> void:
-	$AnimatedSprite2D.animation = "default"
+	anim_sprite.animation = "default"
 	if is_player:
-		BattleManager.player_animation.connect(_do_animation)
+		BattleManager.player_hp_updated.connect(_update_hp)
+		BattleManager.player_posture_updated.connect(_update_posture)
+		BattleManager.player_start_move.connect(_start_move)
 	else:
-		BattleManager.enemy_animation.connect(_do_animation)
+		BattleManager.enemy_hp_updated.connect(_update_hp)
+		BattleManager.enemy_posture_updated.connect(_update_posture)
+		BattleManager.enemy_start_move.connect(_start_move)
 
-func _do_animation(animation_name: String, new_move: MoveResource) -> void:
-	$AnimationPlayer.stop()
-	current_move = new_move
-	$AnimationPlayer.play("player/"+animation_name)
+func show_frame(frame_name: String) -> void:
+	anim_sprite.animation = frame_name
 
-func _execute_move(move_name: String) -> void:
-	if is_player:
-		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, BattleManager.moves[move_name])
-	else:
-		BattleManager.execute_action(BattleManager.enemy, BattleManager.player, BattleManager.moves[move_name])
-
-func _adjust_speed_scale(current_phase: int) -> void:
-	var frames: int
-	match current_phase:
-		BattleActorStats.PHASE_STATE.WINDUP:
-			frames = current_move.windup
-		BattleActorStats.PHASE_STATE.ACTIVE:
-			frames = current_move.active
-		BattleActorStats.PHASE_STATE.RECOVERY:
-			frames = current_move.recovery
-		_:
-			frames = 1
-	$AnimationPlayer.speed_scale = (1.0 / BattleManager.time_step) / frames
-
-func _windup_start() -> void:
-	_adjust_speed_scale(BattleActorStats.PHASE_STATE.WINDUP)
+func _update_hp(new_hp: int) -> void:
+	health_bar.value = new_hp
+	health_label.text = str(new_hp)
 	
-func _active_start() -> void:
-	_adjust_speed_scale(BattleActorStats.PHASE_STATE.ACTIVE)
+func _update_posture(new_posture: int) -> void:
+	posture_bar.value = new_posture
+	posture_label.text = str(new_posture)
 
-func _recovery_start() -> void:
-	_adjust_speed_scale(BattleActorStats.PHASE_STATE.RECOVERY)
+func _start_move(move: MoveResource) -> void:
+	current_move = move
+	start_windup()
+
+func start_windup():
+	var frames_remaining = current_move.windup
+	anim_sprite.animation = current_move.windup_anim_name
+	while frames_remaining > 0:
+		await BattleManager.next_execution_timestep
+		frames_remaining -= 1
+	start_active()
+
+func start_active():
+	var frames_remaining = current_move.active
+	anim_sprite.animation = current_move.active_anim_name
+	if is_player:
+		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, current_move)
+	else:
+		BattleManager.execute_action(BattleManager.enemy, BattleManager.player, current_move)
+	while frames_remaining > 0:
+		await BattleManager.next_execution_timestep
+		frames_remaining -= 1
+	start_recovery()
+	
+func start_recovery():
+	var frames_remaining = current_move.recovery
+	anim_sprite.animation = current_move.recovery_anim_name
+	while frames_remaining > 0:
+		await BattleManager.next_execution_timestep
+		frames_remaining -= 1
+	if current_move.followup_attack != null:
+		current_move = current_move.followup_attack
+		start_windup()
+	else:
+		current_move = null
+		anim_sprite.animation = "default"

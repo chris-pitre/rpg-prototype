@@ -8,4 +8,4 @@ script = ExtResource("1_k5pdx")
 stat_direction = 1
 damage_type = 2
 multiplier = 0.5
-name = "<null>"
+name = "Disarmed"

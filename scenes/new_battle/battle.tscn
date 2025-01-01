@@ -147,3 +147,5 @@ size_flags_horizontal = 0
 [connection signal="button_down" from="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
 
 [editable path="EnemyBattleActor"]
+[editable path="CanvasLayer/PlayerStatusList"]
+[editable path="CanvasLayer/EnemyStatusList"]

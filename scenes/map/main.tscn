@@ -51,3 +51,5 @@ visible = false
 [editable path="Map/CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell"]
 [editable path="Battle"]
 [editable path="Battle/EnemyBattleActor"]
+[editable path="Battle/CanvasLayer/PlayerStatusList"]
+[editable path="Battle/CanvasLayer/EnemyStatusList"]

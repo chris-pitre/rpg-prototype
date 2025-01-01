@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbf68y6cxk4mr"]
+
+[ext_resource type="Script" path="res://scenes/new_battle/stat_status_label.gd" id="1_68h0q"]
+
+[node name="StatStatusLabel" type="Label"]
+script = ExtResource("1_68h0q")

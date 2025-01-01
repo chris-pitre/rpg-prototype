@@ -1,16 +1,24 @@
 class_name MoveResource extends Resource
 
+@export_category("Attack Metadata")
 @export var name: String
-@export var animation_name: String = "<null>"
+@export var windup_anim_name: String 
+@export var active_anim_name: String
+@export var recovery_anim_name: String
 
 @export_category("Attack Characteristics")
 @export_enum("None", "High Attack", "Middle Attack", "Low Attack") var attack_direction: int = 1
 @export var windup: int = 1
 @export var active: int = 1
 @export var recovery: int = 1
-var length: int:
+var length: int = -1:
 	get:
-		return windup + active + recovery
+		if length == -1:
+			length = windup + active + recovery
+			if followup_attack != null:
+				length += followup_attack.length
+		return length
+@export var followup_attack: MoveResource
 
 @export_category("Self Effects")
 @export var self_stat_statuses: Array[StatStatus] = []
@@ -30,7 +38,5 @@ var length: int:
 @export_flags("Power", "Speech", "Agility", "Piety") var opponent_stats: int = 0
 @export var opponent_stat_modifier: int = 0
 
-func _init(p_name="Attack", p_animation_name="<null>"):
+func _init(p_name="Attack"):
 	name = p_name
-	animation_name = p_animation_name
-	

@@ -12,11 +12,13 @@ name = "<null>"
 [resource]
 script = ExtResource("1_7kuhv")
 name = "sub_Double Kick"
-animation_name = "<null>"
+windup_anim_name = "kick_windup"
+active_anim_name = "kick2"
+recovery_anim_name = "kick_windup"
 attack_direction = 1
-windup = 1
-active = 1
-recovery = 1
+windup = 5
+active = 2
+recovery = 3
 self_stat_statuses = Array[ExtResource("1_oj2bx")]([])
 self_damage = 0
 self_healing = 0

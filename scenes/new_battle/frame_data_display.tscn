@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://x7x5jci0gxdx"]
+
+[sub_resource type="Gradient" id="Gradient_nex08"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.188811, 0.444056, 0.727273)
+colors = PackedColorArray(0.38, 0.1254, 0.1254, 1, 0.8, 0.264, 0.264, 1, 0.38, 0.1254, 0.1254, 1, 0.8, 0.264, 0.264, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2u2nj"]
+gradient = SubResource("Gradient_nex08")
+width = 16
+height = 16
+fill_to = Vector2(1, 1)
+repeat = 1
+
+[sub_resource type="Gradient" id="Gradient_g6fha"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n4dkm"]
+gradient = SubResource("Gradient_g6fha")
+width = 16
+height = 16
+fill_to = Vector2(1, 1)
+repeat = 1
+
+[sub_resource type="Gradient" id="Gradient_bv31b"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.188811, 0.444056, 0.727273)
+colors = PackedColorArray(0.22475, 0.1054, 0.31, 1, 0.551, 0.2584, 0.76, 1, 0.22475, 0.1054, 0.31, 1, 0.551, 0.2584, 0.76, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y26wu"]
+gradient = SubResource("Gradient_bv31b")
+width = 16
+height = 16
+fill_to = Vector2(1, 1)
+repeat = 1
+
+[node name="FrameDataDisplay" type="HBoxContainer"]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Windup" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_2u2nj")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Active" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_n4dkm")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Recovery" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_y26wu")
+expand_mode = 1
+stretch_mode = 1

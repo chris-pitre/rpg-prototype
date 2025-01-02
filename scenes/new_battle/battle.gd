@@ -18,7 +18,7 @@ func _start_battle(encounter: Encounter) -> void:
 
 func _get_player_moves() -> void:
 	for child in action_palette.get_children():
-		remove_child(child)
+		action_palette.remove_child(child)
 		child.queue_free()
 	for move: String in BattleManager.player.moves:
 		var move_resource = BattleManager.moves[move]

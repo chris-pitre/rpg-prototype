@@ -9,7 +9,7 @@ class_name BattleActorStats extends Resource
 
 var hp: int = 100: set = _set_hp
 var posture: int = 100: set = _set_posture
-var current_guard: GuardStatus.GUARD = GuardStatus.GUARD.NONE
+var current_guard: GuardStatus.GUARD = GuardStatus.GUARD.NONE: set = _set_guard
 var stat_modifiers: Array[StatStatus] = []
 var stun: StunnedStatus = null: set = _set_stun
 var stat_block: StatBlock = StatBlock.new()

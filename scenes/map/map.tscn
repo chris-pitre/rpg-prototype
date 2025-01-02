@@ -79,19 +79,6 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_7j52r"]
-resource_local_to_scene = true
-script = ExtResource("19_bjh2u")
-weapon_type = 1
-base_damage = 10
-purchasable_upgrades = Array[ExtResource("19_knc5o")]([])
-purchasable_actions = Array[ExtResource("20_vsuqc")]([])
-name = "Chipped Machete"
-description = "A sharp tool weathered by time and rain."
-price = 0
-can_be_sold = false
-type = 1
-
 [node name="Map" type="Control"]
 layout_mode = 3
 anchors_preset = 15

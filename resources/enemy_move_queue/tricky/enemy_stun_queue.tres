@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyMoveQueue" load_steps=3 format=3 uid="uid://do2jaellsfm5y"]
+
+[ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="1_7byjg"]
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="2_5le0v"]
+
+[resource]
+script = ExtResource("2_5le0v")
+queue = {
+0: ExtResource("1_7byjg"),
+1: ExtResource("1_7byjg")
+}

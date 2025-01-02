@@ -6,6 +6,11 @@ extends Node
 func _ready() -> void:
 	BattleManager.start_battle.connect(swap_to_battle)
 	BattleManager.battle_ended.connect(swap_to_map)
+	$Map.show()
+	$Map/Background.show()
+	$Map/CanvasLayer.show()
+	$Battle.hide()
+	$Battle/CanvasLayer.hide()
 
 func swap_to_map(encounter: Encounter, victory: bool) -> void:
 	$Map.show()

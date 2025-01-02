@@ -5,6 +5,7 @@ extends Resource
 @export var road_event: bool = false
 @export var urgent: bool = false
 @export_multiline var hover_description: String = "Something is happening."
+@export_multiline var appear_description: String = "An event has started."
 @export_multiline var description: String = "Something is happening."
 @export var lifetime: int = -1
 @export var require_flags: Array[String] = []

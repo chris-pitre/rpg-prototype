@@ -20,14 +20,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g3efr")
 
-[node name="PlayerBattleActor" parent="." instance=ExtResource("2_rpfhh")]
-position = Vector2(215, 461)
+[node name="PlayerAnchor" type="Node2D" parent="."]
+position = Vector2(268, 391)
+
+[node name="PlayerBattleActor" parent="PlayerAnchor" instance=ExtResource("2_rpfhh")]
 is_player = true
 
-[node name="EnemyBattleActor" parent="." instance=ExtResource("2_rpfhh")]
-position = Vector2(865, 227)
+[node name="EnemyAnchor" type="Node2D" parent="."]
+position = Vector2(828, 211)
 
-[node name="AnimatedSprite2D" parent="EnemyBattleActor" index="0"]
+[node name="EnemyBattleActor" parent="EnemyAnchor" instance=ExtResource("2_rpfhh")]
+
+[node name="AnimatedSprite2D" parent="EnemyAnchor/EnemyBattleActor" index="0"]
 modulate = Color(1, 0, 0, 1)
 scale = Vector2(-2, 2)
 
@@ -155,6 +159,6 @@ anchor_mode = 0
 
 [connection signal="button_down" from="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
 
-[editable path="EnemyBattleActor"]
+[editable path="EnemyAnchor/EnemyBattleActor"]
 [editable path="CanvasLayer/PlayerStatusList"]
 [editable path="CanvasLayer/EnemyStatusList"]

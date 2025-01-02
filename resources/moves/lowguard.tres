@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://bmo1o62a0uy6l"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_gkrcb"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_gu8wn"]
+[ext_resource type="Resource" uid="uid://bg1k1a021d2kj" path="res://resources/statuses/guard_statuses/low_guard_status.tres" id="3_03fds"]
+
+[resource]
+script = ExtResource("2_gu8wn")
+name = "Low Guard"
+windup_anim_name = ""
+active_anim_name = ""
+recovery_anim_name = "tailguard"
+return_anim_name = "tailguard"
+attack_direction = 1
+require_guard = 0
+windup = 2
+active = 0
+recovery = 2
+self_stat_statuses = Array[ExtResource("1_gkrcb")]([])
+self_guard_status = ExtResource("3_03fds")
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_gkrcb")]([])
+opponent_damage = 0
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

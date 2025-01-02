@@ -3,14 +3,9 @@ class_name BattleActorStats extends Resource
 @export var name: String = ""
 @export var is_player: bool = false
 @export var max_hp: int = 100
-@export var power: int = 0
-@export var speech: int = 0
-@export var agility: int = 0
-@export var piety: int = 0
 @export var moves: Array[String] = []
 @export var move_queues: Array[EnemyMoveQueue] = []
 @export var sprite_frames: SpriteFrames #placeholder for now will be replaced with whatever 3d implementation
-@export var animation_lib: AnimationLibrary
 
 var hp: int = 100: set = _set_hp
 var posture: int = 100: set = _set_posture
@@ -27,14 +22,13 @@ enum PHASE_STATE {
 	BLOCKING
 }
 
-func _init(p_name="John", p_max_hp=100, p_power=0, p_speech=0, p_agility=0, p_piety=0, p_moves:Array[String] = [], p_sprite_frames: SpriteFrames=null, p_animation_lib: AnimationLibrary=null) -> void:
+func _init(p_name="John", p_max_hp=100, p_moves:Array[String] = []) -> void:
 	name = p_name
 	max_hp = p_max_hp
-	power = p_power
 	moves = p_moves
 
 func add_status(status: StatStatus) -> void:
-	print(status)
+	BattleManager.next_execution_timestep.connect(status.decrease_duration)
 	status.status_finished.connect(remove_status)
 	if is_player:
 		BattleManager.player_status_added.emit(status)
@@ -43,6 +37,8 @@ func add_status(status: StatStatus) -> void:
 	stat_modifiers.append(status)
 
 func remove_status(status: StatStatus) -> void:
+	status.status_finished.disconnect(remove_status)
+	BattleManager.next_execution_timestep.disconnect(status.decrease_duration)
 	stat_modifiers.erase(status)
 
 func _set_hp(new_hp: int) -> void:

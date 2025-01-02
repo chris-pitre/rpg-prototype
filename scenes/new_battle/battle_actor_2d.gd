@@ -39,6 +39,10 @@ func _start_move(move: MoveResource) -> void:
 func start_windup():
 	var frames_remaining = current_move.windup
 	anim_sprite.animation = current_move.windup_anim_name
+	if is_player:
+		BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.WINDUP
+	else:
+		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.WINDUP
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
@@ -48,8 +52,10 @@ func start_active():
 	var frames_remaining = current_move.active
 	anim_sprite.animation = current_move.active_anim_name
 	if is_player:
+		BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.ACTIVE
 		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, current_move)
 	else:
+		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.ACTIVE
 		BattleManager.execute_action(BattleManager.enemy, BattleManager.player, current_move)
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
@@ -59,6 +65,10 @@ func start_active():
 func start_recovery():
 	var frames_remaining = current_move.recovery
 	anim_sprite.animation = current_move.recovery_anim_name
+	if is_player:
+		BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.RECOVERY
+	else:
+		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.RECOVERY
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
@@ -68,3 +78,7 @@ func start_recovery():
 	else:
 		current_move = null
 		anim_sprite.animation = "default"
+		if is_player:
+			BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.BLOCKING
+		else:
+			BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.BLOCKING

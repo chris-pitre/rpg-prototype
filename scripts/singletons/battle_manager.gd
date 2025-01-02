@@ -10,6 +10,7 @@ signal planning_phase_started
 signal execution_phase_started
 
 signal next_execution_timestep
+signal allow_move_execution
 #endregion
 
 signal UI_move_added(move: MoveResource)
@@ -108,73 +109,101 @@ func start_execution_phase() -> void:
 			enemy_start_move.emit(enemy_move.action)
 		await get_tree().create_timer(time_step).timeout
 		next_execution_timestep.emit()
+		allow_move_execution.emit()
 	start_planning_phase()
 	
 
 func execute_action(current: BattleActorStats, other: BattleActorStats, move: MoveResource) -> void:
+	await allow_move_execution
+	#interrupt execution of action if actor is stunned
 	if current.stun != null and current.stun.check_stun():
 		return
-		
+	
+	#add guard if move adds it
 	if move.self_guard_status != null:
 		current.current_guard = move.self_guard_status.guard_type
 	if move.opponent_guard_status != null:
 		other.current_guard = move.opponent_guard_status.guard_type
-	
-	current.hp += move.self_healing 
-	if current.current_guard != GuardStatus.GUARD.NONE and current.current_guard == move.attack_direction:
-		var damage_mult: float = 1.0
-		for new_stat_status in current.stat_modifiers:
-			if new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.POSTURE or new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.BOTH:
-				damage_mult += new_stat_status.multiplier
-		current.posture -= move.self_damage * damage_mult
-		if current.posture <= 0:
-			current.stun = posture_stun.duplicate()
-	else:
-		var damage_mult: float = 1.0
-		for new_stat_status in current.stat_modifiers:
-			if new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.HP or new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.BOTH:
-				damage_mult += new_stat_status.multiplier
-		current.hp -= move.self_damage
-	
-	other.hp += move.opponent_healing 
-	if other.current_guard != GuardStatus.GUARD.NONE and other.current_guard == move.attack_direction:
-		var damage_mult: float = 1.0
-		for new_stat_status in other.stat_modifiers:
-			if new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.POSTURE or new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.BOTH:
-				damage_mult += new_stat_status.multiplier
-		other.posture -= move.opponent_damage * damage_mult
-		if other.posture <= 0:
-			other.stun = posture_stun.duplicate()
-	else:
-		var damage_mult: float = 1.0
-		for new_stat_status in other.stat_modifiers:
-			if new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.HP or new_stat_status.damage_type == StatStatus.STAT_DAMAGE_TYPES.BOTH:
-				damage_mult += new_stat_status.multiplier
-		other.hp -= move.opponent_damage
 		
-	if move.self_stats & 1:
-		current.stat_array[0] += move.self_stat_modifier
-	if move.self_stats & 2:
-		current.stat_array[1] += move.self_stat_modifier
-	if move.self_stats & 4:
-		current.stat_array[2] += move.self_stat_modifier
-	if move.self_stats & 8:
-		current.stat_array[3] += move.self_stat_modifier
-
-	if move.self_stats & 1:
-		other.stat_array[0] += move.opponent_stat_modifier
-	if move.self_stats & 2:
-		other.stat_array[1] += move.opponent_stat_modifier
-	if move.self_stats & 4:
-		other.stat_array[2] += move.opponent_stat_modifier
-	if move.self_stats & 8:
-		other.stat_array[3] += move.opponent_stat_modifier
+	#interrupt execution of action if there is a clash
+	if current.current_phase_state == BattleActorStats.PHASE_STATE.ACTIVE and other.current_phase_state == BattleActorStats.PHASE_STATE.ACTIVE:
+		return
 	
+	#calculate healing and damage for current and opponent
+	var hp_mult: int
+	var posture_mult: int 
+	
+	if current.current_guard != GuardStatus.GUARD.NONE and current.current_guard == move.attack_direction:
+		if other.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+			hp_mult = 0.0
+			posture_mult = 1.0
+		else:
+			hp_mult = 1.0
+			posture_mult = 0.2
+	else:
+		if other.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+			hp_mult = 1.0
+			posture_mult = 0.2
+		else:
+			hp_mult = 1.0
+			posture_mult = 1.0
+	for new_stat_status in current.stat_modifiers:
+		match new_stat_status.damage_type:
+			StatStatus.STAT_DAMAGE_TYPES.POSTURE:
+				posture_mult += new_stat_status.multiplier
+			StatStatus.STAT_DAMAGE_TYPES.HP:
+				hp_mult += new_stat_status.multiplier
+			StatStatus.STAT_DAMAGE_TYPES.BOTH:
+				posture_mult += new_stat_status.multiplier
+				hp_mult += new_stat_status.multiplier
+
+	current.hp += move.self_healing
+	current.hp -= move.self_damage * hp_mult
+	current.posture -= move.self_damage * posture_mult
+	
+	if other.current_guard != GuardStatus.GUARD.NONE and other.current_guard == move.attack_direction:
+		if current.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+			hp_mult = 0.0
+			posture_mult = 1.0
+		else:
+			hp_mult = 1.0
+			posture_mult = 0.2
+	else:
+		if current.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+			hp_mult = 1.0
+			posture_mult = 0.2
+		else:
+			hp_mult = 1.0
+			posture_mult = 1.0
+	for new_stat_status in other.stat_modifiers:
+		match new_stat_status.damage_type:
+			StatStatus.STAT_DAMAGE_TYPES.POSTURE:
+				posture_mult += new_stat_status.multiplier
+			StatStatus.STAT_DAMAGE_TYPES.HP:
+				hp_mult += new_stat_status.multiplier
+			StatStatus.STAT_DAMAGE_TYPES.BOTH:
+				posture_mult += new_stat_status.multiplier
+				hp_mult += new_stat_status.multiplier
+	
+	other.hp += move.opponent_healing
+	other.hp -= move.opponent_damage * hp_mult
+	other.posture -= move.opponent_damage * posture_mult
+	
+	#add game stat modification
+	
+	#add stun if move stuns
 	if move.self_stun_status != null:
 		current.stun = move.self_stun_status.duplicate()
 	if move.opponent_stun_status != null:
 		other.stun = move.opponent_stun_status.duplicate()
 	
+	#add stun if posture <= 0
+	if current.posture <= 0:
+		current.stun = move.self_stun_status.duplicate()
+	if other.posture <= 0:
+		other.stun = move.opponent_stun_status.duplicate()
+	
+	#add combat stat mods 
 	if not move.self_stat_statuses.is_empty():
 		for status in move.self_stat_statuses:
 			current.add_status(status.duplicate())

@@ -32,7 +32,7 @@ func _on_execute_button_button_down() -> void:
 		var enemy_action_block = action_block.instantiate()
 		enemy_action_block.action = enemy_move_queue.queue[move]
 		enemy_queue.add_action_block(move_pos - total_length, move_pos, enemy_action_block)
-		total_length += enemy_move_queue.queue[move].length
+		total_length += enemy_move_queue.queue[move].length - 1
 	action_palette_margin.hide()
 	BattleManager.start_execution_phase()
 

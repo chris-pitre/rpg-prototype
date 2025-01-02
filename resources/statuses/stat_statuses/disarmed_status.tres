@@ -8,4 +8,5 @@ script = ExtResource("1_k5pdx")
 stat_direction = 1
 damage_type = 2
 multiplier = 0.5
+duration_timesteps = 20
 name = "Disarmed"

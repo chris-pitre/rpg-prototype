@@ -35,7 +35,6 @@ script = ExtResource("1_yvdj5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("2_8udk6")
-animation = &"punch_windup"
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 anchors_preset = 8

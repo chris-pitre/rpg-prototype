@@ -6,8 +6,12 @@
 [resource]
 script = ExtResource("1_kckyn")
 name = "Kick"
-animation_name = "kick"
+windup_anim_name = "kick_windup"
+active_anim_name = "kick"
+recovery_anim_name = "kick_windup"
+return_anim_name = "default"
 attack_direction = 2
+require_guard = 0
 windup = 6
 active = 3
 recovery = 7

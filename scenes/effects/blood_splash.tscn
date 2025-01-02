@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://t8d3paqkrn75"]
+
+[sub_resource type="Curve" id="Curve_yoo40"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_c84q1"]
+curve = SubResource("Curve_yoo40")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_416bf"]
+particle_flag_disable_z = true
+angle_min = 45.0
+angle_max = 45.0
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 100.0
+angular_velocity_min = -15.0
+angular_velocity_max = 15.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.3
+scale_curve = SubResource("CurveTexture_c84q1")
+color = Color(0.699195, 2.08165e-06, 6.73831e-07, 1)
+
+[sub_resource type="Gradient" id="Gradient_oxapt"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qlg1l"]
+gradient = SubResource("Gradient_oxapt")
+width = 32
+height = 32
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fpjyb"]
+script/source = "extends GPUParticles2D
+
+func _ready() -> void:
+	emitting = true
+	await get_tree().create_timer(1).timeout
+	queue_free()
+"
+
+[node name="BloodSplash" type="GPUParticles2D"]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_416bf")
+texture = SubResource("GradientTexture2D_qlg1l")
+one_shot = true
+explosiveness = 1.0
+script = SubResource("GDScript_fpjyb")

@@ -16,6 +16,7 @@ windup_anim_name = "kick_windup"
 active_anim_name = "kick2"
 recovery_anim_name = "kick_windup"
 attack_direction = 1
+require_guard = 0
 windup = 5
 active = 2
 recovery = 3

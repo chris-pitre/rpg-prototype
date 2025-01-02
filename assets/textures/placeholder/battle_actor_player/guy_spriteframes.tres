@@ -1,10 +1,13 @@
-[gd_resource type="SpriteFrames" load_steps=18 format=3 uid="uid://mx5228t1s44m"]
+[gd_resource type="SpriteFrames" load_steps=21 format=3 uid="uid://mx5228t1s44m"]
 
 [ext_resource type="Texture2D" uid="uid://c32iu3ia8ndna" path="res://assets/textures/placeholder/battle_actor_player/guykick.png" id="1_83cax"]
+[ext_resource type="Texture2D" uid="uid://runa16qigw3x" path="res://assets/textures/placeholder/battle_actor_player/guycrouch.png" id="1_pq4xg"]
 [ext_resource type="Texture2D" uid="uid://dc0sh7pohjj8y" path="res://assets/textures/placeholder/battle_actor_player/guypunch.png" id="2_1trls"]
 [ext_resource type="Texture2D" uid="uid://dqjvje16jmxk5" path="res://assets/textures/placeholder/battle_actor_player/guyswordraise.png" id="2_fytow"]
+[ext_resource type="Texture2D" uid="uid://c1qmlk4vrxhwq" path="res://assets/textures/placeholder/battle_actor_player/guydead.png" id="2_qfvid"]
 [ext_resource type="Texture2D" uid="uid://ttv7oisu4or2" path="res://assets/textures/placeholder/battle_actor_player/guyswordswingdown.png" id="2_wu76m"]
 [ext_resource type="Texture2D" uid="uid://dg1ed8asvtkuk" path="res://assets/textures/placeholder/battle_actor_player/guystand.png" id="3_l5tn3"]
+[ext_resource type="Texture2D" uid="uid://bpw0afba5kudv" path="res://assets/textures/placeholder/battle_actor_player/guydropkick.png" id="4_ddvgk"]
 [ext_resource type="Texture2D" uid="uid://dco35fwgarads" path="res://assets/textures/placeholder/battle_actor_player/guykick2.png" id="4_enlus"]
 [ext_resource type="Texture2D" uid="uid://cmd5tvbyjseyq" path="res://assets/textures/placeholder/battle_actor_player/guyuppercut.png" id="4_usqvw"]
 [ext_resource type="Texture2D" uid="uid://c1fw31ny31x42" path="res://assets/textures/placeholder/battle_actor_player/guykickwindup.png" id="5_nodip"]
@@ -22,6 +25,22 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("1_pq4xg")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qfvid")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("3_l5tn3")
 }],
 "loop": true,
@@ -34,6 +53,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"downslash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ddvgk")
+}],
+"loop": true,
+"name": &"dropkick",
 "speed": 5.0
 }, {
 "frames": [{

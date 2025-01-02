@@ -18,11 +18,14 @@ func _start_battle(encounter: Encounter) -> void:
 
 func _get_player_moves() -> void:
 	for child in action_palette.get_children():
+		remove_child(child)
 		child.queue_free()
-	for move in BattleManager.player.moves:
-		var new_action_block = action_block.instantiate()
-		new_action_block.action = BattleManager.moves[move]
-		action_palette.add_child(new_action_block)
+	for move: String in BattleManager.player.moves:
+		var move_resource = BattleManager.moves[move]
+		if BattleManager.player.current_guard == move_resource.require_guard or move_resource.require_guard == GuardStatus.GUARD.NONE:
+			var new_action_block = action_block.instantiate()
+			new_action_block.action = move_resource
+			action_palette.add_child(new_action_block)
 
 func _on_execute_button_button_down() -> void:
 	var enemy_move_queue = BattleManager.enemy.move_queues[GameState.rng.randi_range(0, BattleManager.enemy.move_queues.size() - 1)]
@@ -37,4 +40,5 @@ func _on_execute_button_button_down() -> void:
 	BattleManager.start_execution_phase()
 
 func _show_action_palette() -> void:
+	_get_player_moves()
 	action_palette_margin.show()

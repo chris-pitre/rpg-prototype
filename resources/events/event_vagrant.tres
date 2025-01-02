@@ -31,6 +31,7 @@ name = "Violent Vagrant"
 road_event = true
 urgent = false
 hover_description = ""
+appear_description = "An event has started."
 description = "A disheveled man walks down the road towards you. As he's about to pass you, he lunges for you with a knife."
 lifetime = -1
 require_flags = Array[String]([])

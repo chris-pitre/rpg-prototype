@@ -7,8 +7,11 @@
 [resource]
 script = ExtResource("1_dd1x7")
 name = "Unterhaw"
-animation_name = "upslash"
+windup_anim_name = ""
+active_anim_name = ""
+recovery_anim_name = ""
 attack_direction = 3
+require_guard = 3
 windup = 2
 active = 6
 recovery = 2

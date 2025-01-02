@@ -46,7 +46,7 @@ var current_enemy = null
 var execution_timer: Timer
 
 var max_timestep: int = 60
-var time_step: float = 0.05
+var time_step: float = 0.1
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
 
@@ -114,7 +114,7 @@ func start_execution_phase() -> void:
 func execute_action(current: BattleActorStats, other: BattleActorStats, move: MoveResource) -> void:
 	if current.stun != null and current.stun.check_stun():
 		return
-		
+	
 	if move.self_guard_status != null:
 		current.current_guard = move.self_guard_status.guard_type
 	if move.opponent_guard_status != null:

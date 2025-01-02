@@ -1,65 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpdjmvdtu0ksc"]
+[gd_scene load_steps=4 format=3 uid="uid://bpdjmvdtu0ksc"]
 
 [ext_resource type="Script" path="res://scenes/map/main.gd" id="1_7wmmx"]
 [ext_resource type="PackedScene" uid="uid://bncokx5jbxw5s" path="res://scenes/map/map.tscn" id="1_hxntt"]
 [ext_resource type="PackedScene" uid="uid://d0oyhmdiuhgjd" path="res://scenes/new_battle/battle.tscn" id="2_chq0a"]
-[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="3_jndls"]
-[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="3_mvho4"]
-[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="3_nw5go"]
-
-[sub_resource type="Resource" id="Resource_ftodo"]
-resource_local_to_scene = true
-script = ExtResource("3_mvho4")
-weapon_type = 0
-base_damage = 10
-purchasable_upgrades = Array[ExtResource("3_nw5go")]([])
-purchasable_actions = Array[ExtResource("3_jndls")]([])
-name = "Chipped Machete"
-description = "A sharp tool weathered by time and rain."
-price = 0
-can_be_sold = false
-type = 1
 
 [node name="Main" type="Node"]
 script = ExtResource("1_7wmmx")
 
 [node name="Map" parent="." instance=ExtResource("1_hxntt")]
 
-[node name="Locations" parent="Map" index="1"]
-mouse_filter = 2
-
-[node name="ItemButton" parent="Map/CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" index="0"]
-item = SubResource("Resource_ftodo")
-
 [node name="Battle" parent="." instance=ExtResource("2_chq0a")]
 visible = false
 mouse_filter = 2
-
-[node name="CanvasLayer" parent="Battle" index="2"]
-visible = false
-
-[editable path="Map"]
-[editable path="Map/Locations/Camp"]
-[editable path="Map/Locations/Woods"]
-[editable path="Map/Locations/Countryside"]
-[editable path="Map/Locations/Lake"]
-[editable path="Map/Locations/Blacksmith"]
-[editable path="Map/Locations/Pub"]
-[editable path="Map/Locations/Cliffs"]
-[editable path="Map/Locations/Chasm"]
-[editable path="Map/Locations/Chambers"]
-[editable path="Map/Locations/Market"]
-[editable path="Map/Locations/Wall"]
-[editable path="Map/Locations/Medical"]
-[editable path="Map/Locations/Logging"]
-[editable path="Map/Locations/Farm"]
-[editable path="Map/Locations/Slums"]
-[editable path="Map/Locations/Academy"]
-[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator5"]
-[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator3"]
-[editable path="Map/CanvasLayer/Overlay/ResourceBar/HBoxContainer/ResourceIndicator4"]
-[editable path="Map/CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/BlacksmithTabs/Sell"]
-[editable path="Battle"]
-[editable path="Battle/EnemyBattleActor"]
-[editable path="Battle/CanvasLayer/PlayerStatusList"]
-[editable path="Battle/CanvasLayer/EnemyStatusList"]

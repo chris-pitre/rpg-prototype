@@ -5,9 +5,11 @@ class_name MoveResource extends Resource
 @export var windup_anim_name: String 
 @export var active_anim_name: String
 @export var recovery_anim_name: String
+@export var return_anim_name: String = "default"
 
 @export_category("Attack Characteristics")
 @export_enum("None", "High Attack", "Middle Attack", "Low Attack") var attack_direction: int = 1
+@export var require_guard: GuardStatus.GUARD
 @export var windup: int = 1
 @export var active: int = 1
 @export var recovery: int = 1

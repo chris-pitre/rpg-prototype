@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bncokx5jbxw5s"]
+[gd_scene load_steps=33 format=3 uid="uid://bncokx5jbxw5s"]
 
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="1_c2g5l"]
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_p33he"]
@@ -18,9 +18,7 @@
 [ext_resource type="Script" path="res://scenes/map/medical_menu.gd" id="14_qoh11"]
 [ext_resource type="Script" path="res://scenes/map/academy_menu.gd" id="15_vfc57"]
 [ext_resource type="Script" path="res://scenes/map/character_menu.gd" id="17_fjo3k"]
-[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="19_bjh2u"]
-[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="19_knc5o"]
-[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="20_vsuqc"]
+[ext_resource type="Resource" uid="uid://b30f8nlkl6lrn" path="res://resources/items/weapon_sword_crude.tres" id="19_wfnij"]
 [ext_resource type="Resource" uid="uid://buceht5bgcah6" path="res://resources/items/accessory_ring_damage_common.tres" id="23_iu4tc"]
 
 [sub_resource type="Gradient" id="Gradient_f2idn"]
@@ -80,19 +78,6 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="Resource" id="Resource_ihgmd"]
-resource_local_to_scene = true
-script = ExtResource("19_bjh2u")
-weapon_type = 1
-base_damage = 10
-purchasable_upgrades = Array[ExtResource("19_knc5o")]([])
-purchasable_actions = Array[ExtResource("20_vsuqc")]([])
-name = "Chipped Machete"
-description = "A sharp tool weathered by time and rain."
-price = 0
-can_be_sold = false
-type = 1
 
 [node name="Map" type="Control"]
 layout_mode = 3
@@ -895,18 +880,22 @@ size_flags_horizontal = 4
 
 [node name="WeaponSlot" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
 layout_mode = 2
+require_type = true
 types = 1
 
 [node name="AccessorySlot" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
 layout_mode = 2
+require_type = true
 types = 16
 
 [node name="AccessorySlot2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
 layout_mode = 2
+require_type = true
 types = 16
 
 [node name="AccessorySlot3" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer/EquipSlotContainer" instance=ExtResource("10_nse17")]
 layout_mode = 2
+require_type = true
 types = 16
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/MarginContainer/VBoxContainer"]
@@ -986,7 +975,7 @@ allow_drop = true
 [node name="ItemButton" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = SubResource("Resource_ihgmd")
+item = ExtResource("19_wfnij")
 
 [node name="ItemButton2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2

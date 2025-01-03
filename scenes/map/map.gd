@@ -28,7 +28,8 @@ var mouse_drag: bool = false
 @onready var choice_container = choice_panel.get_node("ChoiceContainer")
 @onready var choice_title = choice_container.get_node("ChoiceTitle")
 @onready var choice_description = choice_container.get_node("ChoiceDescription")
-@onready var result_panel = $CanvasLayer/Overlay/ResultPanel
+@onready var result_cover = $CanvasLayer/Overlay/ResultCover
+@onready var result_panel = $CanvasLayer/Overlay/ResultCover/ResultPanel
 @onready var result_container = result_panel.get_node("ResultContainer")
 @onready var result_title = result_container.get_node("ResultTitle")
 @onready var result_description = result_container.get_node("ResultDescription")
@@ -249,18 +250,18 @@ func show_event_result(result: MapEventResult) -> void:
 			current_encounter = result.encounter
 			start_encounter(current_encounter)
 		else:
-			result_panel.hide()
+			result_cover.hide()
 			resolve_location()
 	else:
 		result_title.text = result.title
 		result_description.text = result.description
 		if result.encounter:
 			current_encounter = result.encounter
-			result_panel.show()
+			result_cover.show()
 			result_fight.show()
 			result_okay.hide()
 		else:
-			result_panel.show()
+			result_cover.show()
 			result_fight.hide()
 			result_okay.show()
 
@@ -346,11 +347,11 @@ func _player_second_tween_finished(map_location: MapLocation) -> void:
 	visit_location(current_location)
 
 func _on_result_okay_pressed() -> void:
-	result_panel.hide()
+	result_cover.hide()
 	resolve_location()
 
 func _on_result_fight_pressed() -> void:
-	result_panel.hide()
+	result_cover.hide()
 	start_encounter(current_encounter)
 
 func _map_event_neglected(event: MapEvent) -> void:

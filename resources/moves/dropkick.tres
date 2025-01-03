@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://digdtv772lvnu"]
+[gd_resource type="Resource" script_class="MoveResource" load_steps=5 format=3 uid="uid://digdtv772lvnu"]
 
 [ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_phdp6"]
 [ext_resource type="Script" path="res://resources/moves/move.gd" id="2_d06x0"]
+[ext_resource type="Resource" uid="uid://cn37n873ng6db" path="res://resources/statuses/stat_statuses/off_balance_status.tres" id="2_i3h4p"]
 [ext_resource type="Resource" uid="uid://bg1k1a021d2kj" path="res://resources/statuses/guard_statuses/low_guard_status.tres" id="3_8fxss"]
 
 [resource]
@@ -13,17 +14,18 @@ recovery_anim_name = "dead"
 return_anim_name = "default"
 attack_direction = 2
 require_guard = 0
-windup = 3
-active = 5
-recovery = 10
+windup = 4
+active = 2
+recovery = 15
+guard_switching = false
 self_stat_statuses = Array[ExtResource("1_phdp6")]([])
 self_guard_status = ExtResource("3_8fxss")
-self_damage = 0
+self_damage = 5
 self_healing = 0
 self_stats = 0
 self_stat_modifier = 0
-opponent_stat_statuses = Array[ExtResource("1_phdp6")]([])
-opponent_damage = 10
+opponent_stat_statuses = Array[ExtResource("1_phdp6")]([ExtResource("2_i3h4p")])
+opponent_damage = 20
 opponent_healing = 0
 opponent_stats = 0
 opponent_stat_modifier = 0

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://sfc461yxmmvv"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_phyan"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_adan0"]
+[ext_resource type="Resource" uid="uid://b5t3ua4e1rk6s" path="res://resources/statuses/guard_statuses/middle_guard_status.tres" id="3_xlh6c"]
+
+[resource]
+script = ExtResource("2_adan0")
+name = "Middle Guard"
+windup_anim_name = ""
+active_anim_name = ""
+recovery_anim_name = ""
+return_anim_name = "default"
+attack_direction = 2
+require_guard = 0
+windup = 2
+active = 0
+recovery = 2
+self_stat_statuses = Array[ExtResource("1_phyan")]([])
+self_guard_status = ExtResource("3_xlh6c")
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_phyan")]([])
+opponent_damage = 0
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

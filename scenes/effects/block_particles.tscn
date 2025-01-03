@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b03kgqt8jm2tk"]
+[gd_scene load_steps=13 format=3 uid="uid://b03kgqt8jm2tk"]
 
 [sub_resource type="Curve" id="Curve_cx36j"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
@@ -8,34 +8,62 @@ point_count = 2
 curve = SubResource("Curve_cx36j")
 
 [sub_resource type="Curve" id="Curve_76wib"]
-_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+_data = [Vector2(0, 1), 0.0, -0.853639, 0, 1, Vector2(1, 0.146361), -0.853639, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_u2xhi"]
 curve = SubResource("Curve_76wib")
 
+[sub_resource type="Curve" id="Curve_iolbm"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_3vb0v"]
+max_value = 3.0
+_data = [Vector2(0, 1.5), 0.0, -1.03006, 0, 1, Vector2(1, 0.469937), -1.03006, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_glblf"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_k223n"]
+curve_x = SubResource("Curve_iolbm")
+curve_y = SubResource("Curve_3vb0v")
+curve_z = SubResource("Curve_glblf")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jgvet"]
+particle_flag_align_y = true
 particle_flag_disable_z = true
 angle_min = 45.0
 angle_max = 45.0
 spread = 180.0
-initial_velocity_min = -0.01
-initial_velocity_max = 30.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
 angular_velocity_min = -15.0
 angular_velocity_max = 15.0
 gravity = Vector3(0, 0, 0)
+damping_min = 400.0
+damping_max = 400.0
 scale_min = 0.5
 scale_curve = SubResource("CurveTexture_u2xhi")
-color = Color(0.830335, 0.830335, 0.830335, 0.694118)
+scale_over_velocity_min = 1.0
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveXYZTexture_k223n")
+color = Color(0.933333, 0.933333, 0.211765, 1)
 alpha_curve = SubResource("CurveTexture_xwpdk")
+turbulence_enabled = true
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.05
 
 [sub_resource type="Gradient" id="Gradient_hr6dg"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8ixef"]
 gradient = SubResource("Gradient_hr6dg")
-width = 32
-height = 32
+width = 16
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -55,6 +83,7 @@ emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_jgvet")
 texture = SubResource("GradientTexture2D_8ixef")
+lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 script = SubResource("GDScript_klqq6")

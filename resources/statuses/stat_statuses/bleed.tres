@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DamageOverTimeStatus" load_steps=2 format=3 uid="uid://cmi5w80nbatc3"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/damage_over_time_status.gd" id="1_sn3we"]
+
+[resource]
+script = ExtResource("1_sn3we")
+amount_per_timestep = 0.5
+stat_direction = 0
+damage_type = 0
+multiplier = 1.0
+duration_timesteps = 10
+name = "Bleeding"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=16 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
@@ -7,9 +7,33 @@
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="4_fviya"]
 [ext_resource type="PackedScene" uid="uid://dhja7uxi2y2ho" path="res://scenes/new_battle/action_queue_indicator.tscn" id="5_qjfvv"]
 [ext_resource type="PackedScene" uid="uid://j3yxrv6hmkar" path="res://scenes/new_battle/status_list.tscn" id="6_5iup2"]
+[ext_resource type="Script" path="res://scenes/new_battle/directional_menu.gd" id="8_02vnp"]
+[ext_resource type="Texture2D" uid="uid://b0ncimjpidtpd" path="res://assets/textures/icons/arrowsmall.png" id="8_jh2bl"]
+[ext_resource type="Texture2D" uid="uid://cdcjq3o0inum" path="res://assets/textures/icons/arrowsmalldown.png" id="8_y744h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
 bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_nx6kn"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ug66m"]
+gradient = SubResource("Gradient_nx6kn")
+width = 32
+height = 32
+
+[sub_resource type="Gradient" id="Gradient_3g17m"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jco4t"]
+gradient = SubResource("Gradient_3g17m")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -153,6 +177,63 @@ offset_bottom = -0.0480003
 grow_horizontal = 0
 size_flags_horizontal = 0
 theme = ExtResource("4_fviya")
+
+[node name="DirectionalMenu" type="MarginContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 48
+script = ExtResource("8_02vnp")
+
+[node name="ArrowGrid" type="GridContainer" parent="CanvasLayer/DirectionalMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="Up" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = ExtResource("8_y744h")
+flip_v = true
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="Right" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = ExtResource("8_jh2bl")
+
+[node name="TextureRect7" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="Down" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = ExtResource("8_y744h")
+
+[node name="TextureRect9" type="TextureRect" parent="CanvasLayer/DirectionalMenu/ArrowGrid"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ug66m")
+
+[node name="DirIndicator" type="Sprite2D" parent="CanvasLayer/DirectionalMenu"]
+position = Vector2(524, 0)
+texture = SubResource("GradientTexture2D_jco4t")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

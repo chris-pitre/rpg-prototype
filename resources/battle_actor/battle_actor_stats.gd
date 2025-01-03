@@ -28,7 +28,7 @@ func _init(p_name="John", p_max_hp=100, p_moves:Array[String] = []) -> void:
 	moves = p_moves
 
 func add_status(status: StatStatus) -> void:
-	BattleManager.next_execution_timestep.connect(status.decrease_duration)
+	BattleManager.next_execution_timestep.connect(status.decrease_duration.bind(self))
 	status.status_finished.connect(remove_status)
 	if is_player:
 		BattleManager.player_status_added.emit(status)
@@ -63,6 +63,6 @@ func _set_stun(new_stun: StunnedStatus) -> void:
 func _set_guard(new_guard: GuardStatus.GUARD) -> void:
 	current_guard = new_guard
 	if is_player:
-		BattleManager.player_guard_updated.emit()
+		BattleManager.player_guard_updated.emit(new_guard)
 	else:
-		BattleManager.enemy_guard_updated.emit()
+		BattleManager.enemy_guard_updated.emit(new_guard)

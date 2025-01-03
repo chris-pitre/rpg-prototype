@@ -78,8 +78,6 @@ func start_new_battle(encounter: Encounter) -> void:
 func start_planning_phase() -> void:
 	current_phase = PHASES.PLANNING
 	planning_phase_started.emit()
-	queued_player_moves = {}
-	queued_enemy_moves = {}
 
 func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION

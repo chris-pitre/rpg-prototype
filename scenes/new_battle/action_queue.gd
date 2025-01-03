@@ -11,7 +11,6 @@ func _ready() -> void:
 	for i in range(BattleManager.max_timestep):
 		var new_empty = EMPTY_BLOCK.instantiate()
 		add_child(new_empty)
-	BattleManager.planning_phase_started.connect(reset_blocks)
 
 func update_blocks() -> void:
 	pass
@@ -20,7 +19,7 @@ func reset_blocks() -> void:
 	for block in action_blocks.values():
 		remove_action_block(block)
 
-func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> void:
+func add_action_block(index: int, timestep: int, action_block: ActionBlock, obscure: bool = false) -> void:
 	var action_range = range(index, index + action_block.action.length)
 	var from_self = action_block in action_blocks.values()
 	
@@ -42,6 +41,7 @@ func add_action_block(index: int, timestep: int, action_block: ActionBlock) -> v
 	else:
 		var new_action_block = action_block.duplicate()
 		#new_action_block.tree_exiting.connect(remove_action_block.bind(new_action_block))
+		new_action_block.is_obscured = obscure
 		add_child(new_action_block)
 		move_child(new_action_block, index)
 		action_blocks[timestep] = new_action_block
@@ -54,7 +54,7 @@ func remove_action_block(action_block: ActionBlock) -> void:
 	action_blocks.erase(action_blocks.find_key(action_block))
 	if not action_block.is_queued_for_deletion():
 		remove_child.call_deferred(action_block)
-		action_block.queue_free.call_deferred()
+		action_block.queue_free()
 	
 	for i in range(amt_to_replace):
 		var new_empty = EMPTY_BLOCK.instantiate()

@@ -3,10 +3,11 @@ extends Control
 
 signal delete_pressed(this: ActionBlock)
 
-var frame_data_display_scene := preload("res://scenes/new_battle/frame_data_display.tscn")
-
 @export var action: MoveResource:
 	set = _set_action
+
+var frame_data_display_scene := preload("res://scenes/new_battle/frame_data_display.tscn")
+var is_obscured: bool = false: set = _obscured_changed
 
 func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_STOP
@@ -33,3 +34,10 @@ func _set_action(_action: MoveResource) -> void:
 		frame_data_display.find_child("Recovery").size_flags_stretch_ratio = temp_action.recovery
 		$HBoxContainer.add_child(frame_data_display)
 		temp_action = temp_action.followup_attack
+
+func _obscured_changed(new_is_obscured: bool) -> void:
+	is_obscured = new_is_obscured
+	if is_obscured:
+		$ObscurationRect.show()
+	else:
+		$ObscurationRect.hide()

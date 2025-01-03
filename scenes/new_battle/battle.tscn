@@ -54,12 +54,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
 script = ExtResource("3_2vcsj")
 
 [node name="RightMargin" type="MarginContainer" parent="CanvasLayer"]
-visible = false
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -528.0
+offset_bottom = -1.0
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("4_fviya")

@@ -17,6 +17,8 @@ func _start_battle(encounter: Encounter) -> void:
 	BattleManager.battle_started.emit()
 
 func _get_player_moves() -> void:
+	BattleManager.queued_player_moves = {}
+	player_queue.reset_blocks()
 	for child in action_palette.get_children():
 		action_palette.remove_child(child)
 		child.queue_free()
@@ -28,17 +30,26 @@ func _get_player_moves() -> void:
 			action_palette.add_child(new_action_block)
 
 func _on_execute_button_button_down() -> void:
+	for child in enemy_queue.get_children():
+		if child is ActionBlock:
+			child.is_obscured = false
+	action_palette_margin.hide()
+	BattleManager.start_execution_phase()
+
+func _show_action_palette() -> void:
+	_get_player_moves()
+	_get_enemy_moves()
+	action_palette_margin.show()
+
+func _get_enemy_moves() -> void:
+	BattleManager.queued_enemy_moves = {}
+	enemy_queue.reset_blocks()
+	await get_tree().process_frame
 	var enemy_move_queue = BattleManager.enemy.move_queues[GameState.rng.randi_range(0, BattleManager.enemy.move_queues.size() - 1)]
 	var total_length = 0
 	for move in enemy_move_queue.queue:
 		var move_pos = move + total_length
 		var enemy_action_block = action_block.instantiate()
 		enemy_action_block.action = enemy_move_queue.queue[move]
-		enemy_queue.add_action_block(move_pos - total_length, move_pos, enemy_action_block)
+		enemy_queue.add_action_block(move_pos - total_length, move_pos, enemy_action_block, true)
 		total_length += enemy_move_queue.queue[move].length - 1
-	action_palette_margin.hide()
-	BattleManager.start_execution_phase()
-
-func _show_action_palette() -> void:
-	_get_player_moves()
-	action_palette_margin.show()

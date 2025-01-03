@@ -21,6 +21,7 @@ var length: int = -1:
 				length += followup_attack.length
 		return length
 @export var followup_attack: MoveResource
+@export var guard_switching: bool = false
 
 @export_category("Self Effects")
 @export var self_stat_statuses: Array[StatStatus] = []

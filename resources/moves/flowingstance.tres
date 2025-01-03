@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://b3qco0dm53bs5"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_6b4xj"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_jpq54"]
+
+[sub_resource type="Resource" id="Resource_fj3fr"]
+resource_local_to_scene = true
+script = ExtResource("1_6b4xj")
+stat_direction = 0
+damage_type = 1
+multiplier = 2.0
+duration_timesteps = 24
+name = "Off-Balance"
+
+[resource]
+script = ExtResource("2_jpq54")
+name = "Flowing Stance"
+windup_anim_name = ""
+active_anim_name = ""
+recovery_anim_name = ""
+return_anim_name = "default"
+attack_direction = 0
+require_guard = 0
+windup = 0
+active = 1
+recovery = 23
+guard_switching = true
+self_stat_statuses = Array[ExtResource("1_6b4xj")]([SubResource("Resource_fj3fr")])
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_6b4xj")]([])
+opponent_damage = 0
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

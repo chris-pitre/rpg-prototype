@@ -25,7 +25,7 @@ func _battle_started() -> void:
 	else:
 		actor = BattleManager.enemy
 		
-func _guard_updated() -> void:
+func _guard_updated(guard_status: GuardStatus.GUARD) -> void:
 	if actor.current_guard != GuardStatus.GUARD.NONE:
 		match actor.current_guard:
 			GuardStatus.GUARD.HIGH_GUARD:

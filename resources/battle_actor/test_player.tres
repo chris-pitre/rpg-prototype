@@ -8,5 +8,5 @@ script = ExtResource("5_dqm3k")
 name = "Awesome Guy"
 is_player = true
 max_hp = 10
-moves = Array[String](["Kick", "Double Kick", "Punch", "Oberhaw", "Unterhaw", "High Guard", "Low Guard", "Dropkick"])
+moves = Array[String](["Kick", "Double Kick", "Punch", "Oberhaw", "Unterhaw", "Dropkick", "High Guard", "Middle Guard", "Low Guard", "Piercing Stab", "Flowing Stance"])
 move_queues = Array[ExtResource("1_t2jo2")]([])

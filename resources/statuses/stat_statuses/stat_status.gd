@@ -18,7 +18,7 @@ signal status_finished(status: StatStatus)
 @export var duration_timesteps: int = 20
 var duration: Variant = null
 
-func decrease_duration() -> void:
+func decrease_duration(battle_actor_stats: BattleActorStats) -> void:
 	if duration == null:
 		duration = duration_timesteps
 	duration -= 1

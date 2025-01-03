@@ -30,6 +30,10 @@ signal enemy_posture_updated(new_posture: int)
 
 signal player_status_added(status: StatStatus)
 signal enemy_status_added(status: StatStatus)
+
+signal guard_switching_started
+signal guard_switching_ended
+
 #endregion
 
 enum PHASES{
@@ -47,7 +51,8 @@ var current_enemy = null
 var execution_timer: Timer
 
 var max_timestep: int = 60
-var time_step: float = 0.1
+var time_step: float = 0.12
+var current_time_step: int = 0
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
 
@@ -55,6 +60,8 @@ var player: BattleActorStats = preload("res://resources/battle_actor/test_player
 var enemy: BattleActorStats
 
 var posture_stun = preload("res://resources/statuses/custom_statuses/stunned_status.tres")
+
+var currently_guard_switching: bool = false
 
 func _ready() -> void:
 	start_battle.connect(start_new_battle)
@@ -83,6 +90,7 @@ func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
 	for i in range(max_timestep):
+		current_time_step = i
 		if player.hp <= 0:
 			battle_ended.emit(current_encounter, false)
 			break
@@ -132,7 +140,13 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	var posture_mult: int 
 	
 	if current.current_guard != GuardStatus.GUARD.NONE and current.current_guard == move.attack_direction:
-		if other.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+		var receiver_move = get_move_at_timestep(other, current_time_step)
+		var receiver_is_switching: bool = false
+		if receiver_move:
+			if receiver_move.guard_switching:
+				receiver_is_switching = true
+		
+		if other.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING or get_move_at_timestep(other, current_time_step):
 			hp_mult = 0.0
 			posture_mult = 1.0
 		else:
@@ -160,7 +174,13 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	current.posture -= move.self_damage * posture_mult
 	
 	if other.current_guard != GuardStatus.GUARD.NONE and other.current_guard == move.attack_direction:
-		if current.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING:
+		var receiver_move = get_move_at_timestep(other, current_time_step)
+		var receiver_is_switching: bool = false
+		if receiver_move:
+			if receiver_move.guard_switching:
+				receiver_is_switching = true
+		
+		if current.current_phase_state == BattleActorStats.PHASE_STATE.BLOCKING or receiver_is_switching:
 			hp_mult = 0.0
 			posture_mult = 1.0
 		else:
@@ -191,26 +211,38 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	
 	#add stun if move stuns
 	if move.self_stun_status != null:
-		current.stun = move.self_stun_status.duplicate()
+		current.stun = move.self_stun_status
 	if move.opponent_stun_status != null:
-		other.stun = move.opponent_stun_status.duplicate()
+		other.stun = move.opponent_stun_status
 	
 	#add stun if posture <= 0
 	if current.posture <= 0:
-		current.stun = move.self_stun_status.duplicate()
+		current.stun = move.self_stun_status
 	if other.posture <= 0:
-		other.stun = move.opponent_stun_status.duplicate()
+		other.stun = move.opponent_stun_status
 	
 	#add combat stat mods 
 	if not move.self_stat_statuses.is_empty():
 		for status in move.self_stat_statuses:
-			current.add_status(status.duplicate())
+			current.add_status(status)
 	if not move.opponent_stat_statuses.is_empty():
 		for status in move.opponent_stat_statuses:
-			other.add_status(status.duplicate())
+			other.add_status(status)
 
 func refresh_stats() -> void:
 	player_hp_updated.emit(player.hp)
 	player_posture_updated.emit(player.posture)
 	enemy_hp_updated.emit(enemy.hp)
 	enemy_posture_updated.emit(enemy.posture)
+
+func get_move_at_timestep(battle_actor_status: BattleActorStats, timestep: int) -> MoveResource:
+	var queued_moves = queued_player_moves if battle_actor_status.is_player else queued_player_moves
+	
+	for move_timestep in queued_moves:
+		var action_block: ActionBlock = queued_moves[move_timestep]
+		var move: MoveResource = action_block.action
+		
+		if move_timestep <= timestep and move_timestep + move.length > timestep:
+			return move
+	
+	return null

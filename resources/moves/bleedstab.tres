@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=5 format=3 uid="uid://dlqntvu40fr8c"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_weaff"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_3ugpn"]
+[ext_resource type="Resource" uid="uid://cmi5w80nbatc3" path="res://resources/statuses/stat_statuses/bleed.tres" id="2_hyeba"]
+[ext_resource type="Resource" uid="uid://b5t3ua4e1rk6s" path="res://resources/statuses/guard_statuses/middle_guard_status.tres" id="3_yri2q"]
+
+[resource]
+script = ExtResource("2_3ugpn")
+name = "Piercing Stab"
+windup_anim_name = "thrust_windup"
+active_anim_name = "thrust"
+recovery_anim_name = "thrust_windup"
+return_anim_name = "default"
+attack_direction = 2
+require_guard = 0
+windup = 2
+active = 2
+recovery = 6
+self_stat_statuses = Array[ExtResource("1_weaff")]([])
+self_guard_status = ExtResource("3_yri2q")
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_weaff")]([ExtResource("2_hyeba")])
+opponent_damage = 1
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

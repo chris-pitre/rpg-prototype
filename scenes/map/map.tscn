@@ -400,8 +400,16 @@ text = "The situation"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ResultPanel" type="Panel" parent="CanvasLayer/Overlay"]
+[node name="ResultCover" type="Control" parent="CanvasLayer/Overlay"]
 visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResultPanel" type="Panel" parent="CanvasLayer/Overlay/ResultCover"]
 custom_minimum_size = Vector2(320, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -418,7 +426,7 @@ grow_vertical = 2
 theme = ExtResource("1_c2g5l")
 theme_override_styles/panel = SubResource("StyleBoxFlat_f8p6s")
 
-[node name="ResultContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/ResultPanel"]
+[node name="ResultContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/ResultCover/ResultPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -426,12 +434,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ResultTitle" type="Label" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+[node name="ResultTitle" type="Label" parent="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer"]
 layout_mode = 2
 text = "Event"
 horizontal_alignment = 1
 
-[node name="ResultDescription" type="Label" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+[node name="ResultDescription" type="Label" parent="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.877616, 0.877616, 0.877616, 1)
@@ -440,11 +449,11 @@ text = "Everyone fuckin died or something"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ResultOkay" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+[node name="ResultOkay" type="Button" parent="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer"]
 layout_mode = 2
 text = "Okay"
 
-[node name="ResultFight" type="Button" parent="CanvasLayer/Overlay/ResultPanel/ResultContainer"]
+[node name="ResultFight" type="Button" parent="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer"]
 layout_mode = 2
 text = "Fight"
 
@@ -1022,8 +1031,8 @@ position_smoothing_speed = 10.0
 
 [node name="BattleCamera" type="Camera2D" parent="."]
 
-[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
-[connection signal="pressed" from="CanvasLayer/Overlay/ResultPanel/ResultContainer/ResultFight" to="." method="_on_result_fight_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer/ResultOkay" to="." method="_on_result_okay_pressed"]
+[connection signal="pressed" from="CanvasLayer/Overlay/ResultCover/ResultPanel/ResultContainer/ResultFight" to="." method="_on_result_fight_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/MembershipContainer/PurchaseMembership" to="." method="_on_purchase_membership_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/BlacksmithMenu/HBoxContainer/Panel/VBoxContainer/CloseBlacksmith" to="." method="_on_close_blacksmith_pressed"]
 [connection signal="pressed" from="CanvasLayer/Overlay/MarketMenu/Panel/VBoxContainer/CloseMarket" to="." method="_on_close_market_pressed"]

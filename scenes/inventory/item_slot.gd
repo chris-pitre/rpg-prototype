@@ -34,7 +34,9 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	var type_matches = data.item.type & types > 0
 	var correct_type = (require_type and type_matches) or not require_type
 	
-	return has_space and correct_type and extra_condition.call(data.item)
+	if extra_condition:
+		return has_space and correct_type and extra_condition.call(data.item)
+	return has_space and correct_type
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
 	data = data as ItemDrag

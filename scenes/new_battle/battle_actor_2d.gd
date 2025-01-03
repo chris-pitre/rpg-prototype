@@ -20,6 +20,7 @@ func _ready() -> void:
 		BattleManager.player_hp_updated.connect(_update_hp)
 		BattleManager.player_posture_updated.connect(_update_posture)
 		BattleManager.player_start_move.connect(_start_move)
+		BattleManager.player_guard_updated.connect(_update_guard)
 	else:
 		BattleManager.enemy_hp_updated.connect(_update_hp)
 		BattleManager.enemy_posture_updated.connect(_update_posture)
@@ -29,13 +30,18 @@ func show_frame(frame_name: String) -> void:
 	anim_sprite.animation = frame_name
 
 func _update_hp(new_hp: int) -> void:
+	var diff = new_hp - health_bar.value
+	var shake_amt = clamp(abs(diff), 1, 5)
+	
 	if new_hp < health_bar.value:
-		damage_anim(5)
+		damage_anim(shake_amt)
 		show_blood()
 	health_bar.value = new_hp
 	health_label.text = str(new_hp)
 	
 func _update_posture(new_posture: int) -> void:
+	var diff = new_posture - posture_bar.value
+	
 	if new_posture < posture_bar.value:
 		damage_anim(1)
 		show_block()
@@ -50,6 +56,8 @@ func start_windup():
 	var frames_remaining = current_move.windup
 	if is_player:
 		BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.WINDUP
+		if current_move.guard_switching:
+			BattleManager.guard_switching_started.emit()
 	else:
 		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.WINDUP
 	if not current_move.windup_anim_name.is_empty():
@@ -90,11 +98,13 @@ func start_recovery():
 		start_windup()
 	else:
 		anim_sprite.animation = current_move.return_anim_name
-		current_move = null
 		if is_player:
 			BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.BLOCKING
+			if current_move.guard_switching:
+				BattleManager.guard_switching_ended.emit()
 		else:
 			BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.BLOCKING
+		current_move = null
 
 func damage_anim(amt: float) -> void:
 	if shake_tween:
@@ -111,3 +121,17 @@ func show_blood() -> void:
 func show_block() -> void:
 	var new_effect = BLOCK_PARTICLES.instantiate()
 	add_child(new_effect)
+
+func _update_guard(guard_status: GuardStatus.GUARD) -> void:
+	if not current_move.guard_switching:
+		return
+	
+	match guard_status:
+		GuardStatus.GUARD.NONE:
+			show_frame("default")
+		GuardStatus.GUARD.HIGH_GUARD:
+			show_frame("highguard")
+		GuardStatus.GUARD.MIDDLE_GUARD:
+			show_frame("swordblock")
+		GuardStatus.GUARD.LOW_GUARD:
+			show_frame("tailguard")

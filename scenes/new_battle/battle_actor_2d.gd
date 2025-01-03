@@ -65,6 +65,9 @@ func start_windup():
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
+		if not BattleManager.battle_active:
+			anim_sprite.animation = "default"
+			return
 	start_active()
 
 func start_active():
@@ -80,6 +83,9 @@ func start_active():
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
+		if not BattleManager.battle_active:
+			anim_sprite.animation = "default"
+			return
 	start_recovery()
 	
 func start_recovery():
@@ -93,7 +99,13 @@ func start_recovery():
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
-	if current_move.followup_attack != null:
+		if not BattleManager.battle_active:
+			anim_sprite.animation = "default"
+			return
+	if current_move == null:
+		anim_sprite.animation = "default"
+		return
+	elif current_move.followup_attack != null:
 		current_move = current_move.followup_attack
 		start_windup()
 	else:

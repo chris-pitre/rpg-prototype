@@ -10,6 +10,12 @@ func _ready() -> void:
 		new_empty.modulate.a = 0.0
 		add_child(new_empty)
 	BattleManager.next_execution_timestep.connect(_do_timestep)
+	BattleManager.battle_ended.connect(_battle_ended)
+
+func _battle_ended(encounter: Encounter, player_lost: bool) -> void:
+	current_timestep = 0
+	for child in get_children():
+		child.modulate.a = 0.0
 
 func _do_timestep() -> void:
 	if current_timestep > 0:

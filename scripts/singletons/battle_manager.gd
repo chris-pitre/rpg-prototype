@@ -93,10 +93,12 @@ func start_execution_phase() -> void:
 		current_time_step = i
 		if player.hp <= 0:
 			battle_ended.emit(current_encounter, false)
-			break
+			battle_active = false
+			return
 		elif enemy.hp <= 0:
 			battle_ended.emit(current_encounter, true)
-			break
+			battle_active = false
+			return
 		if player.stun != null:
 			player.stun.decrease_stun()
 			if not player.stun.check_stun():

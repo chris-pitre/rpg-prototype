@@ -10,11 +10,17 @@ extends Control
 func _ready() -> void:
 	BattleManager.start_battle.connect(_start_battle)
 	BattleManager.planning_phase_started.connect(_show_action_palette)
+	BattleManager.battle_ended.connect(_end_battle)
 
 func _start_battle(encounter: Encounter) -> void:
 	visible = true
-	_get_player_moves()
 	BattleManager.battle_started.emit()
+	
+func _end_battle(encounter: Encounter, is_player: bool) -> void:
+	BattleManager.queued_player_moves = {}
+	player_queue.reset_blocks()
+	BattleManager.queued_enemy_moves = {}
+	enemy_queue.reset_blocks()
 
 func _get_player_moves() -> void:
 	BattleManager.queued_player_moves = {}

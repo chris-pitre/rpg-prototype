@@ -8,9 +8,20 @@ const EMPTY_BLOCK = preload("res://scenes/new_battle/empty_action_block.tscn")
 var action_blocks: Dictionary
 
 func _ready() -> void:
+	BattleManager.battle_started.connect(setup_blocks)
+	BattleManager.battle_ended.connect(delete_blocks)
+
+func setup_blocks() -> void:
+	action_blocks = {}
 	for i in range(BattleManager.max_timestep):
 		var new_empty = EMPTY_BLOCK.instantiate()
 		add_child(new_empty)
+
+func delete_blocks(encounter: Encounter, player_lost: bool) -> void:
+	action_blocks = {}
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
 
 func update_blocks() -> void:
 	pass

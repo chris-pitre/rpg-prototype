@@ -26,8 +26,8 @@ var length: int = -1:
 @export_category("Self Effects")
 @export var self_stat_statuses: Array[StatStatus] = []
 @export var self_guard_status: GuardStatus = null
-@export var self_stun_status: StunnedStatus = null
 @export var self_damage: int = 0
+@export var self_posture_damage: int = 0
 @export var self_healing: int = 0
 @export_flags("Power", "Speech", "Agility", "Piety") var self_stats: int = 0
 @export var self_stat_modifier: int = 0
@@ -35,8 +35,8 @@ var length: int = -1:
 @export_category("Opponent Effects")
 @export var opponent_stat_statuses: Array[StatStatus] = []
 @export var opponent_guard_status: GuardStatus = null
-@export var opponent_stun_status: StunnedStatus = null
 @export var opponent_damage: int = 0
+@export var opponent_posture_damage: int = 0
 @export var opponent_healing: int = 0
 @export_flags("Power", "Speech", "Agility", "Piety") var opponent_stats: int = 0
 @export var opponent_stat_modifier: int = 0

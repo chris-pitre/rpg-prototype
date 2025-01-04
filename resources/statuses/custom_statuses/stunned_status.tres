@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="StunnedStatus" load_steps=2 format=3 uid="uid://vo6vtip20jbh"]
-
-[ext_resource type="Script" path="res://resources/statuses/custom_statuses/stunned_status.gd" id="1_4nna7"]
-
-[resource]
-resource_local_to_scene = true
-script = ExtResource("1_4nna7")
-stun_timesteps = 20
-name = "<null>"

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ItemAccessory" load_steps=4 format=3 uid="uid://bcv0ic6imise2"]
+
+[ext_resource type="Script" path="res://resources/items/item_accessory.gd" id="1_miq8s"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="2_l2lw1"]
+
+[sub_resource type="Resource" id="Resource_6nek0"]
+script = ExtResource("2_l2lw1")
+damage_offset = 15
+posture_damage_offset = 0
+self_damage_offset = 0
+self_posture_damage_offset = 0
+damage_defense = 0
+posture_defense = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
+
+[resource]
+script = ExtResource("1_miq8s")
+stat_block = SubResource("Resource_6nek0")
+name = "Gleaming Red Ring"
+description = "Makes you feel incredibly strong. +15 damage."
+price = 500
+can_be_sold = true
+type = 16

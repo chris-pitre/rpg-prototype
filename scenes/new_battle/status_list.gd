@@ -3,7 +3,6 @@ extends VBoxContainer
 @export var is_player: bool = false
 
 @onready var guard_label := $GuardLabel
-@onready var stun_label := $StunLabel
 @onready var status_label_scene := preload("res://scenes/new_battle/stat_status_label.tscn")
 
 var stat_status_dict: Dictionary = {}
@@ -45,12 +44,6 @@ func _add_status(status: StatStatus) -> void:
 	add_child(status_label)
 
 func _update_statuses() -> void:
-	if actor.stun != null:
-		stun_label.text = "Stunned %d" % [actor.stun.stun]
-		stun_label.show()
-	else:
-		stun_label.hide()
-	
 	for label in get_children():
 		if label is StatStatusLabel:
 			label.update_value()

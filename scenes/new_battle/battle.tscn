@@ -59,6 +59,9 @@ position = Vector2(828, 211)
 modulate = Color(1, 0, 0, 1)
 scale = Vector2(-2, 2)
 
+[node name="ClashPosition" type="Node2D" parent="."]
+position = Vector2(560, 319)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Trash" type="Panel" parent="CanvasLayer"]

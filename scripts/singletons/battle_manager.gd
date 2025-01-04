@@ -30,9 +30,13 @@ signal enemy_posture_updated(new_posture: int)
 
 signal player_status_added(status: StatStatus)
 signal enemy_status_added(status: StatStatus)
+signal player_status_removed(status: StatStatus)
+signal enemy_status_removed(status: StatStatus)
 
 signal guard_switching_started
 signal guard_switching_ended
+
+signal clashed
 
 #endregion
 
@@ -42,6 +46,7 @@ enum PHASES{
 }
 
 const MOVES_DIR = "res://resources/moves/"
+const STUN_STATUS = preload("res://resources/statuses/stat_statuses/stunned_status.tres")
 
 var moves = {}
 var battle_active: bool = false
@@ -55,11 +60,10 @@ var time_step: float = 0.12
 var current_time_step: int = 0
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
+var already_clashed: bool = false
 
 var player: BattleActorStats = preload("res://resources/battle_actor/test_player.tres")
 var enemy: BattleActorStats
-
-var posture_stun = preload("res://resources/statuses/custom_statuses/stunned_status.tres")
 
 var currently_guard_switching: bool = false
 
@@ -77,6 +81,7 @@ func _ready() -> void:
 func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter
 	enemy = encounter.enemy.duplicate()
+	player.stat_block = GameState.stat_block
 	refresh_stats()
 	battle_active = true
 	await battle_started
@@ -90,6 +95,7 @@ func start_execution_phase() -> void:
 	current_phase = PHASES.EXECUTION
 	execution_phase_started.emit()
 	for i in range(max_timestep):
+		already_clashed = false
 		current_time_step = i
 		if player.hp <= 0:
 			battle_ended.emit(current_encounter, false)
@@ -99,16 +105,6 @@ func start_execution_phase() -> void:
 			battle_ended.emit(current_encounter, true)
 			battle_active = false
 			return
-		if player.stun != null:
-			player.stun.decrease_stun()
-			if not player.stun.check_stun():
-				player.posture = 100
-				player.stun = null
-		if enemy.stun != null:
-			enemy.stun.decrease_stun()
-			if not enemy.stun.check_stun():
-				enemy.posture = 100
-				enemy.stun = null
 		var player_move = queued_player_moves.get(i)
 		var enemy_move = queued_enemy_moves.get(i)
 		if player_move != null:
@@ -124,8 +120,9 @@ func start_execution_phase() -> void:
 func execute_action(current: BattleActorStats, other: BattleActorStats, move: MoveResource) -> void:
 	await allow_move_execution
 	#interrupt execution of action if actor is stunned
-	if current.stun != null and current.stun.check_stun():
-		return
+	for stat_status: StatStatus in current.stat_modifiers:
+		if stat_status.name == "Stunned":
+			return
 	
 	#add guard if move adds it
 	if move.self_guard_status != null:
@@ -135,6 +132,9 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 		
 	#interrupt execution of action if there is a clash
 	if current.current_phase_state == BattleActorStats.PHASE_STATE.ACTIVE and other.current_phase_state == BattleActorStats.PHASE_STATE.ACTIVE:
+		if not already_clashed:
+			clashed.emit()
+			already_clashed = true
 		return
 	
 	#calculate healing and damage for current and opponent
@@ -173,7 +173,7 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 
 	current.hp += move.self_healing
 	current.hp -= move.self_damage * hp_mult
-	current.posture -= move.self_damage * posture_mult
+	current.posture -= move.self_posture_damage * posture_mult
 	
 	if other.current_guard != GuardStatus.GUARD.NONE and other.current_guard == move.attack_direction:
 		var receiver_move = get_move_at_timestep(other, current_time_step)
@@ -207,29 +207,21 @@ func execute_action(current: BattleActorStats, other: BattleActorStats, move: Mo
 	
 	other.hp += move.opponent_healing
 	other.hp -= move.opponent_damage * hp_mult
-	other.posture -= move.opponent_damage * posture_mult
+	other.posture -= move.opponent_posture_damage * posture_mult
 	
 	#add game stat modification
 	
-	#add stun if move stuns
-	if move.self_stun_status != null:
-		current.stun = move.self_stun_status
-	if move.opponent_stun_status != null:
-		other.stun = move.opponent_stun_status
-	
 	#add stun if posture <= 0
 	if current.posture <= 0:
-		current.stun = move.self_stun_status
+		current.add_status(STUN_STATUS.instantiate().duplicate())
 	if other.posture <= 0:
-		other.stun = move.opponent_stun_status
+		other.add_status(STUN_STATUS.instantiate().duplicate())
 	
 	#add combat stat mods 
-	if not move.self_stat_statuses.is_empty():
-		for status in move.self_stat_statuses:
-			current.add_status(status)
-	if not move.opponent_stat_statuses.is_empty():
-		for status in move.opponent_stat_statuses:
-			other.add_status(status)
+	for status in move.self_stat_statuses:
+		current.add_status(status.duplicate())
+	for status in move.opponent_stat_statuses:
+		other.add_status(status.duplicate())
 
 func refresh_stats() -> void:
 	player_hp_updated.emit(player.hp)

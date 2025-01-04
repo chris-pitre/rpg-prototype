@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=3 format=3 uid="uid://ccx30idl1w8k7"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_16srg"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_3okri"]
+
+[resource]
+script = ExtResource("2_3okri")
+name = "Claw"
+windup_anim_name = "crouch"
+active_anim_name = "punch"
+recovery_anim_name = "crouch"
+return_anim_name = "crouch"
+attack_direction = 3
+require_guard = 0
+windup = 2
+active = 2
+recovery = 2
+guard_switching = false
+self_stat_statuses = Array[ExtResource("1_16srg")]([])
+self_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_16srg")]([])
+opponent_damage = 5
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

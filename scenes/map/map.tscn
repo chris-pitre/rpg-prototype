@@ -19,7 +19,7 @@
 [ext_resource type="Script" path="res://scenes/map/academy_menu.gd" id="15_vfc57"]
 [ext_resource type="Script" path="res://scenes/map/character_menu.gd" id="17_fjo3k"]
 [ext_resource type="Resource" uid="uid://b30f8nlkl6lrn" path="res://resources/items/weapon_sword_crude.tres" id="19_wfnij"]
-[ext_resource type="Resource" uid="uid://buceht5bgcah6" path="res://resources/items/accessory_ring_damage_common.tres" id="23_iu4tc"]
+[ext_resource type="Resource" uid="uid://bcv0ic6imise2" path="res://resources/items/accessory_ring_damage_legendary.tres" id="20_h1s10"]
 
 [sub_resource type="Gradient" id="Gradient_f2idn"]
 
@@ -989,7 +989,7 @@ item = ExtResource("19_wfnij")
 [node name="ItemButton2" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer/ScrollContainer/Panel/ItemContainer" instance=ExtResource("8_2hsvd")]
 layout_mode = 2
 allow_drag = true
-item = ExtResource("23_iu4tc")
+item = ExtResource("20_h1s10")
 
 [node name="CloseCharacter" type="Button" parent="CanvasLayer/Overlay/CharacterMenu/Panel/VBoxContainer"]
 layout_mode = 2

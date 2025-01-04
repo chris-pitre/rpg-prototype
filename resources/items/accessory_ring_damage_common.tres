@@ -7,11 +7,13 @@
 script = ExtResource("2_lundu")
 damage_offset = 1
 posture_damage_offset = 0
+self_damage_offset = 0
+self_posture_damage_offset = 0
+damage_defense = 0
+posture_defense = 0
 windup_time_offset = 0
 active_time_offset = 0
 recovery_time_offset = 0
-damage_defense = 0
-posture_defense = 0
 stat_power_offset = 0
 stat_agility_offset = 0
 stat_speech_offset = 0
@@ -20,7 +22,7 @@ stat_piety_offset = 0
 [resource]
 script = ExtResource("1_dpr2i")
 stat_block = SubResource("Resource_6nek0")
-name = "Damage Ring"
+name = "Worn Red Ring"
 description = "Makes you feel a bit stronger. +1 damage."
 price = 5
 can_be_sold = true

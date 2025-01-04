@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=21 format=3 uid="uid://mx5228t1s44m"]
+[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://mx5228t1s44m"]
 
 [ext_resource type="Texture2D" uid="uid://c32iu3ia8ndna" path="res://assets/textures/placeholder/battle_actor_player/guykick.png" id="1_83cax"]
 [ext_resource type="Texture2D" uid="uid://runa16qigw3x" path="res://assets/textures/placeholder/battle_actor_player/guycrouch.png" id="1_pq4xg"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cht82mvfam0lp" path="res://assets/textures/placeholder/battle_actor_player/guyswordstab.png" id="11_kihwf"]
 [ext_resource type="Texture2D" uid="uid://8x8xatj8xqss" path="res://assets/textures/placeholder/battle_actor_player/guyswordblock.png" id="12_gjnrf"]
 [ext_resource type="Texture2D" uid="uid://dlpjbuuf16rdc" path="res://assets/textures/placeholder/battle_actor_player/guyswordtail.png" id="13_o6jo7"]
+[ext_resource type="Texture2D" uid="uid://ottsuq3pwvys" path="res://assets/textures/placeholder/battle_actor_player/guystunned.png" id="15_1sijb"]
 [ext_resource type="Texture2D" uid="uid://c6eso8rhjsiay" path="res://assets/textures/placeholder/battle_actor_player/guystabwindup.png" id="15_ytbst"]
 [ext_resource type="Texture2D" uid="uid://dmsu1hi5sheoj" path="res://assets/textures/placeholder/battle_actor_player/guyswordswingup.png" id="17_5p3fw"]
 
@@ -133,6 +134,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"shove_windup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_1sijb")
+}],
+"loop": true,
+"name": &"stunned",
 "speed": 5.0
 }, {
 "frames": [{

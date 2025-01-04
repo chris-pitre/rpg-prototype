@@ -11,7 +11,6 @@ var hp: int = 100: set = _set_hp
 var posture: int = 100: set = _set_posture
 var current_guard: GuardStatus.GUARD = GuardStatus.GUARD.NONE: set = _set_guard
 var stat_modifiers: Array[StatStatus] = []
-var stun: StunnedStatus = null: set = _set_stun
 var stat_block: StatBlock = StatBlock.new()
 var current_phase_state: PHASE_STATE = PHASE_STATE.BLOCKING
 
@@ -38,6 +37,10 @@ func add_status(status: StatStatus) -> void:
 
 func remove_status(status: StatStatus) -> void:
 	status.status_finished.disconnect(remove_status)
+	if is_player:
+		BattleManager.player_status_removed.emit(status)
+	else:
+		BattleManager.enemy_status_removed.emit(status)
 	BattleManager.next_execution_timestep.disconnect(status.decrease_duration)
 	stat_modifiers.erase(status)
 
@@ -54,11 +57,6 @@ func _set_posture(new_posture: int) -> void:
 		BattleManager.player_posture_updated.emit(new_posture)
 	else:
 		BattleManager.enemy_posture_updated.emit(new_posture)
-
-func _set_stun(new_stun: StunnedStatus) -> void:
-	stun = new_stun
-	if stun != null:
-		stun.stun = stun.stun_timesteps
 
 func _set_guard(new_guard: GuardStatus.GUARD) -> void:
 	current_guard = new_guard

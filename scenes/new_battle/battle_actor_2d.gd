@@ -11,22 +11,30 @@ const BLOCK_PARTICLES = preload("res://scenes/effects/block_particles.tscn")
 @onready var posture_bar := $PostureBar
 @onready var posture_label := $PostureBar/PostureLabel
 
+var stunned: bool = false
 var shake_tween: Tween
 var current_move: MoveResource
 
 func _ready() -> void:
-	anim_sprite.animation = "default"
+	show_frame("default")
 	if is_player:
 		BattleManager.player_hp_updated.connect(_update_hp)
 		BattleManager.player_posture_updated.connect(_update_posture)
 		BattleManager.player_start_move.connect(_start_move)
 		BattleManager.player_guard_updated.connect(_update_guard)
+		BattleManager.player_status_added.connect(_status_added)
+		BattleManager.player_status_removed.connect(_status_removed)
 	else:
 		BattleManager.enemy_hp_updated.connect(_update_hp)
 		BattleManager.enemy_posture_updated.connect(_update_posture)
 		BattleManager.enemy_start_move.connect(_start_move)
+		BattleManager.enemy_status_added.connect(_status_added)
+		BattleManager.enemy_status_removed.connect(_status_removed)
 
 func show_frame(frame_name: String) -> void:
+	if stunned:
+		return
+	
 	anim_sprite.animation = frame_name
 
 func _update_hp(new_hp: int) -> void:
@@ -61,19 +69,19 @@ func start_windup():
 	else:
 		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.WINDUP
 	if not current_move.windup_anim_name.is_empty():
-		anim_sprite.animation = current_move.windup_anim_name
+		show_frame(current_move.windup_anim_name)
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
 		if not BattleManager.battle_active:
-			anim_sprite.animation = "default"
+			show_frame("default")
 			return
 	start_active()
 
 func start_active():
 	var frames_remaining = current_move.active
 	if not current_move.active_anim_name.is_empty():
-		anim_sprite.animation = current_move.active_anim_name
+		show_frame(current_move.active_anim_name)
 	if is_player:
 		BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.ACTIVE
 		BattleManager.execute_action(BattleManager.player, BattleManager.enemy, current_move)
@@ -84,7 +92,7 @@ func start_active():
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
 		if not BattleManager.battle_active:
-			anim_sprite.animation = "default"
+			show_frame("default")
 			return
 	start_recovery()
 	
@@ -95,21 +103,21 @@ func start_recovery():
 	else:
 		BattleManager.enemy.current_phase_state = BattleActorStats.PHASE_STATE.RECOVERY
 	if not current_move.recovery_anim_name.is_empty():
-		anim_sprite.animation = current_move.recovery_anim_name
+		show_frame(current_move.recovery_anim_name)
 	while frames_remaining > 0:
 		await BattleManager.next_execution_timestep
 		frames_remaining -= 1
 		if not BattleManager.battle_active:
-			anim_sprite.animation = "default"
+			show_frame("default")
 			return
 	if current_move == null:
-		anim_sprite.animation = "default"
+		show_frame("default")
 		return
 	elif current_move.followup_attack != null:
 		current_move = current_move.followup_attack
 		start_windup()
 	else:
-		anim_sprite.animation = current_move.return_anim_name
+		show_frame(current_move.return_anim_name)
 		if is_player:
 			BattleManager.player.current_phase_state = BattleActorStats.PHASE_STATE.BLOCKING
 			if current_move.guard_switching:
@@ -147,3 +155,14 @@ func _update_guard(guard_status: GuardStatus.GUARD) -> void:
 			show_frame("swordblock")
 		GuardStatus.GUARD.LOW_GUARD:
 			show_frame("tailguard")
+
+func _status_added(stat_status: StatStatus) -> void:
+	if not stat_status.anim_name == "<null>" and not stat_status.anim_name.is_empty():
+		show_frame(stat_status.anim_name)
+		if stat_status.name == "Stunned":
+			stunned = true
+
+func _status_removed(stat_status: StatStatus) -> void:
+	if stat_status.name == "Stunned":
+		stunned = false
+		show_frame("default")

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyMoveQueue" load_steps=6 format=3 uid="uid://do2jaellsfm5y"]
+
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_lkgjd"]
+[ext_resource type="Resource" uid="uid://daxc21snrvljb" path="res://resources/battle_actor/ratman/clawstorm.tres" id="1_uw1u0"]
+[ext_resource type="Resource" uid="uid://ccx30idl1w8k7" path="res://resources/battle_actor/ratman/claw.tres" id="2_7jh8j"]
+[ext_resource type="Resource" uid="uid://sfc461yxmmvv" path="res://resources/moves/middleguard.tres" id="3_r5jo4"]
+[ext_resource type="Resource" uid="uid://dffqe0piuplmu" path="res://resources/moves/punch.tres" id="4_er1k7"]
+
+[resource]
+script = ExtResource("1_lkgjd")
+queue = {
+0: ExtResource("1_uw1u0"),
+12: ExtResource("2_7jh8j"),
+18: ExtResource("2_7jh8j"),
+30: ExtResource("3_r5jo4"),
+38: ExtResource("4_er1k7"),
+45: ExtResource("4_er1k7")
+}

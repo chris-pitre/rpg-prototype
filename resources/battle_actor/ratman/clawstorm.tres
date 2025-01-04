@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://daxc21snrvljb"]
+
+[ext_resource type="Resource" uid="uid://ccx30idl1w8k7" path="res://resources/battle_actor/ratman/claw.tres" id="1_gx13b"]
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_q534b"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_co7hu"]
+
+[resource]
+script = ExtResource("2_co7hu")
+name = "Double Claw"
+windup_anim_name = "crouch"
+active_anim_name = "punch"
+recovery_anim_name = "crouch"
+return_anim_name = "crouch"
+attack_direction = 3
+require_guard = 0
+windup = 4
+active = 2
+recovery = 2
+followup_attack = ExtResource("1_gx13b")
+guard_switching = false
+self_stat_statuses = Array[ExtResource("1_q534b")]([])
+self_damage = 0
+self_healing = 2
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_q534b")]([])
+opponent_damage = 7
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

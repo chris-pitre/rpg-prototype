@@ -1,5 +1,7 @@
 extends Control
 
+const CLASH_EFFECT = preload("res://scenes/effects/clash_effect.tscn")
+
 @onready var enemy_queue := $CanvasLayer/EnemyActionPanel/EnemyActionQueue
 @onready var player_queue := $CanvasLayer/PlayerActionPanel/PlayerActionQueue
 @onready var action_palette_margin := $CanvasLayer/RightMargin
@@ -11,6 +13,7 @@ func _ready() -> void:
 	BattleManager.start_battle.connect(_start_battle)
 	BattleManager.planning_phase_started.connect(_show_action_palette)
 	BattleManager.battle_ended.connect(_end_battle)
+	BattleManager.clashed.connect(_on_clashed)
 
 func _start_battle(encounter: Encounter) -> void:
 	visible = true
@@ -29,10 +32,20 @@ func _get_player_moves() -> void:
 		action_palette.remove_child(child)
 		child.queue_free()
 	for move: String in BattleManager.player.moves:
-		var move_resource = BattleManager.moves[move]
+		var move_resource: MoveResource = BattleManager.moves[move]
+		var move_modified: MoveResource = move_resource.duplicate()
+		move_modified.opponent_damage += BattleManager.player.stat_block.damage_offset
+		move_modified.opponent_posture_damage += BattleManager.player.stat_block.posture_damage_offset
+		move_modified.self_damage += BattleManager.player.stat_block.self_damage_offset
+		move_modified.self_posture_damage += BattleManager.player.stat_block.self_posture_damage_offset
+		
+		move_modified.windup += BattleManager.player.stat_block.windup_time_offset
+		move_modified.active += BattleManager.player.stat_block.active_time_offset
+		move_modified.recovery += BattleManager.player.stat_block.recovery_time_offset
+		
 		if BattleManager.player.current_guard == move_resource.require_guard or move_resource.require_guard == GuardStatus.GUARD.NONE:
 			var new_action_block = action_block.instantiate()
-			new_action_block.action = move_resource
+			new_action_block.action = move_modified
 			action_palette.add_child(new_action_block)
 
 func _on_execute_button_button_down() -> void:
@@ -59,3 +72,7 @@ func _get_enemy_moves() -> void:
 		enemy_action_block.action = enemy_move_queue.queue[move]
 		enemy_queue.add_action_block(move_pos - total_length, move_pos, enemy_action_block, true)
 		total_length += enemy_move_queue.queue[move].length - 1
+
+func _on_clashed() -> void:
+	var new_effect = CLASH_EFFECT.instantiate()
+	$ClashPosition.add_child(new_effect)

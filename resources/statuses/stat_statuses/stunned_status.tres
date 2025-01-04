@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StatStatus" load_steps=2 format=3 uid="uid://c46n34fyklcwp"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_4el3w"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_4el3w")
+stat_direction = 0
+damage_type = 0
+multiplier = 1.0
+duration_timesteps = 10
+anim_name = &"stunned"
+name = "Stunned"

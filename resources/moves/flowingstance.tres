@@ -10,6 +10,7 @@ stat_direction = 0
 damage_type = 1
 multiplier = 2.0
 duration_timesteps = 24
+anim_name = &"<null>"
 name = "Off-Balance"
 
 [resource]
@@ -27,11 +28,13 @@ recovery = 23
 guard_switching = true
 self_stat_statuses = Array[ExtResource("1_6b4xj")]([SubResource("Resource_fj3fr")])
 self_damage = 0
+self_posture_damage = 0
 self_healing = 0
 self_stats = 0
 self_stat_modifier = 0
 opponent_stat_statuses = Array[ExtResource("1_6b4xj")]([])
 opponent_damage = 0
+opponent_posture_damage = 0
 opponent_healing = 0
 opponent_stats = 0
 opponent_stat_modifier = 0

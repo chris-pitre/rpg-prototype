@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ItemAccessory" load_steps=4 format=3 uid="uid://dprv6l580b45q"]
+
+[ext_resource type="Script" path="res://resources/items/item_accessory.gd" id="1_a6raw"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="2_boxu7"]
+
+[sub_resource type="Resource" id="Resource_6nek0"]
+script = ExtResource("2_boxu7")
+damage_offset = 3
+posture_damage_offset = 0
+self_damage_offset = 0
+self_posture_damage_offset = 0
+damage_defense = 0
+posture_defense = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
+
+[resource]
+script = ExtResource("1_a6raw")
+stat_block = SubResource("Resource_6nek0")
+name = "Red Ring"
+description = "Makes you feel stronger. +3 damage."
+price = 100
+can_be_sold = true
+type = 16

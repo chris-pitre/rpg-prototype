@@ -17,6 +17,7 @@ signal status_finished(status: StatStatus)
 @export_category("Status Settings")
 @export var duration_timesteps: int = 20
 var duration: Variant = null
+@export var anim_name: StringName = "<null>"
 
 func decrease_duration(battle_actor_stats: BattleActorStats) -> void:
 	if duration == null:

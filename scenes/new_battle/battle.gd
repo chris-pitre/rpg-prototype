@@ -33,15 +33,7 @@ func _get_player_moves() -> void:
 		child.queue_free()
 	for move: String in BattleManager.player.moves:
 		var move_resource: MoveResource = BattleManager.moves[move]
-		var move_modified: MoveResource = move_resource.duplicate()
-		move_modified.opponent_damage += BattleManager.player.stat_block.damage_offset
-		move_modified.opponent_posture_damage += BattleManager.player.stat_block.posture_damage_offset
-		move_modified.self_damage += BattleManager.player.stat_block.self_damage_offset
-		move_modified.self_posture_damage += BattleManager.player.stat_block.self_posture_damage_offset
-		
-		move_modified.windup += BattleManager.player.stat_block.windup_time_offset
-		move_modified.active += BattleManager.player.stat_block.active_time_offset
-		move_modified.recovery += BattleManager.player.stat_block.recovery_time_offset
+		var move_modified = GameState.get_modified_move(move_resource)
 		
 		if BattleManager.player.current_guard == move_resource.require_guard or move_resource.require_guard == GuardStatus.GUARD.NONE:
 			var new_action_block = action_block.instantiate()
@@ -69,7 +61,8 @@ func _get_enemy_moves() -> void:
 	for move in enemy_move_queue.queue:
 		var move_pos = move + total_length
 		var enemy_action_block = action_block.instantiate()
-		enemy_action_block.action = enemy_move_queue.queue[move]
+		enemy_action_block.action = enemy_move_queue.queue[move].duplicate()
+		enemy_action_block.action.opponent_damage = BattleManager.enemy.enemy_base_damage
 		enemy_queue.add_action_block(move_pos - total_length, move_pos, enemy_action_block, true)
 		total_length += enemy_move_queue.queue[move].length - 1
 

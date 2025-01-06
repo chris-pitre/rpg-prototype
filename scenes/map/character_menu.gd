@@ -21,9 +21,15 @@ func slot_allowed_item(item: Item) -> bool:
 	return true
 
 func _slot_item_removed(item: Item) -> void:
+	if item is ItemWeapon:
+		GameState.equip_weapon(null)
+	
 	GameState.stat_block = GameState.stat_block.sub(item.stat_block)
 
 func _slot_item_added(item: Item) -> void:
+	if item is ItemWeapon:
+		GameState.equip_weapon(item)
+	
 	GameState.stat_block = GameState.stat_block.add(item.stat_block)
 
 func _stat_block_changed(stat_block: StatBlock) -> void:

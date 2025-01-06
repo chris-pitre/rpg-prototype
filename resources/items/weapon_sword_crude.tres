@@ -1,19 +1,30 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=6 format=3 uid="uid://b30f8nlkl6lrn"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=15 format=3 uid="uid://b30f8nlkl6lrn"]
 
 [ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="1_a7vxv"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_bhkox"]
 [ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="1_e5622"]
-[ext_resource type="Script" path="res://scenes/new_battle/battle_action.gd" id="1_jjhq4"]
+[ext_resource type="Resource" uid="uid://dlqntvu40fr8c" path="res://resources/moves/bleedstab.tres" id="2_8qeqx"]
+[ext_resource type="Resource" uid="uid://b3qco0dm53bs5" path="res://resources/moves/flowingstance.tres" id="3_vjg1y"]
 [ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="4_1ryvd"]
+[ext_resource type="Resource" uid="uid://b84mm6kjf7w6q" path="res://resources/moves/oberhaw.tres" id="6_mnmyh"]
+[ext_resource type="Resource" uid="uid://ybusa5i0uhhp" path="res://resources/moves/unterhaw.tres" id="7_hocd4"]
+[ext_resource type="Resource" uid="uid://bmo1o62a0uy6l" path="res://resources/moves/lowguard.tres" id="8_ygn6c"]
+[ext_resource type="Resource" uid="uid://sfc461yxmmvv" path="res://resources/moves/middleguard.tres" id="9_kvep0"]
+[ext_resource type="Resource" uid="uid://c5fh3u3rnnrqu" path="res://resources/moves/highguard.tres" id="10_v0hru"]
+[ext_resource type="Resource" uid="uid://cccj31pumats4" path="res://resources/moves/slash.tres" id="11_puady"]
+[ext_resource type="Resource" uid="uid://batib2l1gtrnf" path="res://resources/moves/doubleslash_1.tres" id="12_d5j0q"]
 
 [sub_resource type="Resource" id="Resource_uoayi"]
 script = ExtResource("4_1ryvd")
 damage_offset = 0
 posture_damage_offset = 0
+self_damage_offset = 0
+self_posture_damage_offset = 0
+damage_defense = 0
+posture_defense = 0
 windup_time_offset = 0
 active_time_offset = 0
 recovery_time_offset = 0
-damage_defense = 0
-posture_defense = 0
 stat_power_offset = 0
 stat_agility_offset = 0
 stat_speech_offset = 0
@@ -24,8 +35,9 @@ script = ExtResource("1_e5622")
 weapon_type = 1
 base_damage = 10
 stat_block = SubResource("Resource_uoayi")
+starting_moves = Array[ExtResource("1_bhkox")]([ExtResource("6_mnmyh"), ExtResource("7_hocd4"), ExtResource("8_ygn6c"), ExtResource("9_kvep0"), ExtResource("10_v0hru"), ExtResource("11_puady"), ExtResource("12_d5j0q")])
 purchasable_upgrades = Array[ExtResource("1_a7vxv")]([])
-purchasable_actions = Array[ExtResource("1_jjhq4")]([])
+purchasable_moves = Array[ExtResource("1_bhkox")]([ExtResource("2_8qeqx"), ExtResource("3_vjg1y")])
 name = "Chipped Machete"
 description = "A sharp tool weathered by time and rain."
 price = 0

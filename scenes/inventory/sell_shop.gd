@@ -8,13 +8,13 @@ var text_timeout: SceneTreeTimer
 func _on_sell_button_pressed() -> void:
 	if item_slot.item_button:
 		if item_slot.item_button.item.can_be_sold:
-			item_slot.item_button.queue_free()
 			GameState.gold += item_slot.item_button.item.price
 			if text_timeout:
 				text_timeout.disconnect("timeout", _on_sell_info_timeout)
 			sell_info.text = "Sold for %d gold." % item_slot.item_button.item.price
 			text_timeout = get_tree().create_timer(4)
 			text_timeout.timeout.connect(func(): sell_info.text = "")
+			item_slot.item_button.queue_free()
 		else:
 			if text_timeout:
 				text_timeout.disconnect("timeout", _on_sell_info_timeout)

@@ -6,6 +6,7 @@ class_name BattleActorStats extends Resource
 @export var moves: Array[String] = []
 @export var move_queues: Array[EnemyMoveQueue] = []
 @export var sprite_frames: SpriteFrames #placeholder for now will be replaced with whatever 3d implementation
+@export var enemy_base_damage: int = 10
 
 var hp: int = 100: set = _set_hp
 var posture: int = 100: set = _set_posture

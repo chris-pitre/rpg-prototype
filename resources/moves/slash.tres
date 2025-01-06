@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=3 format=3 uid="uid://cccj31pumats4"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_dryx7"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_xjqcj"]
+
+[resource]
+script = ExtResource("2_xjqcj")
+name = "Slash"
+windup_anim_name = "tailguard"
+active_anim_name = "upslash"
+recovery_anim_name = "highguard"
+return_anim_name = "default"
+attack_direction = 1
+require_guard = 0
+windup = 2
+active = 4
+recovery = 2
+guard_switching = false
+base_damage_mult = 1.0
+self_stat_statuses = Array[ExtResource("1_dryx7")]([])
+self_damage = 0
+self_posture_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_dryx7")]([])
+opponent_posture_damage = 0
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

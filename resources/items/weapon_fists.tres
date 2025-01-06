@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=10 format=3 uid="uid://bdo1pyhs4lkiq"]
+
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="1_ux3ov"]
+[ext_resource type="Resource" uid="uid://cqx6x3no00un0" path="res://resources/moves/doublekick_1.tres" id="2_cubpf"]
+[ext_resource type="Script" path="res://resources/upgrades/weapon_upgrade.gd" id="2_fd52v"]
+[ext_resource type="Resource" uid="uid://digdtv772lvnu" path="res://resources/moves/dropkick.tres" id="3_fb6ho"]
+[ext_resource type="Script" path="res://resources/items/item_weapon.gd" id="3_l0yfn"]
+[ext_resource type="Resource" uid="uid://dffqe0piuplmu" path="res://resources/moves/punch.tres" id="4_civ1b"]
+[ext_resource type="Script" path="res://resources/battle_actor/stat_block.gd" id="4_re0s3"]
+[ext_resource type="Resource" uid="uid://dr4qjxy81wjkm" path="res://resources/moves/kick.tres" id="5_xobdu"]
+
+[sub_resource type="Resource" id="Resource_gjwgd"]
+script = ExtResource("4_re0s3")
+damage_offset = 0
+posture_damage_offset = 0
+self_damage_offset = 0
+self_posture_damage_offset = 0
+damage_defense = 0
+posture_defense = 0
+windup_time_offset = 0
+active_time_offset = 0
+recovery_time_offset = 0
+stat_power_offset = 0
+stat_agility_offset = 0
+stat_speech_offset = 0
+stat_piety_offset = 0
+
+[resource]
+script = ExtResource("3_l0yfn")
+weapon_type = 0
+base_damage = 10
+stat_block = SubResource("Resource_gjwgd")
+starting_moves = Array[ExtResource("1_ux3ov")]([ExtResource("4_civ1b"), ExtResource("5_xobdu")])
+purchasable_upgrades = Array[ExtResource("2_fd52v")]([])
+purchasable_moves = Array[ExtResource("1_ux3ov")]([ExtResource("2_cubpf"), ExtResource("3_fb6ho")])
+name = "ItemName"
+description = "Description"
+price = 0
+can_be_sold = true
+type = 0

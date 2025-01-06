@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleActorStats" load_steps=3 format=3 uid="uid://our30uh2aj0v"]
+
+[ext_resource type="Script" path="res://resources/enemy_move_queue/enemy_move_queue.gd" id="1_kwctf"]
+[ext_resource type="Script" path="res://resources/battle_actor/battle_actor_stats.gd" id="2_tqiyd"]
+
+[resource]
+script = ExtResource("2_tqiyd")
+name = "Player"
+is_player = true
+max_hp = 100
+moves = Array[String]([])
+move_queues = Array[ExtResource("1_kwctf")]([])
+enemy_base_damage = 10

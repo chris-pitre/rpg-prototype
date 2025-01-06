@@ -11,8 +11,9 @@ enum {
 @export_enum("Fists", "Sword", "Mace", "Spear") var weapon_type: int = 0
 @export var base_damage: int = 10
 @export var stat_block: StatBlock
+@export var starting_moves: Array[MoveResource]
 @export var purchasable_upgrades: Array[WeaponUpgrade]
-@export var purchasable_actions: Array[BattleAction]
+@export var purchasable_moves: Array[MoveResource]
 
 var upgrades: Array[WeaponUpgrade] = []
 

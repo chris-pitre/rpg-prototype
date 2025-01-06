@@ -59,6 +59,7 @@ func _on_item_added(item: Item) -> void:
 
 func _on_item_removed(item: Item) -> void:
 	item_removed.emit(item)
+	item_button = null
 	
 	match types:
 		1:

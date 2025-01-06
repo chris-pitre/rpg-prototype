@@ -25,12 +25,14 @@ var health: int = 5:
 var learned_actions: Dictionary
 var stat_block = StatBlock.new():
 	set = _set_stat_block
+var equipped_weapon: ItemWeapon
 
 func _ready() -> void:
 	if RANDOM_SEED:
 		rng.seed = Time.get_unix_time_from_system()
 	else:
 		rng.seed = 10
+	equip_weapon(null)
 
 func reset() -> void:
 	day = -1
@@ -42,14 +44,34 @@ func give_item(item: Item) -> bool:
 	got_item.emit(item)
 	return true
 
-func give_action(action: BattleAction) -> void:
-	got_action.emit(action)
-
-func learn_action(weapon_type: int, action: BattleAction) -> void:
+func learn_move(weapon_type: int, move: MoveResource) -> void:
 	if not learned_actions.keys().has(weapon_type):
-		learned_actions[weapon_type]
-	elif not learned_actions[weapon_type].has(action):
-		learned_actions[weapon_type].append(action)
+		learned_actions[weapon_type] = [move]
+	elif not learned_actions[weapon_type].has(move):
+		learned_actions[weapon_type].append(move)
+
+func equip_weapon(weapon: ItemWeapon) -> void:
+	if weapon:
+		equipped_weapon = weapon
+	else:
+		equipped_weapon = load("res://resources/items/weapon_fists.tres")
+	
+	for move in equipped_weapon.starting_moves:
+		learn_move(equipped_weapon.weapon_type, move)
+
+func get_modified_move(move: MoveResource) -> MoveResource:
+	var move_modified: MoveResource = move.duplicate()
+	move_modified.opponent_damage = int(GameState.equipped_weapon.base_damage * move_modified.base_damage_mult)
+	move_modified.opponent_damage += BattleManager.player.stat_block.damage_offset
+	move_modified.opponent_posture_damage += BattleManager.player.stat_block.posture_damage_offset
+	move_modified.self_damage += BattleManager.player.stat_block.self_damage_offset
+	move_modified.self_posture_damage += BattleManager.player.stat_block.self_posture_damage_offset
+	
+	move_modified.windup += BattleManager.player.stat_block.windup_time_offset
+	move_modified.active += BattleManager.player.stat_block.active_time_offset
+	move_modified.recovery += BattleManager.player.stat_block.recovery_time_offset
+	
+	return move_modified
 
 func _set_population(amt: int) -> void:
 	population = amt

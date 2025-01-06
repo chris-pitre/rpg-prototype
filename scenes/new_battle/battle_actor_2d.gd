@@ -114,7 +114,7 @@ func start_recovery():
 		show_frame("default")
 		return
 	elif current_move.followup_attack != null:
-		current_move = current_move.followup_attack
+		current_move = GameState.get_modified_move(current_move.followup_attack)
 		start_windup()
 	else:
 		show_frame(current_move.return_anim_name)

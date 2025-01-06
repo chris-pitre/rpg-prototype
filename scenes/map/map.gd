@@ -361,7 +361,7 @@ func _map_event_neglected(event: MapEvent) -> void:
 
 func _on_visit_button_pressed() -> void:
 	visit_button.hide()
-	camera.global_position = current_location.global_position - get_viewport_rect().size / 2.0 + Vector2.ONE * 16
+	camera.global_position = current_location.global_position + Vector2.ONE * 16
 	match current_location.location_name:
 		"Blacksmith":
 			blacksmith_menu.show()

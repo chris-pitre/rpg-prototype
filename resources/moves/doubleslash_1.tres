@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="MoveResource" load_steps=4 format=3 uid="uid://batib2l1gtrnf"]
+
+[ext_resource type="Script" path="res://resources/statuses/stat_statuses/stat_status.gd" id="1_nbgoy"]
+[ext_resource type="Resource" uid="uid://bukff8xklvjc4" path="res://resources/moves/doubleslash_2.tres" id="1_w8x7v"]
+[ext_resource type="Script" path="res://resources/moves/move.gd" id="2_m7asj"]
+
+[resource]
+script = ExtResource("2_m7asj")
+name = "Double Slash"
+windup_anim_name = "tailguard"
+active_anim_name = "upslash"
+recovery_anim_name = "highguard"
+return_anim_name = "default"
+attack_direction = 3
+require_guard = 0
+windup = 3
+active = 1
+recovery = 3
+followup_attack = ExtResource("1_w8x7v")
+guard_switching = false
+base_damage_mult = 0.5
+self_stat_statuses = Array[ExtResource("1_nbgoy")]([])
+self_damage = 0
+self_posture_damage = 0
+self_healing = 0
+self_stats = 0
+self_stat_modifier = 0
+opponent_stat_statuses = Array[ExtResource("1_nbgoy")]([])
+opponent_posture_damage = 0
+opponent_healing = 0
+opponent_stats = 0
+opponent_stat_modifier = 0

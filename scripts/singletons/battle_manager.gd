@@ -62,7 +62,7 @@ var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}
 var already_clashed: bool = false
 
-var player: BattleActorStats = preload("res://resources/battle_actor/test_player.tres")
+var player: BattleActorStats = preload("res://resources/battle_actor/player.tres")
 var enemy: BattleActorStats
 
 var currently_guard_switching: bool = false
@@ -82,6 +82,7 @@ func start_new_battle(encounter: Encounter) -> void:
 	current_encounter = encounter
 	enemy = encounter.enemy.duplicate()
 	player.stat_block = GameState.stat_block
+	get_available_actions()
 	refresh_stats()
 	battle_active = true
 	await battle_started
@@ -228,6 +229,11 @@ func refresh_stats() -> void:
 	player_posture_updated.emit(player.posture)
 	enemy_hp_updated.emit(enemy.hp)
 	enemy_posture_updated.emit(enemy.posture)
+
+func get_available_actions() -> void:
+	player.moves.clear()
+	for action in GameState.learned_actions[GameState.equipped_weapon.weapon_type]:
+		player.moves.append(action.name)
 
 func get_move_at_timestep(battle_actor_status: BattleActorStats, timestep: int) -> MoveResource:
 	var queued_moves = queued_player_moves if battle_actor_status.is_player else queued_player_moves

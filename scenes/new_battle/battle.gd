@@ -1,6 +1,11 @@
 extends Control
 
 const CLASH_EFFECT = preload("res://scenes/effects/clash_effect.tscn")
+const BATTLE_ACTOR_2D = preload("res://scenes/new_battle/battle_actor_2d.tscn")
+const ENEMY_ACTOR_2D = preload("res://scenes/new_battle/enemy_actor_2d.tscn")
+
+var player_actor_2d
+var enemy_actor_2d
 
 @onready var enemy_queue := $CanvasLayer/EnemyActionPanel/EnemyActionQueue
 @onready var player_queue := $CanvasLayer/PlayerActionPanel/PlayerActionQueue
@@ -18,6 +23,14 @@ func _ready() -> void:
 func _start_battle(encounter: Encounter) -> void:
 	visible = true
 	BattleManager.battle_started.emit()
+	if player_actor_2d:
+		player_actor_2d.queue_free()
+	if enemy_actor_2d:
+		enemy_actor_2d.queue_free()
+	player_actor_2d = BATTLE_ACTOR_2D.instantiate()
+	$PlayerAnchor.add_child(player_actor_2d)
+	enemy_actor_2d = ENEMY_ACTOR_2D.instantiate()
+	$EnemyAnchor.add_child(enemy_actor_2d)
 	
 func _end_battle(encounter: Encounter, is_player: bool) -> void:
 	BattleManager.queued_player_moves = {}

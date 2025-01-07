@@ -31,6 +31,7 @@ height = 15
 
 [node name="BattleActor2D" type="Node2D"]
 script = ExtResource("1_yvdj5")
+is_player = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)

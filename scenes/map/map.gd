@@ -299,6 +299,8 @@ func visit_location(location: MapLocation) -> void:
 			visit_button.show()
 		"Medical":
 			visit_button.show()
+		"Academy":
+			visit_button.show()
 		_:
 			visit_button.hide()
 
@@ -386,6 +388,7 @@ func _on_close_medical_pressed() -> void:
 
 func _on_close_academy_pressed() -> void:
 	academy_menu.hide()
+	visit_button.show()
 
 func _on_open_character_pressed() -> void:
 	$CanvasLayer/Overlay/CharacterMenu.show()

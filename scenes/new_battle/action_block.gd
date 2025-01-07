@@ -8,11 +8,18 @@ signal delete_pressed(this: ActionBlock)
 
 var frame_data_display_scene := preload("res://scenes/new_battle/frame_data_display.tscn")
 var is_obscured: bool = false: set = _obscured_changed
+var allow_quick_add: bool = false
 
 func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_STOP
 	size_flags_stretch_ratio = action.length
 	self.text = action.name
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and allow_quick_add:
+			BattleManager.move
+
 
 func _get_drag_data(at_position: Vector2) -> Variant:
 	var preview = Label.new()

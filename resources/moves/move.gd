@@ -6,6 +6,7 @@ class_name MoveResource extends Resource
 @export var active_anim_name: String
 @export var recovery_anim_name: String
 @export var return_anim_name: String = "default"
+@export var price: int = 10
 
 @export_category("Attack Characteristics")
 @export_enum("None", "High Attack", "Middle Attack", "Low Attack") var attack_direction: int = 1

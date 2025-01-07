@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://gi5y7nlgbqk2"]
+
+[ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/new_battle/battle_actor_2d.tscn" id="1_movqq"]
+
+[node name="EnemyActor2D" instance=ExtResource("1_movqq")]
+is_player = false
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+modulate = Color(1, 0, 0, 1)
+flip_h = true

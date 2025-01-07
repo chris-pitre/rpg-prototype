@@ -11,6 +11,7 @@ windup_anim_name = "punch_windup"
 active_anim_name = "punch"
 recovery_anim_name = "punch_windup"
 return_anim_name = "default"
+price = 10
 attack_direction = 2
 require_guard = 0
 windup = 2

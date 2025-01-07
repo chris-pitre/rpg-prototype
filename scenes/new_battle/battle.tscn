@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0oyhmdiuhgjd"]
+[gd_scene load_steps=15 format=3 uid="uid://d0oyhmdiuhgjd"]
 
 [ext_resource type="Script" path="res://scenes/new_battle/battle.gd" id="1_g3efr"]
 [ext_resource type="PackedScene" uid="uid://hinhxroikt2y" path="res://scenes/new_battle/action_queue.tscn" id="2_epcs7"]
-[ext_resource type="PackedScene" uid="uid://hc72175g0g3m" path="res://scenes/new_battle/BattleActor2D.tscn" id="2_rpfhh"]
 [ext_resource type="Script" path="res://scenes/new_battle/action_block_trash.gd" id="3_2vcsj"]
 [ext_resource type="Theme" uid="uid://ccjap30pf1r4p" path="res://resources/testtheme.tres" id="4_fviya"]
 [ext_resource type="PackedScene" uid="uid://dhja7uxi2y2ho" path="res://scenes/new_battle/action_queue_indicator.tscn" id="5_qjfvv"]
@@ -47,17 +46,8 @@ script = ExtResource("1_g3efr")
 [node name="PlayerAnchor" type="Node2D" parent="."]
 position = Vector2(268, 391)
 
-[node name="PlayerBattleActor" parent="PlayerAnchor" instance=ExtResource("2_rpfhh")]
-is_player = true
-
 [node name="EnemyAnchor" type="Node2D" parent="."]
 position = Vector2(828, 211)
-
-[node name="EnemyBattleActor" parent="EnemyAnchor" instance=ExtResource("2_rpfhh")]
-
-[node name="AnimatedSprite2D" parent="EnemyAnchor/EnemyBattleActor" index="0"]
-modulate = Color(1, 0, 0, 1)
-scale = Vector2(-2, 2)
 
 [node name="ClashPosition" type="Node2D" parent="."]
 position = Vector2(560, 319)
@@ -65,6 +55,7 @@ position = Vector2(560, 319)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RightMargin" type="MarginContainer" parent="CanvasLayer"]
+visible = false
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -243,6 +234,5 @@ anchor_mode = 0
 
 [connection signal="button_down" from="CanvasLayer/RightMargin/ActionPanel/MarginContainer/VBoxContainer/ExecuteButton" to="." method="_on_execute_button_button_down"]
 
-[editable path="EnemyAnchor/EnemyBattleActor"]
 [editable path="CanvasLayer/PlayerStatusList"]
 [editable path="CanvasLayer/EnemyStatusList"]

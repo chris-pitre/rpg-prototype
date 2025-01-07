@@ -52,11 +52,10 @@ var moves = {}
 var battle_active: bool = false
 var current_encounter: Encounter
 var current_phase: PHASES
-var current_enemy = null
 var execution_timer: Timer
 
 var max_timestep: int = 60
-var time_step: float = 0.12
+var time_step: float = 0.08
 var current_time_step: int = 0
 var queued_player_moves: Dictionary = {}
 var queued_enemy_moves: Dictionary = {}

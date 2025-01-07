@@ -28,6 +28,7 @@ func update_state() -> void:
 
 func update_icon() -> void:
 	if not current_event:
+		$NotUrgent.visible = false
 		return
 	
 	if current_event.urgent:

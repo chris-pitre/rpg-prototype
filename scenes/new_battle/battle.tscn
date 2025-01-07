@@ -11,9 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://b0ncimjpidtpd" path="res://assets/textures/icons/arrowsmall.png" id="8_jh2bl"]
 [ext_resource type="Texture2D" uid="uid://cdcjq3o0inum" path="res://assets/textures/icons/arrowsmalldown.png" id="8_y744h"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
-bg_color = Color(1, 0, 0, 1)
-
 [sub_resource type="Gradient" id="Gradient_nx6kn"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 0)
@@ -34,6 +31,9 @@ height = 16
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jl25"]
+bg_color = Color(1, 0, 0, 1)
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -63,22 +63,6 @@ scale = Vector2(-2, 2)
 position = Vector2(560, 319)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Trash" type="Panel" parent="CanvasLayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -50.0
-offset_top = -82.0
-offset_right = -10.0
-offset_bottom = -42.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = ExtResource("4_fviya")
-theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
-script = ExtResource("3_2vcsj")
 
 [node name="RightMargin" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 11
@@ -237,6 +221,22 @@ texture = SubResource("GradientTexture2D_ug66m")
 [node name="DirIndicator" type="Sprite2D" parent="CanvasLayer/DirectionalMenu"]
 position = Vector2(524, 0)
 texture = SubResource("GradientTexture2D_jco4t")
+
+[node name="Trash" type="Panel" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -82.0
+offset_right = -10.0
+offset_bottom = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_fviya")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1jl25")
+script = ExtResource("3_2vcsj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

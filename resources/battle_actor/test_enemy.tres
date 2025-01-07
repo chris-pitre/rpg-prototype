@@ -11,3 +11,4 @@ is_player = false
 max_hp = 100
 moves = Array[String]([])
 move_queues = Array[ExtResource("1_cvcb4")]([ExtResource("2_0judp")])
+enemy_base_damage = 10

@@ -35,10 +35,11 @@ func _get_player_moves() -> void:
 		var move_resource: MoveResource = BattleManager.moves[move]
 		var move_modified = GameState.get_modified_move(move_resource)
 		
-		if BattleManager.player.current_guard == move_resource.require_guard or move_resource.require_guard == GuardStatus.GUARD.NONE:
-			var new_action_block = action_block.instantiate()
-			new_action_block.action = move_modified
-			action_palette.add_child(new_action_block)
+		var new_action_block = action_block.instantiate()
+		if BattleManager.player.current_guard != move_resource.require_guard:
+			new_action_block.is_usable = false
+		new_action_block.action = move_modified
+		action_palette.add_child(new_action_block)
 
 func _on_execute_button_button_down() -> void:
 	for child in enemy_queue.get_children():

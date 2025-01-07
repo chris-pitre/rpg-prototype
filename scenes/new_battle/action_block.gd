@@ -8,6 +8,7 @@ signal delete_pressed(this: ActionBlock)
 
 var frame_data_display_scene := preload("res://scenes/new_battle/frame_data_display.tscn")
 var is_obscured: bool = false: set = _obscured_changed
+var is_usable: bool = true: set = _usable_changed
 
 func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_STOP
@@ -41,3 +42,10 @@ func _obscured_changed(new_is_obscured: bool) -> void:
 		$ObscurationRect.show()
 	else:
 		$ObscurationRect.hide()
+
+func _usable_changed(new_is_usable: bool) -> void:
+	is_usable = new_is_usable
+	if is_usable:
+		$UnusuableRect.hide()
+	else:
+		$UnusuableRect.show()
